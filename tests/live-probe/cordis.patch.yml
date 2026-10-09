@@ -1,0 +1,6 @@
+# For this workspace's live smoke test only; edit the outputDir before installing elsewhere.
+- insert:
+    - id: wish-willow-p0-probe
+      name: dsh-wish-willow-p0-probe
+      config:
+        outputDir: 'G:\dsh\Wish-Willow\.research\live'

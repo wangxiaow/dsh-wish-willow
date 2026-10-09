@@ -1,0 +1,32 @@
+node.exe : $ node scripts/check.mjs && node --test tests/*.test.mjs tests/integration/*.test.mjs
+所在位置 行:1 字符: 129
++ ... ew($false); & 'C:\Users\wangw\.dsh\dsh-runtimes\dsh-primary-runtime\d ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ node scripts/...tion/*.test.mjs:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+Build PASS: install-ready JavaScript entrypoints, lazy Client factory, Bundle manifest and schema import. No transpilation needed.
+✔ lazy client loads only React and registers additive root Slot and locale with disposal ownership (2.1768ms)
+✔ RPC adapter uses shared /api carrier, named args and errors without a Desktop-specific transport (1.0293ms)
+✔ React SSR renders bilingual labelled controls, host tokens and no iframe or external DOM (4.6862ms)
+✔ real DSH shared Fetch carrier dispatches Remote envelopes; trust fence is retained (48.4147ms)
+✔ real Cordis loading, Gateway binding, JSON durability, concurrent CAS and unload/reload (35.3851ms)
+Process 19836: seed PASS
+Process 31572: recover PASS
+✔ two independent Node processes restore the same product via real DSH services (521.0303ms)
+✔ malformed media, mismatched version and invalid stored records fail closed, leaving bytes intact (15.8389ms)
+✔ creation, trim, independent ID, defensive snapshots and revision (3.9823ms)
+✔ reject invalid and unknown fields without persistence (2.212ms)
+✔ concurrent CAS accepts exactly one write; stale write cannot overwrite (0.3747ms)
+✔ failed durable write preserves previous memory; ID collision never overwrites (0.4341ms)
+✔ schema rejects corrupted records and unsupported state versions (0.261ms)
+✔ mounted React form creates, updates with CAS, preserves conflict draft, and explicitly reloads (16.5085ms)
+✔ unmount aborts a pending DSH request and ignores late response (1.0945ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 904.6169

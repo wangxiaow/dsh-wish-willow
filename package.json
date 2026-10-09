@@ -1,0 +1,50 @@
+{
+  "name": "dsh-wish-willow",
+  "version": "0.1.0-p0.1",
+  "description": "Wish Willow P0: session-independent product state for DeepSeek Harness",
+  "type": "module",
+  "license": "MIT",
+  "engines": { "node": ">=22" },
+  "exports": { ".": "./src/host.js", "./client": "./client.js", "./package.json": "./package.json", "./locale/*.json": "./locale/*.json" },
+  "files": ["src/", "client.js", "cordis.patch.yml", "locale/", "README.md", "LICENSE", "docs/", "tests/", "scripts/"],
+  "scripts": {
+    "build": "node scripts/check.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "test:integration": "node --test tests/integration/*.test.mjs",
+    "check": "node scripts/check.mjs && node --test tests/*.test.mjs tests/integration/*.test.mjs"
+  },
+  "dsh": {
+    "bundle": { "patch": "./cordis.patch.yml" },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": ["@deepseek-ai/dsh-client-connection", "@deepseek-ai/dsh-api-gateway", "@deepseek-ai/dsh-client-locale", "@deepseek-ai/dsh-client-ui-settings"]
+    }
+  },
+  "dependencies": { "zod": "4.6.5" },
+  "peerDependencies": {
+    "@deepseek-ai/dsh": "0.2.0-rc.2",
+    "@deepseek-ai/cordis": "~4.0.4",
+    "@deepseek-ai/dsh-storage-domain": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-typert-protocol": "0.2.0-rc.2"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/dsh": { "optional": true },
+    "@deepseek-ai/cordis": { "optional": true },
+    "@deepseek-ai/dsh-storage-domain": { "optional": true },
+    "@deepseek-ai/dsh-typert-protocol": { "optional": true }
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "4.0.4",
+    "@deepseek-ai/dsh-storage": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-storage-domain": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-storage-json": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-typert-protocol": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-typert-registry": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-api-gateway": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-client-connection": "0.2.0-rc.2",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-test-renderer": "18.3.1"
+  }
+}
