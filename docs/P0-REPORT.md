@@ -35,6 +35,7 @@
 ### 当前真实 DSH（通过的部分）
 
 - 官方 `plugin_manager.install_bundle` 对安装候选包返回 applied、exit=0；Host `include:wish-willow-p0` 实际 active。
+- 把安装来源切换到正式 artifacts 路径时，包操作 exit=0，返回 **restart-required**（官方规则：替换已安装包需新模块代际）。当前旧代际的相同运行源码仍 active；请正常重启后验证正式来源恢复。本次未把该结果说成已完成重启。最终打包仅再更新这条安装收据/文档，运行源码和 manifest 语义没有变化。
 - 实际 Client `settings.section` Slot 中出现 order=30/active=true 的 Wish Willow；停用后消失、重新启用后恢复。
 - 临时独立 probe 在 Desktop Host PID=31800 调用正式 Service 创建及更新一条明确标记为测试的产品；真实文件在 DSH_HOME/storages 中生成。关闭并重新打开 Domain 后 ID、revision=2、内容和时间戳完全一致；文件 SHA256 保持不变。
 - probe 已用官方管理器移除；测试产品保留，不执行未授权数据删除。可在 UI 将其标为 archived。

@@ -6,7 +6,7 @@
 
 | 项目 | 结果 | 证据/边界 |
 |---|---|---|
-| 当前 Desktop profile Bundle 安装 | 通过 | 官方 plugin_manager 的 install_bundle 返回 packageResult.exitCode=0、application=applied |
+| 当前 Desktop profile Bundle 安装 | 通过；正式来源替换待重启 | 候选包 applied/exit=0；正式 artifacts 路径重新安装 exit=0、restart-required。之后仅补充交付记录，运行源码未变 |
 | 当前 Desktop Host 插件加载 | 通过 | list_plugins：include:wish-willow-p0、enabled=true、fiberPhase=active |
 | 当前连接 Client 的 UI 注册 | 通过 | 实际 Client Slots.listSubTree：settings.section 中 wish-willow-p0/order=30/active=true |
 | 停用释放与重新启用 | 通过 | Slot 消失后恢复；JSON 文件 SHA256 未改变 |
