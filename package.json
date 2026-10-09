@@ -4,6 +4,8 @@
   "description": "Wish Willow P0: session-independent product state for DeepSeek Harness",
   "type": "module",
   "license": "MIT",
+  "author": "wangxiaow",
+  "repository": { "type": "git", "url": "git+https://github.com/wangxiaow/dsh-wish-willow.git" },
   "engines": { "node": ">=22" },
   "exports": { ".": "./src/host.js", "./client": "./client.js", "./package.json": "./package.json", "./locale/*.json": "./locale/*.json" },
   "files": ["src/", "client.js", "cordis.patch.yml", "locale/", "README.md", "LICENSE", "docs/", "tests/", "scripts/"],

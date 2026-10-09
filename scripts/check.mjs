@@ -5,6 +5,12 @@ import vm from 'node:vm';
 
 const manifest = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'));
 assert.equal(manifest.name, 'dsh-wish-willow');
+assert.equal(manifest.license, 'MIT');
+assert.equal(manifest.author, 'wangxiaow');
+assert.equal(manifest.repository.url, 'git+https://github.com/wangxiaow/dsh-wish-willow.git');
+const license = await readFile(new URL('../LICENSE', import.meta.url), 'utf8');
+assert.match(license, /^MIT License\r?\n/);
+assert.match(license, /Copyright \(c\) 2026 wangxiaow/);
 assert.equal(manifest.dsh.client.platform, 'web');
 assert.equal(manifest.dsh.bundle.patch, './cordis.patch.yml');
 assert.equal(manifest.scripts.prepare, undefined, 'Git install must not need lifecycle build scripts');

@@ -20,4 +20,11 @@
 - live disable 一次因仍选中的 probe 进入 pending 而返回 failed；报告保留失败，修正依赖停用顺序后验证主体数据未改变及重启 fiber 恢复。
 - 安装 peer 警告已用 pnpm peers check 调查，只点名既有其他插件，不为消除警告修改它们或授予版本豁免。
 
-没有开发 P1/P2/P3；没有核心 Fork、远程推送、Release 或公网部署。
+首次 P0 交付没有开发 P1/P2/P3，也没有核心 Fork、远程推送、Release 或公网部署。
+
+## 用户授权的仓库提交
+
+- 提交目标：<https://github.com/wangxiaow/dsh-wish-willow>，只提交源码到 main，不创建 Release 或进入 P1。
+- 许可保留 MIT，版权名改为 `wangxiaow`；同步 package 作者/仓库元信息与 GitHub 安装说明。
+- 不包含 node_modules、DSH 核心副本或本地打包产物；保留原始测试记录和未验证事项。
+- 提交前 pnpm run check 的自动依赖检查首次因未批准构建脚本而退出 1；未授予构建许可，按 README 显式执行 install --frozen-lockfile --ignore-scripts 后，许可/仓库元信息检查及 14 项测试全部通过。

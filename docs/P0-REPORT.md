@@ -18,7 +18,7 @@
 - 可安装 Bundle：`artifacts/dsh-wish-willow-0.1.0-p0.1.tgz`。
 - 完整源码快照：`artifacts/wish-willow-p0-source.zip`，含开发规范、阶段契约、锁文件、测试和文档，不含 DSH 源码、node_modules 或研究目录。
 - 包含完整交付文件的最终包另有产物结构/指纹检查；对当前 runtime 已加载的 Host/model/Client 代码逐项 SHA256 相同。pnpm pack 会重新序列化 manifest，比较的是解析后 manifest 语义，不把格式差异说成代码差异。
-- Git commit 与最终压缩包 SHA256 在最终工具输出/产物指纹记录中提供，不在本文嵌入自引用哈希。没有 remote、公开 Release、推送或公网部署。
+- Git commit 与最终压缩包 SHA256 在最终工具输出/产物指纹记录中提供，不在本文嵌入自引用哈希。首次 P0 交付没有 remote、公开 Release、推送或公网部署；后续用户明确授权把源码提交到 <https://github.com/wangxiaow/dsh-wish-willow>，许可 MIT，版权名 wangxiaow。此授权不包括 Release 或进入 P1。
 
 ## 3. 验证证据
 
@@ -64,7 +64,7 @@
 
 ## 5. 需要用户决定的事项
 
-当前无额外安全/费用/核心修改请求。请先完成兼容性文档中的待验收项，决定是否接受 P0 的明确限制。公开 GitHub 发布或进入 P1 均需另行授权；本次未做。
+当前无额外安全/费用/核心修改请求。请先完成兼容性文档中的待验收项，决定是否接受 P0 的明确限制。源码提交 GitHub 已获后续明确授权；Release、公网部署或进入 P1 仍需另行授权。GitHub 源码提交不改变上述功能验收结论。
 
 ## 6. 下一阶段建议（仅建议）
 
