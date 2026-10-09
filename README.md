@@ -8,7 +8,11 @@
 
 ### 推荐：DSH 插件管理页
 
-1. 从 GitHub 下载或克隆这个仓库（本次交付没有远程仓库地址，也没有公开发布）。
+1. 从 [GitHub 仓库](<https://github.com/wangxiaow/dsh-wish-willow>) 下载源码，或克隆后进入仓库目录：
+   ```sh
+   git clone https://github.com/wangxiaow/dsh-wish-willow.git
+   cd dsh-wish-willow
+   ```
 2. 本地构建与打包：
    ```sh
    pnpm install --frozen-lockfile --ignore-scripts
@@ -25,15 +29,15 @@
 
 创造模式也可使用公开工具 `plugin_manager`：先 `list_bundles`，再 `install_bundle`，`target` 填上述压缩包绝对路径。仅在 danger-full-access 或获准调用时可安装。插件自身不增加工具或权限。
 
-### GitHub 直接安装（发布后）
+### GitHub 直接安装
 
-DSH 官方管理器支持 git/GitHub package spec，并在下载前执行连接检查。将仓库上传到你授权的 GitHub 地址后，在上述安装输入框填：
+DSH 官方管理器支持 git/GitHub package spec，并在下载前执行连接检查。在上述安装输入框填：
 
 ```text
-https://github.com/<OWNER>/<REPOSITORY>.git#<COMMIT_SHA>
+https://github.com/wangxiaow/dsh-wish-willow.git#<COMMIT_SHA>
 ```
 
-`<OWNER>`、`<REPOSITORY>`、`<COMMIT_SHA>` 都是需替换的占位符，不是本次已存在的下载链接。建议固定提交，而非浮动 main。仓库已经包含 Host/Client 可加载入口，不依赖 Git 下载时的构建脚本。**真实 GitHub 安装尚未验证**；禁止把示例当作已发布 Release。
+将 `<COMMIT_SHA>` 替换为仓库中要安装的完整提交号；建议固定提交，而非浮动 main。仓库已经包含 Host/Client 可加载入口，不依赖 Git 下载时的构建脚本。**真实 GitHub 安装尚未验证**；源码推送成功不等于 GitHub 安装已通过，也没有创建 Release。
 
 Web CLI 的官方形式是 `dsh plugin --profile web add <package-spec>`；Desktop 推荐使用自身插件页，不让 CLI 并发修改运行中的桌面 profile。
 
@@ -72,3 +76,7 @@ pnpm run check
 ## 尚未实现
 
 主 Agent、规划/看板、软件预览与交付、Reviewer、质量门禁、跨模型接管与持续演化均未实现。P0 后等待用户验收，不自动进入 P1。
+
+## 许可
+
+[MIT License](<LICENSE>)，Copyright (c) 2026 wangxiaow。
