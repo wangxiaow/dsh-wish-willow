@@ -204,11 +204,11 @@ $node = 'C:\Users\wangw\.dsh\dsh-runtimes\dsh-primary-runtime\dependencies\node\
 | 项 | 值 |
 |---|---|
 | 开发分支 | `p1/unified-bundle`（起点 `p1/minimal-loop` = `9ed8016`） |
-| 本次提交 | 见 `artifacts/BUILD-INFO.json` 的 `commit` 字段与本报告对应提交 |
+| 本次提交 | `693fe17`（分支 `p1/unified-bundle`） |
 | 安装产物 | `artifacts/dsh-wish-willow-0.3.1.tgz`（134,687 bytes / `0e54729c…3e16`） |
 | 回退产物 | `artifacts/dsh-wish-willow-0.1.0-p0.1.tgz`、`artifacts/dsh-wish-willow-p1-0.2.0-p1.1.tgz` |
 | 忽略但保留的本地数据 | `.test-data/`（隔离 home、真实数据副本、Desktop 备份）、`.research/`（官方 DSH 只读提取）、`artifacts/*.tgz` |
-| 远程推送 | 用户已授权；推送结果见本报告提交说明 |
+| 远程推送 | 用户已授权并完成：`refs/heads/main` 与 `refs/heads/p1/unified-bundle` 均为 `693fe17`（`git ls-remote` 复核） |
 
 ### A.1 版本与产物说明
 

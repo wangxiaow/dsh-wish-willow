@@ -302,8 +302,8 @@ SetNamedSecurityInfoW failed (Win32 5): grantWrite(<workspace>)
 
 | 项目 | 值 |
 |---|---|
-| 分支 | `p1/unified-bundle`（起点 `9ed8016`） |
-| 提交 | 见文末与 `artifacts/BUILD-INFO.json` |
+| 分支 | `p1/unified-bundle`（起点 `9ed8016`），已推送 |
+| 提交 | `693fe17`（`feat(p1): ship the unified Wish Willow bundle 0.3.1 with real acceptance evidence`）; 已推送 `main` 与 `p1/unified-bundle` |
 | 可安装产物 | `artifacts/dsh-wish-willow-0.3.1.tgz`，134,687 bytes，SHA256 `0e54729ca7ecb57660c46adae92fabb6787f445e31e6ac7b7deff98bc1863e16` |
 | 构建命令 | `node scripts/check.mjs && node --test tests/*.test.mjs tests/integration/*.test.mjs && pnpm pack --pack-destination artifacts` |
 | 回退产物 | `artifacts/dsh-wish-willow-0.1.0-p0.1.tgz`、`artifacts/dsh-wish-willow-p1-0.2.0-p1.1.tgz` |
