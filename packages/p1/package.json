@@ -1,0 +1,33 @@
+{
+  "name": "dsh-wish-willow-p1",
+  "version": "0.2.0-p1.1",
+  "description": "Wish Willow P1: persistent product evolution with real DSH Coding execution",
+  "type": "module",
+  "license": "MIT",
+  "author": "wangxiaow",
+  "repository": { "type": "git", "url": "git+https://github.com/wangxiaow/dsh-wish-willow.git", "directory": "packages/p1" },
+  "engines": { "node": ">=22" },
+  "exports": { ".": "./src/host.js", "./client": "./client.js", "./package.json": "./package.json" },
+  "files": ["src/", "client.js", "cordis.patch.yml", "README.md", "LICENSE"],
+  "dsh": {
+    "bundle": { "patch": "./cordis.patch.yml" },
+    "client": { "platform": "web", "immediately": true, "inject": ["@deepseek-ai/dsh-client-connection", "@deepseek-ai/dsh-api-gateway", "@deepseek-ai/dsh-client-locale", "@deepseek-ai/dsh-client-ui-settings"] }
+  },
+  "dependencies": { "zod": "4.6.5" },
+  "peerDependencies": {
+    "@deepseek-ai/dsh": "0.2.0-rc.2",
+    "@deepseek-ai/cordis": "~4.0.4",
+    "@deepseek-ai/dsh-storage-domain": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-typert-protocol": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-sandbox-policy": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-user-approval": "0.2.0-rc.2"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/dsh": { "optional": true },
+    "@deepseek-ai/cordis": { "optional": true },
+    "@deepseek-ai/dsh-storage-domain": { "optional": true },
+    "@deepseek-ai/dsh-typert-protocol": { "optional": true },
+    "@deepseek-ai/dsh-sandbox-policy": { "optional": true },
+    "@deepseek-ai/dsh-user-approval": { "optional": true }
+  }
+}

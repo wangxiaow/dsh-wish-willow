@@ -1,0 +1,7 @@
+# Live end-to-end probe for Wish Willow P1. Installed temporarily through the official
+# plugin manager, removed after the run; it only calls the product's own public service.
+- insert:
+    - id: wish-willow-p1-e2e-probe
+      name: dsh-wish-willow-p1-e2e-probe
+      config:
+        outputDir: 'G:\dsh\Wish-Willow\docs\evidence\p1\live'
