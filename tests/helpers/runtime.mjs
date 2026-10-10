@@ -4,7 +4,7 @@ import * as Json from '@deepseek-ai/dsh-storage-json';
 import * as Domain from '@deepseek-ai/dsh-storage-domain';
 import Typert from '@deepseek-ai/dsh-typert-registry';
 import Gateway from '@deepseek-ai/dsh-api-gateway';
-import * as Wish from '../../src/host.js';
+import * as Wish from '../../src/p0/host.js';
 
 export async function runtime(root) {
   const ctx = new Context();

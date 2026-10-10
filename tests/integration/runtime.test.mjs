@@ -25,7 +25,7 @@ test('real Cordis loading, Gateway binding, JSON durability, concurrent CAS and 
   assert.equal(host.ctx.get('wishWillow'), undefined);
   assert.equal(host.ctx.storageDomain.get('wish_willow'), undefined);
   await assert.rejects(host.call('list'));
-  const Wish = await import('../../src/host.js');
+  const Wish = await import('../../src/p0/host.js');
   const nextFiber = host.ctx.plugin(Wish); await nextFiber;
   assert.equal(nextFiber.state, 2); assert.deepEqual(await host.call('list'), before);
   await nextFiber.dispose();

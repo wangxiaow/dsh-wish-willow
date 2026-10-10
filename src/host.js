@@ -1,48 +1,32 @@
-import { randomUUID } from 'node:crypto';
-import { defineDomain, domainTable } from '@deepseek-ai/dsh-storage-domain';
-import { Remote, RemoteError, TypertRemoteService } from '@deepseek-ai/dsh-typert-protocol';
-import { createProductStore, productSchema } from './model.js';
+import { apply as applyP0, productDomain } from './p0/host.js';
+import { apply as applyP1, evolutionDomain } from '../packages/p1/src/host.js';
 
-export const name = 'wish-willow-p0';
-export const inject = ['storageDomain', 'typertGateway'];
-export const productDomain = defineDomain({
-  name: 'wish_willow', version: 1, layout: 'single',
-  tables: { products: domainTable(productSchema) },
-});
+/**
+ * Wish Willow — the single installable Bundle entry point.
+ *
+ * One loader row loads one Host plugin, which composes the internal modules:
+ *   - `wish-willow-p0` module: Domain `wish_willow` v1 / `products` + Service `wishWillow`
+ *     (legacy product state; unchanged schema, so existing P0 files stay byte-compatible).
+ *   - `wish-willow-p1` module: Domain `wish_willow_p1` v1 / `projects` + Service `wishWillowP1`
+ *     (authoritative product evolution state, orchestration and evidence gating).
+ *
+ * The modules keep their own files, services, storage domains and tests. Only the
+ * installation unit and the user-facing entry are unified: users install `dsh-wish-willow`
+ * once and see one Wish Willow workspace.
+ */
+export const name = 'wish-willow';
 
-const initializers = [];
-export class WishWillowService extends TypertRemoteService {
-  constructor(ctx, domain) {
-    super(ctx, 'wishWillow');
-    this.products = createProductStore(domain.table('products'), {
-      uuid: randomUUID, now: () => new Date().toISOString(),
-      failure: (reason, message, details) => new RemoteError(`wish-willow/${reason}`, message, details),
-    });
-    for (const initialize of initializers) initialize.call(this);
-  }
-  list() { return this.products.list(); }
-  create(input, signal) {
-    signal?.throwIfAborted();
-    return this.products.create(input);
-  }
-  update(input, signal) {
-    signal?.throwIfAborted();
-    return this.products.update(input);
-  }
-}
+/** Union of the services both internal modules need before they may mount. */
+export const inject = ['storageDomain', 'typertGateway', 'agents', 'agentDefaultModel', 'agentPresets', 'sandboxPolicy', 'sessions', 'sessionQuery'];
 
-// Standard Stage-3 method decorator invocation, without a compiler or private marker access.
-// rc.2 Gateway's documented SRC path checks named JSON args; model.js validates business types.
-for (const method of ['list', 'create', 'update']) {
-  Remote(WishWillowService.prototype[method], {
-    kind: 'method', name: method, static: false, private: false,
-    addInitializer: initialize => initializers.push(initialize),
-  });
-}
+/** Domain descriptors, re-exported so tooling and tests can assert the storage contract. */
+export { productDomain, evolutionDomain };
 
-export async function apply(ctx) {
-  const domain = await ctx.storageDomain.open(productDomain);
-  // The domain must also close if later Service setup fails.
-  ctx.effect(() => () => domain.close(), 'wish-willow: product domain');
-  new WishWillowService(ctx, domain);
+export async function apply(ctx, config = {}) {
+  // The legacy product-state module is opened first so the evolution module can
+  // read it through `ctx.get('wishWillow')` for explicit, user-initiated imports.
+  // Cordis owns the return value of `apply`, so nothing is returned here: both
+  // modules register their Services and disposal effects on this plugin's fiber.
+  await applyP0(ctx);
+  await applyP1(ctx, config);
 }

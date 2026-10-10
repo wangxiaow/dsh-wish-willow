@@ -1,4 +1,10 @@
+# Wish Willow — single unified Bundle patch.
+#
+# ONE insert over the shipped composition: the unified Host/Client row loads both
+# internal modules (legacy P0 product state + P1 wish-driven evolution). Users no
+# longer install `dsh-wish-willow` (P0) and `dsh-wish-willow-p1` separately: the
+# legacy companion rows must be removed from `dsh.profile.bundles` when upgrading.
 - insert:
-    - id: wish-willow-p0
+    - id: wish-willow
       name: dsh-wish-willow
       config: {}

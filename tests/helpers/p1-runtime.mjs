@@ -7,7 +7,7 @@ import * as Json from '@deepseek-ai/dsh-storage-json';
 import * as Domain from '@deepseek-ai/dsh-storage-domain';
 import Typert from '@deepseek-ai/dsh-typert-registry';
 import Gateway from '@deepseek-ai/dsh-api-gateway';
-import * as Wish from '../../src/host.js';
+import * as Wish from '../../src/p0/host.js';
 import * as WishP1 from '../../packages/p1/src/host.js';
 
 /** Real Coding tools without a model: real writes inside the workspace and real commands with real exit codes. */
