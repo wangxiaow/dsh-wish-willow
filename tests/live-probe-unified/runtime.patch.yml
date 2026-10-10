@@ -1,0 +1,9 @@
+# Isolation-only overlay for the unified acceptance Host.
+# Browser authentication stays enabled; only URL printing and auto-open are suppressed so
+# the authenticated URL is never written into evidence logs.
+- id: web-runtime
+  config:
+    openBrowser: false
+    printUrl: false
+    surfaceContext: true
+    trustedHosts: []
