@@ -5,6 +5,22 @@
 
 > **数据安全承诺**：本次升级**不迁移、不改写、不重命名**任何存储。`wish_willow.json` 与 `wish_willow_p1.json` 在升级前后必须字节一致；升级只改变「装了什么、看到什么页面」。
 
+> **本手册的实测状态（2026-10-10；明确区分「已实际执行」与「仅文档说明」）**
+>
+> | 操作 | 状态 |
+> |---|---|
+> | §2 升级前备份与 SHA256 记录 | **已在真实 Desktop profile 执行** |
+> | §3.1「先移除旧 P1，再安装统一 Bundle」顺序 | **已执行**（隔离环境与真实 profile 均按此顺序） |
+> | §3.2 插件管理器 `remove_bundle` / `install_bundle`（含 `applied`、`restart-required`、同版本重打包被 `ambiguous-install` 拒绝三种回执） | **已执行**（真实 Desktop profile） |
+> | §3.3 官方 CLI `dsh plugin --profile <非 desktop> add/remove` | **已执行**（隔离 Web profile，多次） |
+> | §3.4 重启后生效 | **已执行**（真实 Desktop 2026-10-10 21:29 重启后复验通过） |
+> | §4 回退为双 Bundle 并保留数据 | **已在隔离环境实测**（存储字节不变、两个旧页面恢复、旧面板读出原项目）；**真实 Desktop profile 上未执行** |
+> | §5 升级后校验命令 | **已执行** |
+> | §6 故障恢复表中的双入口 / 面板报错 / CAS 冲突 / 坏介质 | 双入口与面板报错**已实测观察**；CAS 冲突与坏介质由自动化集成测试覆盖 |
+> | §7 限制 5（Windows 沙箱 `grantWrite` 需 WRITE_OWNER） | **已实测**（受限目录失败、用户目录成功） |
+>
+> 未实测的部分已在上表明确标注；不要据本手册推断其已在真实环境验证。隔离回退实测证据见 `docs/evidence/p1-unification/upgrade/rollback-*` 与 `rollback-web/`。
+
 ---
 
 ## 1. 升级后的变化

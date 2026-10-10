@@ -1,0 +1,19 @@
+﻿{"at":"2026-10-10T21:31:01.5117727+08:00","pid":20368,"handle":329986,"action":"inspect","id":"","name":"","value":"","keys":"","label":"01-settings-nav"}
+{"at":"2026-10-10T21:31:13.6004701+08:00","pid":20368,"handle":329986,"action":"expand","id":"","name":"账号菜单","value":"","keys":"","label":"desktop"}
+{"at":"2026-10-10T21:31:16.4060364+08:00","pid":20368,"handle":329986,"action":"inspect","id":"","name":"","value":"","keys":"","label":"02-menu"}
+{"at":"2026-10-10T21:31:29.9814623+08:00","pid":20368,"handle":329986,"action":"invoke-name","id":"","name":"设置","value":"","keys":"","label":"desktop"}
+{"at":"2026-10-10T21:31:34.2413388+08:00","pid":20368,"handle":329986,"action":"inspect","id":"","name":"","value":"","keys":"","label":"03-settings-nav"}
+{"at":"2026-10-10T21:31:45.5901820+08:00","pid":20368,"handle":329986,"action":"invoke-name","id":"","name":"Wish Willow","value":"","keys":"","label":"desktop"}
+{"at":"2026-10-10T21:31:51.7867443+08:00","pid":20368,"handle":329986,"action":"inspect","id":"","name":"","value":"","keys":"","label":"04-panel-after-restart"}
+{"at":"2026-10-10T21:31:53.5884464+08:00","pid":20368,"handle":329986,"action":"capture","id":"","name":"","value":"","keys":"","label":"04-panel-after-restart"}
+{"at":"2026-10-10T21:34:24.1822687+08:00","pid":20368,"handle":329986,"action":"value","id":"ww-title","name":"","value":"[P1 DESKTOP RESTART TEST] Hello World 静态页","keys":"","label":"desktop"}
+{"at":"2026-10-10T21:34:25.5101349+08:00","pid":20368,"handle":329986,"action":"value","id":"ww-new-wish","name":"","value":"请创建一个最小的零依赖静态网页应用：页面标题和正文都显示 Hello World，并提供一个可以在源码目录重复启动的本地启动命令。不要引入任何第三方依赖，也不要修改其他产品。","keys":"","label":"desktop"}
+{"at":"2026-10-10T21:34:26.8239633+08:00","pid":20368,"handle":329986,"action":"click-name","id":"","name":"创建产品","value":"","keys":"","label":"desktop"}
+{"at":"2026-10-10T21:34:43.8984887+08:00","pid":20368,"handle":329986,"action":"value","id":"ww-wish","name":"","value":"请创建一个最小的零依赖静态网页应用：页面标题和正文都显示 Hello World，并提供一个可以在源码目录重复启动的本地启动命令。不要引入任何第三方依赖，也不要修改其他产品。","keys":"","label":"desktop"}
+{"at":"2026-10-10T21:35:14.6734815+08:00","pid":20368,"handle":329986,"action":"click-id","id":"ww-submit","name":"","value":"","keys":"","label":"desktop"}
+{"at":"2026-10-10T21:37:07.5038156+08:00","pid":20368,"handle":329986,"action":"expand","id":"","name":"账号菜单","value":"","keys":"","label":"desktop"}
+{"at":"2026-10-10T21:37:09.2817238+08:00","pid":20368,"handle":329986,"action":"invoke-name","id":"","name":"设置","value":"","keys":"","label":"desktop"}
+{"at":"2026-10-10T21:37:20.5737516+08:00","pid":20368,"handle":329986,"action":"invoke-name","id":"","name":"Wish Willow","value":"","keys":"","label":"desktop"}
+{"at":"2026-10-10T21:45:35.2765677+08:00","pid":20368,"handle":329986,"action":"expand","id":"","name":"账号菜单","value":"","keys":"","label":"desktop"}
+{"at":"2026-10-10T21:45:50.8922019+08:00","pid":20368,"handle":329986,"action":"invoke-name","id":"","name":"设置","value":"","keys":"","label":"desktop"}
+{"at":"2026-10-10T21:45:54.0805240+08:00","pid":20368,"handle":329986,"action":"invoke-name","id":"","name":"Wish Willow","value":"","keys":"","label":"desktop"}

@@ -1,6 +1,8 @@
 # P1 统一 Bundle 整合报告
 
-**结论：Wish Willow 已从两个独立安装单元整合为一个可安装 Bundle（`dsh-wish-willow` 0.3.1）、一个统一用户入口，并保留 P0/P1 全部历史存储与交付历史。单 Bundle 装载、旧版本升级、真实 Web UI 双轮 DeepSeek V4.1 软件演化、独立交付复验与 50 项自动化回归均已实际执行并通过；真实 Desktop profile 已完成安装级升级，可视化验收需重启 Desktop 后完成（见「未完成项」）。**
+**结论：Wish Willow 已从两个独立安装单元整合为一个可安装 Bundle（`dsh-wish-willow` 0.3.1）、一个统一用户入口，并保留 P0/P1 全部历史存储与交付历史。单 Bundle 装载、旧版本升级与隔离回退、真实 Web UI 双轮 + 真实 Desktop UI 单轮 DeepSeek V4.1 软件演化、独立交付复验与 50 项自动化回归均已实际执行；真实 Desktop profile 已在重启后完成复验（单入口、真实历史数据、经 UI 发起真实 Agent 并交付）。**
+
+**已知未修复缺陷 1 项：F1 —— 交付快照的扩展名白名单会静默丢弃非白名单入口文件（本次为 `start.ps1`），建议以 0.3.2 补丁修复后签署 P1，详见 §9 与 [P1-FINAL-ACCEPTANCE.md](<P1-FINAL-ACCEPTANCE.md>) §5。**
 
 报告日期：2026-10-10。所有数字与路径来自本次真实执行记录；未执行或被阻塞的项目单列，不计为通过。
 
@@ -244,7 +246,7 @@ SetNamedSecurityInfoW failed (Win32 5): grantWrite(<workspace>)
 
 ---
 
-## 7. 真实 Desktop 验收（已授权，部分完成）
+## 7. 真实 Desktop 验收（已授权，已完成）
 
 用户于本次会话中明确授权「直接升级当前 Desktop profile」。执行记录：
 
@@ -257,9 +259,22 @@ SetNamedSecurityInfoW failed (Win32 5): grantWrite(<workspace>)
 | 用户数据 | 两个 storage 文件 SHA256 与升级前完全一致 | PASS | `upgrade-actions-live.json` |
 | 真实 Desktop 用户入口 | 设置导航实测只剩 **一个** `Wish Willow`（`Wish Willow · P0`/`· P1` 已消失） | PASS | `desktop/desktop-settings.json` |
 | 真实 Desktop 面板 | 面板控件在真实 Desktop 窗口中渲染（`ww-app`/`ww-product-list`/`ww-title`/`ww-legacy-*` 等 151 元素） | PASS（渲染） | `desktop/desktop-wish-willow.json`、`desktop/desktop-wish-willow.png` |
-| 面板数据加载 | **未通过**：Host 侧旧 row 仍在内存中（`include:wish-willow-p0`, `fiberPhase: active`），新 row 需重启才生效，面板显示「操作失败…」 | 已知阻塞 | `desktop/desktop-panel-check.json` |
+| 面板数据加载（重启前） | 未通过：Host 侧旧 row 仍在内存中（`include:wish-willow-p0`, `fiberPhase: active`），面板显示「操作失败…」 | 已知阻塞（`restart-required`） | `desktop/desktop-panel-check.json` |
 
-**结论：Desktop 已完成安装级升级且用户入口已统一，但「面板可用 + 真实 Agent 执行」需要在重启 Desktop 后复验。** 这属于 `application: restart-required` 的已知语义，不是产品缺陷；本次会话语义上无法自行重启（当前会话运行在该 Host 内），因此交由用户重启后继续（步骤见 `docs/P1-FINAL-ACCEPTANCE.md` 附录）。
+### 7.1 重启后复验（2026-10-10 21:29 重启，21:30–21:46 执行）— 全部通过
+
+| 检查 | 结果 | 证据 |
+|---|---|---|
+| 运行中的 Host 已加载统一 0.3.1 | PASS：唯一 Bundle `dsh-wish-willow@0.3.1`，行 `{rowId: wish-willow, entryId: include:wish-willow}`；`Config.listConfigs` 只返回该行 | `desktop-after-restart/plugin-inventory-after.json` |
+| 只有一个入口 | PASS：设置导航 `通用设置/模型/内置插件/Agent 预设/Wish Willow` | `01-settings-nav.json` |
+| 面板加载真实历史数据、无错误 | PASS：`errorElement=false`；概览「已交付 / 修订号 32 / 0.2.0 · 正式交付 11:18:09Z」；runs=2、evidence=11、versions=2、旧 P0 产品 2 个 | `04-panel-after-restart.json`、`04-panel-after-restart.png` |
+| 经 UI 创建产品并提交愿望 | PASS：草稿 rev1 → 提交 → 执行中（rev3、runs=1、`0.1.0 · 计划中`） | `09-product-created.json`、`11-wish-submitted.json` |
+| 真实 Agent 交付 | PASS：`[P1 DESKTOP RESTART TEST] Hello World 静态页` → **已交付**（rev 18、`0.1.0 · 正式交付 13:43:22Z`、evidence=6、tasks=8） | `18-panel-settled.json`、`run-progress.jsonl` |
+| 重开面板状态恢复 | PASS（面板关闭后重新进入，状态与交付结果完整重现） | `18-panel-settled.json` |
+| 该轮独立复验 | 11 PASS / 1 FAIL：软件启动、HTTP、构建门禁、Release 元数据、原产品不变性均通过；**快照缺少入口脚本 `start.ps1`**（缺陷 F1，见 §9） | `20-desktop-delivery-verification.json` |
+| 原产品未被改动 | PASS：revision 32、两个 Release 时间戳（11:11:19Z / 11:18:09Z）不变 | 同上 |
+
+**结论：Desktop 侧验收完成。** 该轮真实运行使用 `command` / `deepseek/deepseek-v4.1-flash`（用户 Desktop 配置的 DeepSeek V4.1 Flash），22 次模型调用 / 31 次工具调用 / 0 失败 / 590,047 输入 + 49,602 输出 tokens / 487,090 ms。
 
 ---
 
@@ -270,9 +285,10 @@ SetNamedSecurityInfoW failed (Win32 5): grantWrite(<workspace>)
 | 隔离 Web 轮次 1（首次，环境 ACL 失败） | failed（无交付） | 21 | 33 | 7 | 67,979 | 20,853 | ~60 s |
 | 隔离 Web 轮次 1（修复环境后） | 0.1.0 Released | 31 | 35 | 2 | 94,535 | 22,032 | 106,430 ms |
 | 隔离 Web 轮次 2 | 0.2.0 Released | 35 | 44 | 1 | 200,245 | 23,636 | 119,901 ms |
-| **合计** | 2 次交付 | **87** | **112** | **10** | **362,759** | **66,521** | ~5 分钟模型时间 |
+| 真实 Desktop 轮次（重启后） | 0.1.0 Released | 22 | 31 | 0 | 590,047 | 49,602 | 487,090 ms |
+| **合计** | **3 次交付** | **109** | **143** | **10** | **952,806** | **116,123** | ~12 分钟模型时间 |
 
-（tokens 为 DSH 会话统计口径，非账单金额。用户参与的重大决策：2 次 — Desktop 升级授权、是否推送 GitHub。）
+（tokens 为 DSH 会话统计口径，非账单金额。用户参与的重大决策：3 次 — Desktop 升级授权、是否推送 GitHub、本次「仅执行附录 A 复验」的边界确认。）
 
 防失控机制全部生效：步数上限 60、运行时限 900,000 ms、ChangeSet 重试上限 3、失败/待确认状态可见、无证据不可交付。
 
@@ -280,30 +296,38 @@ SetNamedSecurityInfoW failed (Win32 5): grantWrite(<workspace>)
 
 ## 9. 限制与已知问题
 
-1. **Desktop 面板需重启后可用**（见 §7）；这是本次唯一未完成的验收动作。
-2. **统一 Bundle 与旧 companion Bundle 不可同时安装**：两者都会注册 `wishWillowP1` / 提供相同 Slot，属于重复身份；迁移手册要求在安装统一 Bundle 前先移除旧 P1 Bundle（本次已按此顺序执行）。
-3. **单写入 Host 限制不变**：JSON 后端没有跨进程写锁，Desktop 与 Web（或任何两个 Host）不得共写同一 storage root。本次 Web 验收使用完全隔离的 home，未做共写实验。
-4. **UI 自动化方式**：Web 端用 CDP 真实输入事件（Playwright 同路径）而非人工手点；Desktop 端用 UIA（Expand/Invoke/坐标点击 + PrintWindow 截图）。两者都不使用产品 RPC 或 mock 页面，但仍不等于人工验收。
-5. **旧 P1 目录残留**：live profile 的 `node_modules/dsh-wish-willow-p1` 目录仍存在（已不在 bundles 列表中，不会被加载）；`pnpm` 会在下次操作时清理。
-6. **未覆盖平台**：仅 Windows 11 + 本机 Chrome；未验证 macOS/Linux、其它 DSH 版本、其它浏览器引擎。
-7. **未实现（按阶段边界）**：P2 独立 Reviewer/质量门禁、P3 跨模型接管与调度、云部署与发布基础设施。
+1. **F1（本次新发现的真实缺陷，未修复）：交付快照会静默丢弃扩展名不在白名单内的文件。** Desktop 那轮的启动脚本 `start.ps1`（9,075 bytes）未进入不可覆盖快照，快照因此无法复现交付物本身。根因：`packages/p1/src/artifacts.js:6` 的扩展名白名单不含 `.ps1`，第 24 行直接 `continue`；manifest 仍自洽，Host 的「存在可运行源码」门禁因 `index.html` 通过，故不会报警。影响范围是入口为非白名单扩展名的交付；Web 两轮（纯 JS/HTML/CSS/MD）未受影响。修复需新版本 + 重新打包 + 重新安装 + 重启，属新变更，本次未执行。详见 `docs/P1-FINAL-ACCEPTANCE.md` §5。
+2. **Desktop 面板重启前不可用**（`application: restart-required` 的已知语义）：本次已由用户重启并在重启后完成复验（§7.1）。
+3. **统一 Bundle 与旧 companion Bundle 不可同时安装**：两者都会注册 `wishWillowP1` / 提供相同 Slot，属于重复身份；迁移手册要求在安装统一 Bundle 前先移除旧 P1 Bundle（本次已按此顺序执行）。
+4. **单写入 Host 限制不变**：JSON 后端没有跨进程写锁，Desktop 与 Web（或任何两个 Host）不得共写同一 storage root。本次 Web 验收使用完全隔离的 home，未做共写实验。
+5. **UI 自动化方式**：Web 端用 CDP 真实输入事件（Playwright 同路径）而非人工手点；Desktop 端用 UIA（ExpandCollapse/Invoke/ValuePattern/坐标点击 + PrintWindow 截图）。两者都不使用产品 RPC 或 mock 页面，但仍不等于人工验收。
+6. **旧 P1 目录残留**：live profile 的 `node_modules/dsh-wish-willow-p1` 目录仍存在（已不在 bundles 列表中，不会被加载）；`pnpm` 会在下次操作时清理。
+7. **未覆盖平台**：仅 Windows 11 + 本机 Chrome；未验证 macOS/Linux、其它 DSH 版本、其它浏览器引擎。
+8. **未实现（按阶段边界）**：P2 独立 Reviewer/质量门禁、P3 跨模型接管与调度、云部署与发布基础设施。
 
 ## 10. 未完成项 / 需用户操作
 
-1. **重启 DSH Desktop**（唯一阻塞项）：重启后统一 Bundle 的 Host row 才会以 `wish-willow` 生效；随后需复验「面板可加载真实产品 + 一次最小真实 Agent 执行」（命令与步骤已备好）。
+1. **F1 修复（建议在关闭 P1 前）**：需要一次代码变更 + 新版本（如 0.3.2）+ 重新打包 + 重新安装 + 重启，属需要你批准的新变更；本次按约定未执行。
 2. 正式验收签署（由用户完成，开发者不得自行宣布验收通过）。
-3. 若需回退：按 `docs/WISH-WILLOW-UPGRADE.md` §4 执行（同样需要一次重启）。
+3. 若需回退：按 `docs/WISH-WILLOW-UPGRADE.md` §4 执行（隔离环境已实测，真实 Desktop profile 上需一次重启）。
+4. 真实 Desktop profile 上的「回退」本次未执行（约定不重装插件）。
 
 ## 11. 是否建议正式关闭 P1
 
-**建议：在完成 Desktop 重启复验后关闭 P1。** 依据：A/B/C/D/F/G/H/I/J 已通过实际验收；K 的隔离升级与真实 profile 安装级升级已验证，仅剩「重启后 Desktop 面板可用性」这一可复现动作；无未解决的 P1 代码缺陷。不进入 P2。
+**建议：先以一次 0.3.2 补丁修复 F1，再正式关闭 P1；若你决定接受 F1 为已知遗留缺陷，则当前证据已足以关闭 P1。**
+
+依据：
+
+- A/B/C/D/E/F/G/H/J 已通过实际验收；K 的升级方向（隔离三场景 + 真实 Desktop profile）与回退方向（隔离实测）均已验证；真实 Desktop 重启后复验完成（单入口、真实数据、经 UI 发起真实 Agent 并交付、重开面板状态恢复）。
+- 唯一未修复项是 F1（交付快照缺 `start.ps1`）：它不影响 UI 链路与软件在工作目录中的真实可运行性，但使该轮交付的「不可覆盖快照」无法复现启动方式，属于真实缺陷。修复涉及代码变更 + 新版本 + 重新打包 + 重新安装 + 重启，需要你的批准。
+- 本 Agent 不自行宣布验收通过；不进入 P2。是否关闭 P1 由你决定。
 
 ## 12. Git 与产物
 
 | 项目 | 值 |
 |---|---|
 | 分支 | `p1/unified-bundle`（起点 `9ed8016`），已推送 |
-| 提交 | `693fe17`（`feat(p1): ship the unified Wish Willow bundle 0.3.1 with real acceptance evidence`）; 已推送 `main` 与 `p1/unified-bundle` |
+| 提交 | `693fe17`（交付内容）、`be941c1`、`ec17ca0`（验收记录补记）+ 本次「Desktop 重启后复验」提交；`main` 与 `p1/unified-bundle` 保持同一提交 |
 | 可安装产物 | `artifacts/dsh-wish-willow-0.3.1.tgz`，134,687 bytes，SHA256 `0e54729ca7ecb57660c46adae92fabb6787f445e31e6ac7b7deff98bc1863e16` |
 | 构建命令 | `node scripts/check.mjs && node --test tests/*.test.mjs tests/integration/*.test.mjs && pnpm pack --pack-destination artifacts` |
 | 回退产物 | `artifacts/dsh-wish-willow-0.1.0-p0.1.tgz`、`artifacts/dsh-wish-willow-p1-0.2.0-p1.1.tgz` |
@@ -315,4 +339,11 @@ SetNamedSecurityInfoW failed (Win32 5): grantWrite(<workspace>)
 - 文档定稿后重新打包使同一版本下的产物内容发生变化；官方插件管理器以 `ambiguous-install` **保护性拒绝**在同一版本下替换已安装内容（本次实测，未改动 profile）。因此最终发布产物版本提升为 **0.3.1**。
 - 0.3.1 与 0.3.0 构建的**运行时代码逐文件 SHA256 一致**（`client.js`、`cordis.patch.yml`、`src/**`、`packages/p1/src/**`）；唯一差异是 `package.json` 版本号与界面上的版本标签（`client.js` 的 `stageNote`）。
 - 最终产物已重新跑通构建校验与 50 项回归，并重新安装到隔离 Web home 做了一次启动与面板复验（`docs/evidence/p1-unification/web/final-031-panel.json`）。
-- 两种版本均以 tgz 形式提供；真实 Desktop profile 现为 0.3.1（依赖 `file:G:/dsh/Wish-Willow/artifacts/dsh-wish-willow-0.3.1.tgz`），等待一次重启生效。
+- 两种版本均以 tgz 形式提供；真实 Desktop profile 现为 0.3.1（依赖 `file:G:/dsh/Wish-Willow/artifacts/dsh-wish-willow-0.3.1.tgz`），已于 2026-10-10 21:29 重启并完成复验（§7.1）。
+
+### 12.2 本次「Desktop 重启后复验」新增的脚本与证据
+
+- `tests/live-probe-unified/desktop-panel.ps1`：以 UIA 幂等重开设置面板并输出精简面板状态（`panel` 动作）。
+- `tests/live-probe-unified/verify-desktop-delivery.mjs`：独立进程复验 Desktop 那轮交付（快照 manifest、快照完整性、PowerShell 语法、README 记录的启动命令与烟测、404/403、端口释放、Release 元数据、原产品不变性）。
+- 证据目录 `docs/evidence/p1-unification/desktop-after-restart/`（含 20 份 JSON/PNG 与 `run-progress.jsonl` 运行时间线）。
+- 证据目录 `docs/evidence/p1-unification/upgrade/rollback-web/`：隔离回退（统一 → 双 Bundle）实测记录。

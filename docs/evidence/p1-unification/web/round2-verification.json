@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-10T12:52:01.312Z",
+  "at": "2026-10-10T13:49:53.629Z",
   "round": 2,
   "deliveryRoot": "C:\\Users\\wangw\\AppData\\Local\\dsh-wish-willow-acceptance\\home-unified\\wish-willow\\deliveries\\b41b8242-db6c-416f-bd27-85110219d5d9\\1e79d8f8-c695-4df4-968d-feb39246f734\\source",
   "workspace": "C:\\Users\\wangw\\AppData\\Local\\dsh-wish-willow-acceptance\\home-unified\\wish-willow\\projects\\b41b8242-db6c-416f-bd27-85110219d5d9",
@@ -24,7 +24,7 @@
       "detail": "node todo-test-runner.js exit=0"
     },
     {
-      "name": "run: documented start command serves the real page over HTTP",
+      "name": "run: documented start command 'node server.js' serves the real page over HTTP",
       "ok": true,
       "detail": "status=200 bytes=2361"
     },
@@ -108,6 +108,8 @@
   "http": {
     "status": 200,
     "bytes": 2361,
+    "startCommand": "node server.js",
+    "expectText": null,
     "pageHasPriority": true
   },
   "releases": [

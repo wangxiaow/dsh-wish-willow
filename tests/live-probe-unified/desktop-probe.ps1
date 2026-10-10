@@ -1,5 +1,5 @@
 param(
-  [ValidateSet('find','inspect','capture','activate','click-name','click-id','expand','invoke-name','value','keys','focused','tab-to','dump-ids')][string]$Action='inspect',
+  [ValidateSet('find','inspect','capture','activate','click-name','click-id','expand','invoke-name','value','keys','focused','tab-to','panel','dump-ids')][string]$Action='inspect',
   [string]$Id='', [string]$Name='', [string]$Value='', [string]$Keys='', [string]$Control='', [string]$Label='desktop',
   [int]$TimeoutMs=20000, [string]$OutDir=''
 )
@@ -136,6 +136,43 @@ if($Action -eq 'tab-to'){
   [System.Windows.Forms.SendKeys]::SendWait('{TAB}'); $step++; Start-Sleep -Milliseconds 120
  }
  Fail "tab-to: '$Name' not reached after $step TABs"
+}
+if($Action -eq 'panel'){
+ $all=Elements
+ $ids=@{}
+ foreach($el in $all){ $c=$el.Current; if($c.AutomationId -and -not $ids.ContainsKey($c.AutomationId)){ $ids[$c.AutomationId]=$c.Name } }
+ $valueOf = { param($key) if($ids.ContainsKey($key)){ $ids[$key] } else { $null } }
+ $texts=@($all | ForEach-Object { $_.Current.Name } | Where-Object { $_ })
+ $summary=[ordered]@{}
+ $summary.at=(Get-Date -Format o)
+ $summary.panelPresent=$ids.ContainsKey('ww-app')
+ $summary.errorElement=$ids.ContainsKey('ww-error')
+ $summary.errorText=(& $valueOf 'ww-error')
+ $summary.notice=(& $valueOf 'ww-notice')
+ $summary.productTitle=(& $valueOf 'ww-product-title')
+ $summary.status=(& $valueOf 'ww-status-label')
+ $summary.revision=(& $valueOf 'ww-revision')
+ $summary.version=(& $valueOf 'ww-version')
+ $summary.startCommand=(& $valueOf 'ww-start-command')
+ $summary.suggestion=(& $valueOf 'ww-suggestion')
+ $summary.buildStatus=(& $valueOf 'ww-build-status')
+ $summary.taskCount=@($all | Where-Object { $_.Current.AutomationId -like 'ww-task-*' }).Count
+ $summary.taskGroups=@($texts | Where-Object { $_ -match '^(待执行|执行中|已完成|失败|阻塞|状态待确认) \(\d+\)$' })
+ $summary.runCount=@($all | Where-Object { $_.Current.AutomationId -like 'ww-run-*' }).Count
+ $summary.evidenceCount=@($all | Where-Object { $_.Current.AutomationId -like 'ww-evidence-*' }).Count
+ $summary.versionCount=@($all | Where-Object { $_.Current.AutomationId -like 'ww-version-*' }).Count
+ $summary.productButtons=@($all | Where-Object { $_.Current.AutomationId -like 'ww-product-*' } | ForEach-Object { $_.Current.Name })
+ $summary.legacyButtons=@($all | Where-Object { $_.Current.AutomationId -like 'ww-legacy-product-*' } | ForEach-Object { $_.Current.Name })
+ $summary.failureTexts=@($texts | Where-Object { $_ -match '操作失败|开发未交付|状态待确认' } | Select-Object -First 5)
+ $summary.focusList=@($all | Where-Object { $_.Current.AutomationId -like 'ww-wish*' -or $_.Current.AutomationId -eq 'ww-submit' } | ForEach-Object { $_.Current.AutomationId })
+ $overview=@($all | Where-Object { $_.Current.AutomationId -eq 'ww-overview' })
+ if($overview.Count -eq 1){
+  $children=@($overview[0].FindAll([System.Windows.Automation.TreeScope]::Descendants,[System.Windows.Automation.Condition]::TrueCondition) | ForEach-Object { $_.Current.Name } | Where-Object { $_ })
+  $summary.overview=$children
+ } else { $summary.overview=@() }
+ $summary | ConvertTo-Json -Depth 5 | Set-Content -Encoding UTF8 (Join-Path $OutDir ($Label+'.json'))
+ $summary | ConvertTo-Json -Depth 5 -Compress
+ exit 0
 }
 if($Action -eq 'inspect' -or $Action -eq 'dump-ids'){
  $all=Elements

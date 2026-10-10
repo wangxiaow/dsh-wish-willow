@@ -1,0 +1,62 @@
+{
+  "at": "2026-10-10T13:53:47.922Z",
+  "storageFile": {
+    "path": "C:\\Users\\wangw\\.dsh\\storages\\wish_willow_p1.json",
+    "bytes": 194358,
+    "sha256": "b936881f9be7bd91ec7688f83e1e3573ef8b29eeee5157abebbcd6bbf9962d09",
+    "note": "changed by design: the acceptance run created one marked test product; the pre-existing records are compared field by field below"
+  },
+  "preExistingProject": {
+    "id": "72e73806-11ac-44f4-b58a-01ff32153e00",
+    "revision": 32,
+    "status": "delivered",
+    "confirmed": [
+      "我想做一个简单的待办事项应用，可以添加任务、标记完成、删除任务。",
+      "给待办事项增加优先级，并且能够按优先级筛选。"
+    ],
+    "versions": [
+      "0.1.0:Released",
+      "0.2.0:Released"
+    ],
+    "releases": [
+      {
+        "releasedAt": "2026-10-10T11:11:19.590Z",
+        "startCommand": "npm start",
+        "snapshotPath": "C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\deliveries\\72e73806-11ac-44f4-b58a-01ff32153e00\\85c5989f-a1df-43d9-bd31-1d24be26839d\\source"
+      },
+      {
+        "releasedAt": "2026-10-10T11:18:09.263Z",
+        "startCommand": "npm start",
+        "snapshotPath": "C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\deliveries\\72e73806-11ac-44f4-b58a-01ff32153e00\\3147cf4c-1191-4907-8096-590f9e2bc1d1\\source"
+      }
+    ],
+    "historyFirst": {
+      "id": "6a871fdc-318f-4b63-a490-381289f6e311",
+      "at": "2026-10-10T11:06:27.069Z",
+      "action": "create-product",
+      "source": {
+        "kind": "user",
+        "ref": "57603622-aae6-4c68-90e7-d9cc70de64d6"
+      },
+      "revision": 1
+    },
+    "historyLength": 32
+  },
+  "acceptanceTestProduct": {
+    "id": "6c3a8ed2-972b-4d09-ab74-6e6dac725a06",
+    "title": "[P1 DESKTOP RESTART TEST] Hello World 静态页",
+    "revision": 18,
+    "status": "delivered",
+    "versions": [
+      "0.1.0:Released"
+    ],
+    "releases": 1,
+    "evidence": 6,
+    "tasks": 8
+  },
+  "expectations": {
+    "revisionUnchanged": true,
+    "releasesUnchanged": true,
+    "confirmedUnchanged": true
+  }
+}
