@@ -1,0 +1,226 @@
+﻿{
+    "at":  "2026-10-10T16:52:56.1710538+08:00",
+    "target":  "BrowserA",
+    "pid":  9908,
+    "handle":  21497424,
+    "action":  "inspect",
+    "name":  "",
+    "id":  "",
+    "value":  "",
+    "keys":  "",
+    "bounds":  "481,187,1935,1057",
+    "label":  "a-whitespace",
+    "elements":  [
+                     {
+                         "type":  "ControlType.Group",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1048,372,189,800"
+                     },
+                     {
+                         "type":  "ControlType.Group",
+                         "name":  "",
+                         "id":  ":rh:",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1060,394,165,24"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "设置",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1072,395,33,21"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "通用设置",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1060,436,165,40"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "模型",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1060,480,165,40"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "内置插件",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1060,524,165,40"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "Agent 预设",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1060,568,165,40"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "Wish Willow · P0",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1060,612,165,40"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "打开配置文件",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1704,392,95,28"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "关闭",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1806,392,29,28"
+                     },
+                     {
+                         "type":  "ControlType.Group",
+                         "name":  "Wish Willow · P0",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1260,426,565,626"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "Wish Willow · P0",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1280,446,525,27"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "独立于 DSH 会话的产品状态。此阶段仅保存数据，不执行自动编程。",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1280,491,489,21"
+                     },
+                     {
+                         "type":  "ControlType.Group",
+                         "name":  "产品列表",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1280,530,221,502"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "新建产品",
+                         "id":  "",
+                         "enabled":  false,
+                         "offscreen":  false,
+                         "bounds":  "1280,530,221,40"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "尚无产品，请创建第一条记录。",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1280,595,193,48"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "产品名称",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1520,542,65,22"
+                     },
+                     {
+                         "type":  "ControlType.Edit",
+                         "name":  "产品名称",
+                         "id":  "ww-title",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1520,569,285,40",
+                         "value":  "   "
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "软件愿望",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1520,620,65,22"
+                     },
+                     {
+                         "type":  "ControlType.Edit",
+                         "name":  "软件愿望",
+                         "id":  "ww-wish",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1520,647,285,141",
+                         "value":  ""
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "手动产品状态",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1520,803,97,22"
+                     },
+                     {
+                         "type":  "ControlType.ComboBox",
+                         "name":  "手动产品状态",
+                         "id":  "ww-status",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1520,830,285,42",
+                         "value":  "草稿"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "保存",
+                         "id":  "",
+                         "enabled":  false,
+                         "offscreen":  false,
+                         "bounds":  "1520,887,59,40"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "重新读取（放弃未保存修改）",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1520,934,235,40"
+                     },
+                     {
+                         "type":  "ControlType.StatusBar",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1520,989,285,27"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "有未保存修改",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1520,991,97,22"
+                     }
+                 ]
+}

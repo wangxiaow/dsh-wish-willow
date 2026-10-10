@@ -1,0 +1,111 @@
+﻿{"at":"2026-10-09T22:26:44.7213267+08:00","action":"expand","label":"desktop","name":"账号菜单","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:26:44.8151738+08:00","action":"capture","label":"desktop-menu","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:26:44.9160688+08:00","action":"inspect","label":"desktop-menu","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:27:32.6300118+08:00","action":"expand","label":"desktop","name":"账号菜单","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:27:32.7542131+08:00","action":"invoke","label":"desktop","name":"设置","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:27:32.7967252+08:00","action":"inspect","label":"desktop-settings","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:27:32.9251264+08:00","action":"capture","label":"desktop-settings","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:28:25.2033269+08:00","action":"inspect","label":"desktop-current","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:28:25.4163054+08:00","action":"capture","label":"desktop-current","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:28:56.1183588+08:00","action":"expand","label":"desktop","name":"账号菜单","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:28:56.2466691+08:00","action":"invoke","label":"desktop","name":"设置","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:28:56.3318806+08:00","action":"invoke","label":"desktop","name":"Wish Willow · P0","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:28:56.3718531+08:00","action":"inspect","label":"desktop-wish-before","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:28:56.5060217+08:00","action":"capture","label":"desktop-wish-before","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:29:42.5264878+08:00","action":"expand","label":"desktop","name":"账号菜单","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:29:42.6662577+08:00","action":"invoke","label":"desktop","name":"设置","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:29:42.7469571+08:00","action":"invoke","label":"desktop","name":"Wish Willow · P0","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:29:42.8251402+08:00","action":"invoke","label":"desktop","name":"新建产品","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:29:42.9035841+08:00","action":"value","label":"desktop","name":"","id":"ww-title","value":"[P0 ACCEPTANCE TEST] Desktop 2026-10-09","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:29:42.9834427+08:00","action":"value","label":"desktop","name":"","id":"ww-wish","value":"独立验收测试数据，不代表正式需求。Native Desktop persistence acceptance.","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:29:43.0234902+08:00","action":"inspect","label":"desktop-draft","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:29:43.1490991+08:00","action":"capture","label":"desktop-draft","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:30:29.0051518+08:00","action":"expand","label":"desktop","name":"账号菜单","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:30:29.1372802+08:00","action":"invoke","label":"desktop","name":"设置","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:30:29.2144041+08:00","action":"invoke","label":"desktop","name":"Wish Willow · P0","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:30:55.1252859+08:00","action":"expand","label":"desktop","name":"","id":"ww-status","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:30:55.2042241+08:00","action":"inspect","label":"desktop-status-options","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:31:41.3157704+08:00","action":"expand","label":"desktop","name":"账号菜单","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:31:41.4470358+08:00","action":"invoke","label":"desktop","name":"设置","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:31:41.5354309+08:00","action":"invoke","label":"desktop","name":"Wish Willow · P0","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:31:41.6146572+08:00","action":"invoke","label":"desktop","name":"新建产品","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:31:41.7043324+08:00","action":"value","label":"desktop","name":"","id":"ww-title","value":"[P0 ACCEPTANCE TEST] Desktop 2026-10-09","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:31:41.7823374+08:00","action":"value","label":"desktop","name":"","id":"ww-wish","value":"独立验收测试数据，不代表正式需求。Native Desktop persistence acceptance.","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:31:41.8619850+08:00","action":"invoke","label":"desktop","name":"保存","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:31:41.9016938+08:00","action":"inspect","label":"desktop-created","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:31:42.0574381+08:00","action":"capture","label":"desktop-created","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:32:25.9921883+08:00","action":"expand","label":"desktop","name":"账号菜单","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:32:26.1300106+08:00","action":"invoke","label":"desktop","name":"设置","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:32:26.2193365+08:00","action":"invoke","label":"desktop","name":"Wish Willow · P0","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:32:59.2692576+08:00","action":"expand","label":"desktop","name":"账号菜单","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:32:59.4070936+08:00","action":"invoke","label":"desktop","name":"设置","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:32:59.4894961+08:00","action":"invoke","label":"desktop","name":"Wish Willow · P0","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:32:59.6203610+08:00","action":"value","label":"desktop","name":"","id":"ww-title","value":"[P0 ACCEPTANCE TEST] Desktop edited","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:32:59.7070060+08:00","action":"value","label":"desktop","name":"","id":"ww-wish","value":"独立验收测试数据；第二次保存。UUID unchanged; revision must increment.","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:32:59.7908099+08:00","action":"invoke","label":"desktop","name":"保存","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:32:59.8313101+08:00","action":"capture","label":"desktop-updated","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:32:59.9509781+08:00","action":"inspect","label":"desktop-updated","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:33:20.5898751+08:00","action":"expand","label":"desktop","name":"账号菜单","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:33:20.7318396+08:00","action":"invoke","label":"desktop","name":"设置","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:33:20.8196833+08:00","action":"invoke","label":"desktop","name":"Wish Willow · P0","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:33:20.9025255+08:00","action":"focus","label":"desktop","name":"","id":"ww-status","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:33:21.0400210+08:00","action":"keys","label":"desktop","name":"","id":"","value":"","keys":"{HOME}{DOWN}{TAB}","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:33:21.1185331+08:00","action":"invoke","label":"desktop","name":"保存","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:33:21.1608941+08:00","action":"capture","label":"desktop-status-saved","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:33:21.2537957+08:00","action":"inspect","label":"desktop-status-saved","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:34:00.8364076+08:00","action":"expand","label":"desktop","name":"账号菜单","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:34:00.9835822+08:00","action":"invoke","label":"desktop","name":"设置","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:34:01.0955809+08:00","action":"invoke","label":"desktop","name":"Wish Willow · P0","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:34:01.1921211+08:00","action":"invoke","label":"desktop","name":"重新读取（放弃未保存修改）","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:34:01.2341615+08:00","action":"capture","label":"desktop-reloaded","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:34:01.3365421+08:00","action":"inspect","label":"desktop-reloaded","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:34:01.6322296+08:00","action":"invoke","label":"desktop","name":"通用设置","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:34:01.6719859+08:00","action":"capture","label":"desktop-general","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:34:01.7400140+08:00","action":"inspect","label":"desktop-general","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:35:13.0587753+08:00","action":"expand","label":"desktop","name":"账号菜单","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:35:13.1868109+08:00","action":"invoke","label":"desktop","name":"设置","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:35:13.2724385+08:00","action":"invoke","label":"desktop","name":"通用设置","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:35:13.3566516+08:00","action":"invoke","label":"desktop","name":"浅色","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:35:13.4485852+08:00","action":"invoke","label":"desktop","name":"Wish Willow · P0","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:35:13.4916317+08:00","action":"capture","label":"desktop-light","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:35:13.6439832+08:00","action":"invoke","label":"desktop","name":"通用设置","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:35:13.7271285+08:00","action":"invoke","label":"desktop","name":"深色","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:35:13.8333881+08:00","action":"invoke","label":"desktop","name":"Wish Willow · P0","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:35:13.8765607+08:00","action":"capture","label":"desktop-dark","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:35:13.9923873+08:00","action":"invoke","label":"desktop","name":"通用设置","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:35:14.0746040+08:00","action":"invoke","label":"desktop","name":"跟随系统","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:35:14.1151628+08:00","action":"capture","label":"desktop-theme-restored","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:35:14.2524505+08:00","action":"invoke","label":"desktop","name":"Wish Willow · P0","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-09T22:39:01.9206807+08:00","action":"expand","label":"desktop","name":"账号菜单","id":"","value":"","keys":"","x":0,"y":0,"pid":31400}
+{"at":"2026-10-10T07:55:01.7240891+08:00","action":"activate","label":"desktop","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:55:01.8200563+08:00","action":"inspect","label":"restart-window","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:55:01.9575505+08:00","action":"capture","label":"restart-window","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:55:30.9263902+08:00","action":"expand","label":"desktop","name":"账号菜单","id":"","value":"","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:55:31.0579997+08:00","action":"invoke","label":"desktop","name":"设置","id":"","value":"","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:55:31.1514198+08:00","action":"invoke","label":"desktop","name":"Wish Willow · P0","id":"","value":"","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:55:31.3314069+08:00","action":"wait-ready","label":"desktop","name":"","id":"","value":"[P0 ACCEPTANCE TEST] Desktop edited","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:55:31.3683823+08:00","action":"capture","label":"after-restart-wish","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:55:31.4670135+08:00","action":"inspect","label":"after-restart-wish","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:56:29.3726391+08:00","action":"invoke","label":"desktop","name":"通用设置","id":"","value":"","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:56:29.6842090+08:00","action":"invoke","label":"desktop","name":"浅色","id":"","value":"","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:56:29.7980143+08:00","action":"invoke","label":"desktop","name":"Wish Willow · P0","id":"","value":"","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:56:29.9842923+08:00","action":"wait-ready","label":"desktop","name":"","id":"","value":"[P0 ACCEPTANCE TEST] Desktop edited","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:56:30.0212922+08:00","action":"capture","label":"desktop-light-ready","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:56:30.1632920+08:00","action":"invoke","label":"desktop","name":"通用设置","id":"","value":"","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:56:30.2588038+08:00","action":"invoke","label":"desktop","name":"深色","id":"","value":"","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:56:30.3762317+08:00","action":"invoke","label":"desktop","name":"Wish Willow · P0","id":"","value":"","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:56:30.5933467+08:00","action":"wait-ready","label":"desktop","name":"","id":"","value":"[P0 ACCEPTANCE TEST] Desktop edited","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:56:30.6353424+08:00","action":"capture","label":"desktop-dark-ready","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:56:30.8106764+08:00","action":"invoke","label":"desktop","name":"通用设置","id":"","value":"","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:56:30.9331941+08:00","action":"invoke","label":"desktop","name":"跟随系统","id":"","value":"","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:56:31.0440472+08:00","action":"invoke","label":"desktop","name":"Wish Willow · P0","id":"","value":"","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:56:31.2230439+08:00","action":"wait-ready","label":"desktop","name":"","id":"","value":"[P0 ACCEPTANCE TEST] Desktop edited","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:56:53.0323009+08:00","action":"invoke","label":"desktop","name":"内置插件","id":"","value":"","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:56:53.1463596+08:00","action":"inspect","label":"desktop-plugin-inventory","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:56:53.3705449+08:00","action":"capture","label":"desktop-plugin-inventory","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:57:09.7525287+08:00","action":"value","label":"desktop","name":"搜索插件","id":"","value":"wish","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:57:09.8362037+08:00","action":"inspect","label":"desktop-wish-inventory","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:57:09.9843643+08:00","action":"capture","label":"desktop-wish-inventory","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:57:34.4375933+08:00","action":"expand","label":"desktop","name":"Wish Willow · P0, include:wish-willow-p0, 已启用","id":"","value":"","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:57:34.5165930+08:00","action":"inspect","label":"desktop-wish-runtime-details","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":5932}
+{"at":"2026-10-10T07:57:34.6807979+08:00","action":"capture","label":"desktop-wish-runtime-details","name":"","id":"","value":"","keys":"","x":0,"y":0,"pid":5932}

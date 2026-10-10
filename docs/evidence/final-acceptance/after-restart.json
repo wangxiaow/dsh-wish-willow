@@ -1,0 +1,29 @@
+{
+  "observedAt": "2026-10-09T23:55:02.309828+00:00",
+  "storagePath": "C:\\Users\\wangw\\.dsh\\storages\\wish_willow.json",
+  "sha256": "dbbb88bfb5c4d723f6803f63f8f942ef0b48a22dd4238c0ecec0362c9b9ecbcc",
+  "historicalProductUnchanged": true,
+  "historicalProduct": {
+    "title": "[P0 TEST] Wish Willow 加载验证",
+    "wish": "自动化测试数据，不代表用户需求。验证独立产品存储与重新加载恢复。 保存成功。",
+    "status": "draft",
+    "id": "61dce9a9-7ec2-414f-84a2-7b5f3f7e11bf",
+    "schemaVersion": 1,
+    "revision": 2,
+    "createdAt": "2026-10-09T13:41:24.661Z",
+    "updatedAt": "2026-10-09T13:41:24.667Z"
+  },
+  "acceptanceProducts": [
+    {
+      "title": "[P0 ACCEPTANCE TEST] Desktop edited",
+      "wish": "独立验收测试数据；第二次保存。UUID unchanged; revision must increment.",
+      "status": "confirmed",
+      "id": "7dee98d3-e9f1-4441-a917-8a5175967fc8",
+      "schemaVersion": 1,
+      "revision": 3,
+      "createdAt": "2026-10-09T14:31:41.867Z",
+      "updatedAt": "2026-10-09T14:33:21.122Z"
+    }
+  ],
+  "productCount": 2
+}

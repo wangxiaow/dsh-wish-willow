@@ -1,0 +1,21 @@
+{
+  "observedAt": "2026-10-09T23:53:56.936Z",
+  "credentialsRead": false,
+  "authenticationBypassed": false,
+  "results": [
+    {
+      "url": "http://127.0.0.1:19387/",
+      "method": "GET",
+      "status": 401,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:19387/api/wishWillow/list",
+      "method": "POST",
+      "status": 401,
+      "contentType": null
+    }
+  ],
+  "browserDomE2E": "UNVERIFIED: no authenticated controllable browser target obtained",
+  "note": "An attempted Chrome window launch did not yield an identifiable DSH target. HTTP checks do not represent DOM E2E."
+}

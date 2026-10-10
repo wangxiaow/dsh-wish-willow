@@ -3,151 +3,427 @@ window.__ModuleLoader__.load({
   factory(require) {
     const React = require('react');
     const h = React.createElement;
-    const NS = 'wishWillow.p0';
+    const NS = 'wishWillow';
     const dictionaries = {
       zh: {
-        title: 'Wish Willow · P0', description: '独立于 DSH 会话的产品状态。此阶段仅保存数据，不执行自动编程。',
-        name: '产品名称', wish: '软件愿望', status: '手动产品状态', draft: '草稿', confirmed: '已确认', archived: '已归档',
-        new: '新建产品', save: '保存', saving: '处理中…', reload: '重新读取（放弃未保存修改）',
-        loading: '读取中…', empty: '尚无产品，请创建第一条记录。', unsaved: '有未保存修改', saved: '已持久化保存',
-        conflict: '此产品已被其他页面修改。你的草稿已保留，请重新读取后再编辑。',
-        invalid: '请检查名称（1–120 字符）与愿望（最多 10000 字符）。', failure: '操作失败；草稿已保留。请检查连接或插件状态后重试。',
-        id: '稳定产品 ID', revision: '修订号', updated: '更新时间', productList: '产品列表',
+        title: 'Wish Willow', description: '一个入口：许愿、执行、证据与交付。提交自然语言愿望，由真实 DSH Agent 规划、开发、构建、测试并交付可运行软件；产品状态独立于会话并持久保存。',
+        productList: '产品', newProduct: '新建产品', name: '产品名称', wish: '软件愿望', create: '创建产品', creating: '创建中…',
+        reload: '重新读取', loading: '读取中…', empty: '尚无产品。请先新建产品并写下你的愿望。',
+        goal: '产品目标', currentWish: '当前愿望', workspace: '工作目录', revision: '修订号', productStatus: '产品状态',
+        requirements: '已确认需求', inferredRequirements: 'Agent 推断需求（未确认）', constraints: '核心约束', decisions: '需要你决策的事项',
+        confirmed: '用户确认', inferred: 'Agent 推断', accept: '接受', reject: '拒绝', accepted: '已接受', rejected: '已拒绝', proposed: '待决策', major: '重大', ordinary: '普通',
+        plan: '当前任务及执行状态', pending: '待执行', running: '执行中', completed: '已完成', failed: '失败', blocked: '阻塞', uncertain: '状态待确认',
+        draft: '草稿', delivered: '已交付',
+        taskId: '任务 ID', category: '类别', technical: '技术类', experience: '体验类', phase: '阶段', dependencies: '依赖', result: '实际结果', evidence: '证据', noTasks: '尚无任务',
+        agentRuns: 'Agent 执行记录', noRuns: '尚无执行记录', provider: 'Provider', model: '模型', session: 'Session ID', started: '开始', ended: '结束',
+        modelCalls: '模型调用', toolCalls: '工具调用', failures: '记录失败', tokens: 'Tokens（输入/输出）', duration: '耗时', reason: '原因', notAvailable: '—',
+        outcomes: '构建、测试与交付证据', build: '最近构建', tests: '测试状态', noBuild: '尚无构建记录', exitCode: '退出码', evidenceKinds: '证据类型',
+        artifacts: '交付产物', snapshot: '不可覆盖源码快照', noArtifacts: '尚无产物', recordedAt: '记录时间', code: '源码', passed: '通过', failedBuild: '失败', passedMark: '✓', missingMark: '—',
+        versionHistory: '版本历史与运行方式', version: '当前版本', startCommand: '启动方式', releasedAt: '交付时间', summary: '交付说明', noRelease: '尚未交付版本', planned: '计划中', built: '已构建', released: '正式交付', sourcePath: '源码目录', snapshotPath: '快照目录',
+        submit: '提交下一轮愿望', submitting: '已提交，正在执行…', wishPlaceholder: '用自然语言描述你希望这个软件接下来变成什么样；已确认需求与历史版本会保留。',
+        retry: '重试本次变更', retryAck: '我已检查工作目录并确认可以重试（可能有未知副作用）', retrying: '已提交重试…', cancel: '取消执行',
+        failedExplanation: '本次执行失败：不会产生新版本，也不会改写已交付历史。可查看失败任务后重试，或提交修订愿望。',
+        uncertainExplanation: 'Host 在执行中中断。为避免重复副作用，系统没有自动重跑：请检查工作目录，确认后再重试。',
+        noEvidence: '没有真实构建、测试与运行证据时不会标记为已交付。',
+        legacyArea: '旧版 P0 产品（独立存储，可编辑与升级）', legacyHint: 'P0 数据保存在独立 Domain（wish_willow）中，字节不变。可在此直接编辑，或按 UUID 导入到统一产品状态继续演化。',
+        legacyEmpty: '没有旧版 P0 产品。', importP0: '导入到统一产品', imported: '已导入（再次导入返回同一产品）', legacyNew: '新建旧版 P0 产品', legacySave: '保存 P0 产品', legacySaved: 'P0 产品已保存',
+        legacyTitle: 'P0 产品名称', legacyWish: 'P0 软件愿望', legacyStatus: 'P0 手动状态', statusDraft: '草稿', statusConfirmed: '已确认', statusArchived: '已归档',
+        conflict: '此产品已被其他页面修改。你的草稿已保留，请重新读取后再编辑。', failure: '操作失败；草稿已保留。请检查连接或插件状态后重试。',
+        invalid: '请检查名称（1–120 字符）与愿望（1–10000 字符）。', busy: '当前变更尚未结束。请先等待、取消或处理，再提交新的愿望。',
+        saved: '已持久化保存', submitted: '愿望已提交，Agent 开始执行', retried: '已提交重试', cancelled: '已请求取消执行', decided: '决策已保存', unsaved: '有未保存修改',
+        suggestion: { deliver: '已交付。可用“启动方式”在本地运行；如需改动，继续提交新的愿望。', running: 'Agent 正在执行。看板会自动刷新。', blocked: '存在重大决策，需要你先接受或拒绝后才能继续。', failed: '上次执行失败，请查看失败任务后重试或提交修订愿望。', uncertain: '执行状态待确认，请检查工作目录后显式重试。', draft: '尚未提交愿望。写下愿望即可开始。' },
+        language: '语言', stageNote: '统一 Bundle 0.3.0：P0 与 P1 能力来自同一安装单元。',
       },
       en: {
-        title: 'Wish Willow · P0', description: 'Product state independent of DSH sessions. This phase stores data only; no autonomous coding.',
-        name: 'Product name', wish: 'Software wish', status: 'Manual product status', draft: 'Draft', confirmed: 'Confirmed', archived: 'Archived',
-        new: 'New product', save: 'Save', saving: 'Working…', reload: 'Reload (discard unsaved edits)',
-        loading: 'Loading…', empty: 'No products yet. Create your first record.', unsaved: 'Unsaved edits', saved: 'Durably saved',
-        conflict: 'Another page changed this product. Your draft is preserved; reload before editing again.',
-        invalid: 'Check the name (1–120 characters) and wish (up to 10000 characters).', failure: 'Operation failed; draft preserved. Check connection or plugin status and retry.',
-        id: 'Stable product ID', revision: 'Revision', updated: 'Updated', productList: 'Products',
+        title: 'Wish Willow', description: 'One entry point: wish, execution, evidence and delivery. Submit a natural-language wish; a real DSH Agent plans, codes, builds, tests and delivers running software. Product state persists independently of sessions.',
+        productList: 'Products', newProduct: 'New product', name: 'Product name', wish: 'Software wish', create: 'Create product', creating: 'Creating…',
+        reload: 'Reload', loading: 'Loading…', empty: 'No products yet. Create one and write your wish.',
+        goal: 'Product goal', currentWish: 'Current wish', workspace: 'Workspace', revision: 'Revision', productStatus: 'Product status',
+        requirements: 'Confirmed requirements', inferredRequirements: 'Agent-inferred (unconfirmed)', constraints: 'Core constraints', decisions: 'Decisions needed from you',
+        confirmed: 'Confirmed by user', inferred: 'Agent-inferred', accept: 'Accept', reject: 'Reject', accepted: 'Accepted', rejected: 'Rejected', proposed: 'Proposed', major: 'Major', ordinary: 'Ordinary',
+        plan: 'Current tasks and execution status', pending: 'Pending', running: 'Running', completed: 'Completed', failed: 'Failed', blocked: 'Blocked', uncertain: 'Unconfirmed',
+        draft: 'Draft', delivered: 'Delivered',
+        taskId: 'Task ID', category: 'Category', technical: 'Technical', experience: 'Experience', phase: 'Phase', dependencies: 'Depends on', result: 'Actual result', evidence: 'Evidence', noTasks: 'No tasks yet',
+        agentRuns: 'Agent runs', noRuns: 'No runs yet', provider: 'Provider', model: 'Model', session: 'Session ID', started: 'Started', ended: 'Ended',
+        modelCalls: 'Model calls', toolCalls: 'Tool calls', failures: 'Recorded failures', tokens: 'Tokens (in/out)', duration: 'Duration', reason: 'Reason', notAvailable: '—',
+        outcomes: 'Build, test and delivery evidence', build: 'Latest build', tests: 'Test status', noBuild: 'No build yet', exitCode: 'Exit code', evidenceKinds: 'Evidence kinds',
+        artifacts: 'Deliverables', snapshot: 'Immutable source snapshot', noArtifacts: 'No artifacts yet', recordedAt: 'Recorded at', code: 'Source', passed: 'passed', failedBuild: 'failed', passedMark: '✓', missingMark: '—',
+        versionHistory: 'Version history and how to run', version: 'Current version', startCommand: 'Start command', releasedAt: 'Released at', summary: 'Delivery summary', noRelease: 'No release yet', planned: 'Planned', built: 'Built', released: 'Released', sourcePath: 'Source directory', snapshotPath: 'Snapshot directory',
+        submit: 'Submit the next wish', submitting: 'Submitted; running…', wishPlaceholder: 'Describe in natural language what this software should become next; confirmed requirements and released history are preserved.',
+        retry: 'Retry this change', retryAck: 'I inspected the workspace and confirm retry (side effects may be unknown)', retrying: 'Retry submitted…', cancel: 'Cancel run',
+        failedExplanation: 'This run failed: no new version is produced and released history is unchanged. Inspect failed tasks, then retry or submit a revised wish.',
+        uncertainExplanation: 'The Host was interrupted mid-run. Nothing was re-run automatically to avoid duplicate side effects; inspect the workspace, then retry explicitly.',
+        noEvidence: 'Nothing is marked delivered without real build, test and run evidence.',
+        legacyArea: 'Legacy P0 products (separate storage, editable and upgradable)', legacyHint: 'P0 data lives in its own Domain (wish_willow) with unchanged bytes. Edit it here, or import by UUID into the unified product state to continue evolving it.',
+        legacyEmpty: 'No legacy P0 products.', importP0: 'Import into unified products', imported: 'Imported (importing again returns the same product)', legacyNew: 'New legacy P0 product', legacySave: 'Save P0 product', legacySaved: 'P0 product saved',
+        legacyTitle: 'P0 product name', legacyWish: 'P0 software wish', legacyStatus: 'P0 manual status', statusDraft: 'Draft', statusConfirmed: 'Confirmed', statusArchived: 'Archived',
+        conflict: 'Another page changed this product. Your draft is preserved; reload before editing again.', failure: 'Operation failed; draft preserved. Check connection or plugin state and retry.',
+        invalid: 'Check the name (1–120 characters) and wish (up to 10000 characters).', busy: 'The current change is unfinished. Wait, cancel or resolve it before submitting another wish.',
+        saved: 'Durably saved', submitted: 'Wish submitted; the Agent started', retried: 'Retry submitted', cancelled: 'Cancellation requested', decided: 'Decision saved', unsaved: 'Unsaved edits',
+        suggestion: { deliver: 'Delivered. Run it locally with the start command; submit a new wish for further changes.', running: 'The Agent is working. The board refreshes automatically.', blocked: 'Major decisions are pending; accept or reject them to continue.', failed: 'The last run failed. Inspect failed tasks, then retry or submit a revised wish.', uncertain: 'Execution needs confirmation; inspect the workspace, then retry explicitly.', draft: 'No wish submitted yet. Write one to begin.' },
+        language: 'Language', stageNote: 'Unified bundle 0.3.0: P0 and P1 capabilities come from one install unit.',
       },
     };
     const css = `
-      .ww-p0 { color:var(--dsw-alias-label-primary); max-width:860px; padding:20px; margin:auto; }
-      .ww-p0 * { box-sizing:border-box; }
-      .ww-p0 h2 { font-size:20px; margin:0 0 12px; }
-      .ww-p0 p { color:var(--dsw-alias-label-secondary); line-height:1.6; }
-      .ww-p0 .ww-columns { display:grid; grid-template-columns:minmax(130px,220px) minmax(0,1fr); gap:20px; }
-      .ww-p0 .ww-list { display:flex; flex-direction:column; gap:8px; }
-      .ww-p0 button,.ww-p0 input,.ww-p0 textarea,.ww-p0 select { font:inherit; color:inherit; border:1px solid var(--dsw-alias-border-l2); border-radius:8px; background:var(--dsw-alias-bg-layer-1); padding:8px 12px; }
-      .ww-p0 button { cursor:pointer; text-align:left; overflow-wrap:anywhere; }
-      .ww-p0 button[aria-pressed=true] { border-color:var(--dsw-alias-brand-primary); }
-      .ww-p0 :focus-visible { outline:2px solid var(--dsw-alias-brand-primary); outline-offset:2px; }
-      .ww-p0 :disabled { opacity:.55; cursor:default; }
-      .ww-p0 label { display:block; font-weight:500; margin:12px 0 6px; }
-      .ww-p0 input,.ww-p0 textarea,.ww-p0 select { width:100%; }
-      .ww-p0 textarea { resize:vertical; min-height:140px; }
-      .ww-p0 .ww-actions { display:flex; flex-wrap:wrap; gap:8px; margin:16px 0; }
-      .ww-p0 dl { font-size:12px; overflow-wrap:anywhere; color:var(--dsw-alias-label-secondary); }
-      .ww-p0 dd { margin:2px 0 8px; }
-      .ww-p0 [role=alert] { color:var(--dsw-alias-state-error-primary); }
-      @media(max-width:640px) { .ww-p0 { padding:12px; } .ww-p0 .ww-columns { grid-template-columns:1fr; } }
+      .ww { color:var(--dsw-alias-label-primary); max-width:1180px; padding:20px; margin:auto; }
+      .ww * { box-sizing:border-box; }
+      .ww h2 { font-size:20px; margin:0 0 8px; }
+      .ww h3 { font-size:15px; margin:18px 0 8px; }
+      .ww h4 { font-size:13px; margin:12px 0 6px; }
+      .ww p { color:var(--dsw-alias-label-secondary); line-height:1.6; margin:6px 0; }
+      .ww .ww-columns { display:grid; grid-template-columns:minmax(210px,300px) minmax(0,1fr); gap:20px; align-items:start; }
+      .ww .ww-list { display:flex; flex-direction:column; gap:8px; }
+      .ww button,.ww input,.ww textarea,.ww select { font:inherit; color:inherit; border:1px solid var(--dsw-alias-border-l2); border-radius:8px; background:var(--dsw-alias-bg-layer-1); padding:8px 12px; }
+      .ww button { cursor:pointer; text-align:left; overflow-wrap:anywhere; }
+      .ww button[aria-pressed=true] { border-color:var(--dsw-alias-brand-primary); }
+      .ww :focus-visible { outline:2px solid var(--dsw-alias-brand-primary); outline-offset:2px; }
+      .ww :disabled { opacity:.55; cursor:default; }
+      .ww label { display:block; font-weight:500; margin:10px 0 6px; }
+      .ww input,.ww textarea,.ww select { width:100%; }
+      .ww textarea { resize:vertical; min-height:84px; }
+      .ww .ww-actions { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+      .ww dl { font-size:12px; overflow-wrap:anywhere; color:var(--dsw-alias-label-secondary); margin:4px 0; }
+      .ww dd { margin:2px 0 8px; }
+      .ww [role=alert] { color:var(--dsw-alias-state-error-primary); }
+      .ww .ww-card { border:1px solid var(--dsw-alias-border-l2); border-radius:10px; padding:12px; margin:8px 0; background:var(--dsw-alias-bg-layer-1); }
+      .ww .ww-task { border-left:3px solid var(--dsw-alias-border-l2); padding-left:10px; margin:8px 0; }
+      .ww .ww-tag { display:inline-block; font-size:12px; border:1px solid var(--dsw-alias-border-l2); border-radius:999px; padding:1px 8px; margin-right:6px; }
+      .ww code { overflow-wrap:anywhere; font-size:12px; }
+      .ww ul { margin:6px 0 6px 18px; padding:0; }
+      .ww li { line-height:1.6; overflow-wrap:anywhere; }
+      .ww table { border-collapse:collapse; width:100%; font-size:12px; }
+      .ww th,.ww td { border:1px solid var(--dsw-alias-border-l2); padding:4px 6px; text-align:left; overflow-wrap:anywhere; vertical-align:top; }
+      .ww .ww-hint { font-size:12px; }
+      .ww .ww-sep { border-top:1px solid var(--dsw-alias-border-l2); margin:18px 0 0; }
+      @media(max-width:720px) { .ww { padding:12px; } .ww .ww-columns { grid-template-columns:1fr; } }
     `;
 
-    /** Uses the actual DSH carrier; no raw fetch, custom server, or Desktop globals. */
+    /** Uses the actual DSH carrier; no raw fetch, custom server or Desktop globals. */
     function createApi(connection) {
-      return async function call(method, input, signal) {
-        const result = await connection.rpc.call('/api', `wishWillow/${method}`,
-          { args: method === 'list' ? {} : { input } }, signal);
+      async function call(namespace, method, input, signal) {
+        const noInput = method === 'list' || method === 'legacy';
+        const result = await connection.rpc.call('/api', `${namespace}/${method}`, { args: noInput ? {} : { input } }, signal);
         if (!result.ok) {
           const error = new Error(result.error.message);
           error.code = result.error.code;
           throw error;
         }
         return result.value;
+      }
+      return {
+        /** Authoritative product state (Domain wish_willow_p1 / Service wishWillowP1). */
+        evolution: (method, input, signal) => call('wishWillowP1', method, input, signal),
+        /** Legacy P0 product state (Domain wish_willow / Service wishWillow). */
+        products: (method, input, signal) => call('wishWillow', method, input, signal),
       };
     }
-    const blank = () => ({ title: '', wish: '', status: 'draft' });
-    const fieldsOf = row => ({ title: row.title, wish: row.wish, status: row.status });
 
-    function ProductPanel({ t, call }) {
-      const [rows, setRows] = React.useState([]);
-      const [base, setBase] = React.useState(null);
-      const [draft, setDraft] = React.useState(blank);
+    const newId = () => (globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(16).slice(2)}`);
+    const short = value => String(value ?? '').slice(0, 8);
+    const blankLegacy = () => ({ title: '', wish: '', status: 'draft' });
+    const legacyFields = row => ({ title: row.title, wish: row.wish, status: row.status });
+    const blankDraft = () => ({ ...blankLegacy(), newTitle: '', newWish: '' });
+    const groupOf = task => ['completed', 'running', 'uncertain', 'blocked', 'failed'].includes(task.status) ? task.status : 'pending';
+
+    function ProductWorkspace({ t, project, busy, act, onReload, acked, setAcked, wish, setWish }) {
+      const pendingDecisions = project.decisions.filter(d => d.risk === 'major' && d.status === 'proposed');
+      const change = project.changes.at(-1);
+      const running = change && ['pending', 'running'].includes(change.status);
+      const stuck = change && ['failed', 'uncertain', 'blocked'].includes(change.status);
+      const groups = { pending: [], running: [], completed: [], failed: [], blocked: [], uncertain: [] };
+      for (const task of project.tasks) groups[groupOf(task)].push(task);
+      const release = project.releases.at(-1);
+      const build = project.builds.at(-1);
+      const version = release ? project.versions.find(v => v.id === release.versionId) : project.versions.at(-1);
+      const evidenceFor = ids => project.evidence.filter(e => ids.includes(e.id));
+      const confirmed = project.requirements.filter(r => r.confirmation === 'confirmed');
+      const inferred = project.requirements.filter(r => r.confirmation === 'inferred');
+      React.useEffect(() => {
+        if (!running) return undefined;
+        const timer = setInterval(onReload, 4000);
+        return () => clearInterval(timer);
+      }, [running, onReload]);
+      const taskRow = task => h('div', { className: 'ww-task', key: task.id, id: `ww-task-${short(task.id)}` },
+        h('div', null, h('span', { className: 'ww-tag' }, task.phase), h('span', { className: 'ww-tag' }, t(task.category)),
+          h('span', { className: 'ww-tag' }, t(groupOf(task))), task.description),
+        h('dl', null,
+          h('dt', null, t('taskId')), h('dd', null, task.id),
+          task.dependencies.length ? h('dt', null, t('dependencies')) : null,
+          task.dependencies.length ? h('dd', null, task.dependencies.map(short).join(', ')) : null,
+          task.result ? h('dt', null, t('result')) : null,
+          task.result ? h('dd', null, task.result) : null,
+          evidenceFor(task.evidenceIds).length ? h('dt', null, t('evidence')) : null,
+          evidenceFor(task.evidenceIds).length ? h('dd', { id: `ww-task-evidence-${short(task.id)}` },
+            evidenceFor(task.evidenceIds).map(e => `${t(e.kind)} exit=${e.exitCode ?? 'n/a'} ${e.success ? t('passedMark') : '✗'}`).join('; ')) : null));
+      const bucket = (key, items) => items.length
+        ? h('div', { key }, h('h4', null, `${t(key)} (${items.length})`), items.map(taskRow))
+        : null;
+      return h('section', { id: 'ww-workspace' },
+        h('h3', { id: 'ww-product-title' }, project.title),
+        h('p', null, `${t('workspace')}: ${project.workspace}`),
+        h('dl', { id: 'ww-overview' },
+          h('dt', null, t('productStatus')), h('dd', { id: 'ww-status-label' }, t(project.status)),
+          h('dt', null, t('revision')), h('dd', { id: 'ww-revision' }, String(project.revision)),
+          h('dt', null, t('goal')), h('dd', { id: 'ww-goal' }, project.goal || '—'),
+          h('dt', null, t('currentWish')), h('dd', { id: 'ww-current-wish' }, project.currentWish || '—'),
+          h('dt', null, t('version')), h('dd', { id: 'ww-version' }, version ? `${version.label} · ${t(version.status.toLowerCase())}${release ? ` · ${t('releasedAt')} ${release.releasedAt}` : ''}` : '—')),
+
+        h('h3', null, t('requirements')),
+        h('ul', { id: 'ww-requirements-confirmed' }, confirmed.map(r => h('li', { key: r.id }, r.text))),
+        inferred.length ? h('div', { id: 'ww-requirements-inferred' }, h('h4', null, t('inferredRequirements')),
+          h('ul', null, inferred.map(r => h('li', { key: r.id }, r.text)))) : null,
+
+        project.constraints.length ? h('div', { id: 'ww-constraints' }, h('h3', null, t('constraints')),
+          h('ul', null, project.constraints.map(c => h('li', { key: c.id }, `${c.text} (${t(c.confirmation)})`)))) : null,
+
+        pendingDecisions.length ? h('div', { className: 'ww-card', id: 'ww-decisions' },
+          h('h3', null, t('decisions')),
+          pendingDecisions.map(d => h('div', { key: d.id },
+            h('p', null, `${d.text} — ${t('major')}`),
+            h('div', { className: 'ww-actions' },
+              h('button', { type: 'button', id: 'ww-accept', disabled: busy,
+                onClick: () => act('decide', { projectId: project.id, decisionId: d.id, expectedRevision: project.revision, accepted: true }) }, t('accept')),
+              h('button', { type: 'button', id: 'ww-reject', disabled: busy,
+                onClick: () => act('decide', { projectId: project.id, decisionId: d.id, expectedRevision: project.revision, accepted: false }) }, t('reject')))))) : null,
+        project.decisions.length ? h('div', { id: 'ww-decision-history', className: 'ww-hint' },
+          h('h4', null, t('decisions')),
+          h('ul', null, project.decisions.map(d => h('li', { key: d.id, id: `ww-decision-${short(d.id)}` }, `${d.text} — ${t(d.risk)} · ${t(d.status)}`)))) : null,
+
+        h('h3', null, t('plan')),
+        project.tasks.length ? h('div', { id: 'ww-tasks' },
+          bucket('pending', groups.pending), bucket('running', groups.running), bucket('completed', groups.completed),
+          bucket('failed', groups.failed), bucket('blocked', groups.blocked), bucket('uncertain', groups.uncertain)) : h('p', { id: 'ww-tasks' }, t('noTasks')),
+
+        h('h3', null, t('agentRuns')),
+        project.runs.length ? h('table', { id: 'ww-runs' },
+          h('thead', null, h('tr', null, ['session', 'provider', 'model', 'started', 'ended', 'modelCalls', 'toolCalls', 'failures', 'tokens', 'duration', 'reason'].map(key => h('th', { key }, t(key))))),
+          h('tbody', null, project.runs.map(run => h('tr', { key: run.id, id: `ww-run-${short(run.id)}` },
+            h('td', null, short(run.sessionId)), h('td', null, run.provider ?? t('notAvailable')), h('td', null, run.model ?? t('notAvailable')),
+            h('td', null, run.startedAt), h('td', null, run.endedAt ?? '—'),
+            h('td', null, String(run.modelCalls)), h('td', null, String(run.toolCalls)), h('td', null, String(run.failures)),
+            h('td', null, `${run.inputTokens ?? '—'}/${run.outputTokens ?? '—'}`),
+            h('td', null, run.durationMs === undefined ? '—' : `${run.durationMs} ms`),
+            h('td', null, run.status === 'completed' ? t('completed') : `${t(run.status)}${run.reason ? `: ${run.reason}` : ''}`))))) : h('p', { id: 'ww-runs' }, t('noRuns')),
+
+        h('h3', null, t('outcomes')),
+        h('div', { className: 'ww-card', id: 'ww-build' },
+          h('p', { id: 'ww-build-status' }, `${t('build')}: ${build ? `${t(build.status === 'passed' ? 'passed' : 'failedBuild')} · ${build.createdAt}` : t('noBuild')}`),
+          build ? h('p', { id: 'ww-evidence-kinds' }, `${t('evidenceKinds')}: ${evidenceFor(build.evidenceIds).map(e => `${t(e.kind)} exit=${e.exitCode ?? 'n/a'}`).join('; ')}`) : null,
+          h('p', { id: 'ww-test-status' }, `${t('tests')}: ${project.evidence.some(e => e.kind === 'test' && e.success && e.exitCode === 0) ? t('passedMark') : t('missingMark')}`),
+          h('p', { id: 'ww-artifacts' }, `${t('artifacts')}: ${project.artifacts.length ? project.artifacts.map(a => `${a.path} (${a.sha256.slice(0, 12)}…)`).join('; ') : t('noArtifacts')}`),
+          release ? h('p', { id: 'ww-snapshot' }, `${t('snapshot')}: ${release.snapshotPath}`) : null,
+          h('p', null, t('noEvidence'))),
+        project.evidence.length ? h('table', { id: 'ww-evidence' },
+          h('thead', null, h('tr', null, ['phase', 'exitCode', 'result', 'recordedAt', 'evidence'].map(key => h('th', { key }, t(key))))),
+          h('tbody', null, project.evidence.map(e => h('tr', { key: e.id, id: `ww-evidence-${short(e.id)}` },
+            h('td', null, t(e.kind)), h('td', null, e.exitCode === undefined ? '—' : String(e.exitCode)),
+            h('td', null, e.success ? t('passedMark') : '✗'), h('td', null, e.recordedAt),
+            h('td', null, e.summary))))) : null,
+
+        h('h3', null, t('versionHistory')),
+        h('div', { className: 'ww-card', id: 'ww-versions' },
+          project.versions.length ? h('table', null,
+            h('thead', null, h('tr', null, ['version', 'productStatus', 'releasedAt', 'startCommand'].map(key => h('th', { key }, t(key))))),
+            h('tbody', null, project.versions.map(v => {
+              const rel = project.releases.find(r => r.versionId === v.id);
+              return h('tr', { key: v.id, id: `ww-version-${short(v.id)}` },
+                h('td', null, v.label), h('td', null, t(v.status.toLowerCase())),
+                h('td', null, rel ? rel.releasedAt : '—'),
+                h('td', null, rel ? h('code', null, rel.startCommand) : '—'));
+            }))) : h('p', null, t('noRelease')),
+          release ? h('div', null,
+            h('p', { id: 'ww-start-command' }, `${t('startCommand')}: `, h('code', null, release.startCommand)),
+            h('p', { id: 'ww-release-path' }, `${t('sourcePath')}: ${release.sourcePath}`),
+            h('p', { id: 'ww-release-summary' }, `${t('summary')}: ${release.summary}`)) : null),
+
+        h('h3', null, t('submit')),
+        h('p', { id: 'ww-suggestion' }, t('suggestion')[release ? 'deliver' : project.status] ?? t('suggestion').draft),
+        stuck ? h('div', { className: 'ww-card', id: 'ww-stuck' },
+          h('p', { role: 'alert' }, t(change.status === 'uncertain' ? 'uncertainExplanation' : 'failedExplanation')),
+          change.status === 'uncertain' ? h('label', { htmlFor: 'ww-ack' }, h('input', { id: 'ww-ack', type: 'checkbox', checked: acked, onChange: e => setAcked(e.target.checked) }), ` ${t('retryAck')}`) : null,
+          h('div', { className: 'ww-actions' },
+            h('button', { type: 'button', id: 'ww-retry', disabled: busy || (change.status === 'uncertain' && !acked),
+              onClick: () => act('retry', { projectId: project.id, expectedRevision: project.revision, requestId: newId(), changeId: change.id, acknowledgeUncertain: acked }) }, t('retry')))) : null,
+        running ? h('div', { className: 'ww-actions' }, h('button', { type: 'button', id: 'ww-cancel', disabled: busy, onClick: () => act('cancel', { projectId: project.id }) }, t('cancel'))) : null,
+        h('label', { htmlFor: 'ww-wish' }, t('submit')),
+        h('textarea', { id: 'ww-wish', value: wish, maxLength: 10000, disabled: busy || !!running, placeholder: t('wishPlaceholder'),
+          onChange: e => setWish(e.target.value) }),
+        h('div', { className: 'ww-actions' },
+          h('button', { type: 'button', id: 'ww-submit', disabled: busy || !!running || !wish.trim(),
+            onClick: () => act('submit', { projectId: project.id, expectedRevision: project.revision, requestId: newId(), wish }) }, t('submit'))));
+    }
+
+    function LegacyArea({ t, legacy, legacyActive, legacyDraft, setLegacyDraft, busy, onSelect, onCreate, onSave, onReload, onImport, dirty }) {
+      const statusKey = value => value === 'draft' ? 'statusDraft' : value === 'confirmed' ? 'statusConfirmed' : 'statusArchived';
+      return h('div', { id: 'ww-legacy-area' },
+        h('h3', null, t('legacyArea')),
+        h('p', { className: 'ww-hint' }, t('legacyHint')),
+        h('nav', { className: 'ww-list', id: 'ww-legacy-list', 'aria-label': t('legacyArea') },
+          legacy.map((row, index) => h('button', { type: 'button', key: row.id, id: `ww-legacy-product-${index}`, disabled: busy,
+            'aria-pressed': legacyActive?.id === row.id, onClick: () => onSelect(row) }, row.title)),
+          legacy.length ? null : h('p', null, t('legacyEmpty'))),
+        legacyActive ? h('div', { className: 'ww-card' },
+          h('label', { htmlFor: 'ww-legacy-title' }, t('legacyTitle')),
+          h('input', { id: 'ww-legacy-title', value: legacyDraft.title, maxLength: 120, disabled: busy, onChange: e => setLegacyDraft({ ...legacyDraft, title: e.target.value }) }),
+          h('label', { htmlFor: 'ww-legacy-wish' }, t('legacyWish')),
+          h('textarea', { id: 'ww-legacy-wish', value: legacyDraft.wish, maxLength: 10000, disabled: busy, onChange: e => setLegacyDraft({ ...legacyDraft, wish: e.target.value }) }),
+          h('label', { htmlFor: 'ww-legacy-status' }, t('legacyStatus')),
+          h('select', { id: 'ww-legacy-status', value: legacyDraft.status, disabled: busy, onChange: e => setLegacyDraft({ ...legacyDraft, status: e.target.value }) },
+            ['draft', 'confirmed', 'archived'].map(value => h('option', { value, key: value }, t(statusKey(value))))),
+          h('div', { className: 'ww-actions' },
+            h('button', { type: 'button', id: 'ww-legacy-save', disabled: busy || !legacyDraft.title.trim() || !dirty, onClick: onSave }, t('legacySave')),
+            h('button', { type: 'button', id: 'ww-legacy-reload', disabled: busy, onClick: onReload }, t('reload')),
+            h('button', { type: 'button', id: 'ww-legacy-import', disabled: busy, onClick: () => onImport(legacyActive.id) }, t('importP0')))) : null,
+        h('form', { onSubmit: onCreate },
+          h('h4', null, t('legacyNew')),
+          h('label', { htmlFor: 'ww-legacy-new-title' }, t('legacyTitle')),
+          h('input', { id: 'ww-legacy-new-title', value: legacyDraft.newTitle ?? '', maxLength: 120, disabled: busy, onChange: e => setLegacyDraft({ ...legacyDraft, newTitle: e.target.value }) }),
+          h('label', { htmlFor: 'ww-legacy-new-wish' }, t('legacyWish')),
+          h('textarea', { id: 'ww-legacy-new-wish', value: legacyDraft.newWish ?? '', maxLength: 10000, disabled: busy, onChange: e => setLegacyDraft({ ...legacyDraft, newWish: e.target.value }) }),
+          h('div', { className: 'ww-actions' }, h('button', { type: 'submit', id: 'ww-legacy-create', disabled: busy || !(legacyDraft.newTitle ?? '').trim() }, t('legacyNew')))));
+    }
+
+    function Panel({ t, api }) {
+      const [products, setProducts] = React.useState([]);
+      const [legacy, setLegacy] = React.useState([]);
+      const [active, setActive] = React.useState(null);
+      const [legacyActive, setLegacyActive] = React.useState(null);
+      const [legacyDraft, setLegacyDraft] = React.useState(blankDraft);
+      const [form, setForm] = React.useState({ title: '', wish: '' });
+      const [wish, setWish] = React.useState('');
+      const [acked, setAcked] = React.useState(false);
       const [busy, setBusy] = React.useState(true);
       const [error, setError] = React.useState('');
       const [notice, setNotice] = React.useState('');
-      const active = React.useRef(null);
-      const dirty = JSON.stringify(draft) !== JSON.stringify(base ? fieldsOf(base) : blank());
-      function showError(cause) {
+      const controller = React.useRef(null);
+      const fail = cause => {
         if (cause.name === 'AbortError') return;
-        setError(cause.code === 'wish-willow/conflict' ? 'conflict' :
-          cause.code === 'wish-willow/invalid-input' ? 'invalid' : 'failure');
-      }
-      function select(row) {
-        setBase(row); setDraft(row ? fieldsOf(row) : blank()); setError(''); setNotice('');
-      }
-      async function reload(preferredId) {
-        const controller = new AbortController();
-        active.current?.abort(); active.current = controller;
-        setBusy(true); setError(''); setNotice('');
-        try {
-          const next = await call('list', undefined, controller.signal);
-          if (controller.signal.aborted) return;
-          setRows(next); select(next.find(row => row.id === preferredId) ?? next[0] ?? null);
-        } catch (cause) { if (!controller.signal.aborted) showError(cause); }
-        finally { if (!controller.signal.aborted) setBusy(false); }
-      }
-      React.useEffect(() => {
-        reload();
-        return () => active.current?.abort();
+        setError(cause.code === 'wish-willow-p1/conflict' || cause.code === 'wish-willow/conflict' ? 'conflict'
+          : cause.code === 'wish-willow-p1/invalid-input' || cause.code === 'wish-willow/invalid-input' ? 'invalid'
+          : cause.code === 'wish-willow-p1/busy' ? 'busy' : 'failure');
+      };
+      const run = React.useCallback(async (fn, { quiet = false } = {}) => {
+        controller.current?.abort();
+        const next = new AbortController();
+        controller.current = next;
+        if (!quiet) setBusy(true);
+        try { return await fn(next.signal); }
+        catch (cause) { fail(cause); return null; }
+        finally { if (!next.signal.aborted && !quiet) setBusy(false); }
       }, []);
-      async function save(event) {
+      const refresh = React.useCallback(async (preferredId, quiet) => run(async signal => {
+        const list = await api.evolution('list', undefined, signal);
+        setLegacy(await api.evolution('legacy', undefined, signal));
+        setProducts(list);
+        const wanted = preferredId ?? active?.id;
+        const next = wanted ? await api.evolution('read', { projectId: wanted }, signal) : (list[0] ? await api.evolution('read', { projectId: list[0].id }, signal) : null);
+        setActive(next);
+        setError('');
+        return next;
+      }, { quiet }), [run, api, active?.id]);
+      React.useEffect(() => { refresh(); return () => controller.current?.abort(); }, []);
+      const act = async (method, input) => {
+        const result = await run(signal => api.evolution(method, input, signal));
+        if (result) {
+          setNotice(method === 'submit' ? 'submitted' : method === 'retry' ? 'retried' : method === 'cancel' ? 'cancelled' : 'decided');
+          setWish('');
+          setAcked(false);
+          await refresh(result.id, true);
+        }
+      };
+      async function createProduct(event) {
         event.preventDefault();
         if (busy) return;
-        const controller = new AbortController(); active.current = controller;
-        setBusy(true); setError(''); setNotice('');
-        try {
-          const value = await call(base ? 'update' : 'create', base ?
-            { ...draft, id: base.id, expectedRevision: base.revision } : draft, controller.signal);
-          if (controller.signal.aborted) return;
-          setRows(previous => [value, ...previous.filter(row => row.id !== value.id)]);
-          setBase(value); setDraft(fieldsOf(value)); setNotice('saved');
-        } catch (cause) { if (!controller.signal.aborted) showError(cause); }
-        finally { if (!controller.signal.aborted) setBusy(false); }
+        const value = await run(signal => api.evolution('create', { requestId: newId(), title: form.title, wish: form.wish }, signal));
+        if (value) { setForm({ title: '', wish: '' }); setNotice('saved'); await refresh(value.id, true); }
       }
-      function edit(key, value) { setDraft(previous => ({ ...previous, [key]: value })); setNotice(''); }
-      return h('section', { className: 'ww-p0', 'aria-label': t('title'), 'aria-busy': busy },
-        h('style', null, css), h('h2', null, t('title')), h('p', null, t('description')),
+      function selectLegacy(row) {
+        setLegacyActive(row);
+        setLegacyDraft({ ...legacyFields(row), newTitle: legacyDraft.newTitle ?? '', newWish: legacyDraft.newWish ?? '' });
+        setError(''); setNotice('');
+      }
+      const legacyDirty = legacyActive
+        ? JSON.stringify(legacyFields(legacyActive)) !== JSON.stringify({ title: legacyDraft.title, wish: legacyDraft.wish, status: legacyDraft.status })
+        : false;
+      async function saveLegacy() {
+        if (!legacyActive) return;
+        const value = await run(signal => api.products('update', { id: legacyActive.id, expectedRevision: legacyActive.revision,
+          title: legacyDraft.title, wish: legacyDraft.wish, status: legacyDraft.status }, signal));
+        if (value) {
+          setLegacyActive(value);
+          setLegacyDraft({ ...legacyFields(value), newTitle: legacyDraft.newTitle ?? '', newWish: legacyDraft.newWish ?? '' });
+          setNotice('legacySaved');
+          await refresh(active?.id, true);
+        }
+      }
+      async function createLegacy(event) {
+        event.preventDefault();
+        if (busy) return;
+        const value = await run(signal => api.products('create', { title: legacyDraft.newTitle, wish: legacyDraft.newWish ?? '', status: 'draft' }, signal));
+        if (value) {
+          setLegacyActive(value);
+          setLegacyDraft({ ...legacyFields(value), newTitle: '', newWish: '' });
+          setNotice('legacySaved');
+          await refresh(active?.id, true);
+        }
+      }
+      async function importLegacy(productId) {
+        const value = await run(signal => api.evolution('importLegacy', { productId, requestId: newId() }, signal));
+        if (value) { setNotice('imported'); await refresh(value.id, true); }
+      }
+      function reloadLegacy() {
+        if (!legacyActive) return run(async signal => {
+          setLegacy(await api.evolution('legacy', undefined, signal));
+          return null;
+        });
+        return run(async signal => {
+          const rows = await api.evolution('legacy', undefined, signal);
+          setLegacy(rows);
+          const fresh = rows.find(row => row.id === legacyActive.id);
+          if (fresh) {
+            setLegacyActive(fresh);
+            setLegacyDraft({ ...legacyFields(fresh), newTitle: legacyDraft.newTitle ?? '', newWish: legacyDraft.newWish ?? '' });
+          }
+          setError(''); setNotice('');
+          return fresh ?? null;
+        });
+      }
+      return h('section', { className: 'ww', id: 'ww-app', 'aria-label': t('title'), 'aria-busy': busy },
+        h('style', null, css),
+        h('h2', null, t('title')), h('p', null, t('description')), h('p', { className: 'ww-hint' }, t('stageNote')),
         h('div', { className: 'ww-columns' },
-          h('nav', { className: 'ww-list', 'aria-label': t('productList') },
-            h('button', { type: 'button', disabled: busy || dirty, onClick: () => select(null) }, t('new')),
-            rows.map(row => h('button', { type: 'button', key: row.id, disabled: busy || dirty,
-              'aria-pressed': base?.id === row.id, onClick: () => select(row) }, row.title)),
-            !rows.length && h('p', null, t(busy ? 'loading' : 'empty'))),
-          h('form', { onSubmit: save },
-            h('label', { htmlFor: 'ww-title' }, t('name')),
-            h('input', { id: 'ww-title', value: draft.title, required: true, maxLength: 120, disabled: busy,
-              onChange: event => edit('title', event.target.value) }),
-            h('label', { htmlFor: 'ww-wish' }, t('wish')),
-            h('textarea', { id: 'ww-wish', value: draft.wish, maxLength: 10000, disabled: busy,
-              onChange: event => edit('wish', event.target.value) }),
-            h('label', { htmlFor: 'ww-status' }, t('status')),
-            h('select', { id: 'ww-status', value: draft.status, disabled: busy,
-              onChange: event => edit('status', event.target.value) },
-              ['draft', 'confirmed', 'archived'].map(status => h('option', { value: status, key: status }, t(status)))),
-            h('div', { className: 'ww-actions' },
-              h('button', { type: 'submit', disabled: busy || !draft.title.trim() || !dirty }, t(busy ? 'saving' : 'save')),
-              h('button', { type: 'button', disabled: busy, onClick: () => reload(base?.id) }, t('reload'))),
-            error && h('p', { role: 'alert' }, t(error)),
-            h('p', { role: 'status', 'aria-live': 'polite' }, t(notice || (dirty ? 'unsaved' : busy ? 'loading' : ''))),
-            base && h('dl', null,
-              h('dt', null, t('id')), h('dd', null, base.id),
-              h('dt', null, t('revision')), h('dd', null, String(base.revision)),
-              h('dt', null, t('updated')), h('dd', null, base.updatedAt)))));
+          h('nav', { className: 'ww-list', id: 'ww-product-list', 'aria-label': t('productList') },
+            products.map((row, index) => h('button', { type: 'button', key: row.id, id: `ww-product-${index}`, disabled: busy,
+              'aria-pressed': active?.id === row.id, onClick: () => setActive(row) },
+              `${row.title} · ${(row.versions.at(-1) ?? { label: '—' }).label}`)),
+            products.length ? null : h('p', null, t(busy ? 'loading' : 'empty')),
+            h('form', { onSubmit: createProduct },
+              h('label', { htmlFor: 'ww-title' }, t('name')),
+              h('input', { id: 'ww-title', value: form.title, required: true, maxLength: 120, disabled: busy, onChange: e => setForm({ ...form, title: e.target.value }) }),
+              h('label', { htmlFor: 'ww-new-wish' }, t('wish')),
+              h('textarea', { id: 'ww-new-wish', value: form.wish, maxLength: 10000, disabled: busy, onChange: e => setForm({ ...form, wish: e.target.value }) }),
+              h('div', { className: 'ww-actions' }, h('button', { type: 'submit', id: 'ww-create', disabled: busy || !form.title.trim() || !form.wish.trim() }, t('create')))),
+            h('div', { className: 'ww-actions' }, h('button', { type: 'button', id: 'ww-reload', disabled: busy, onClick: () => refresh(active?.id) }, t('reload')))),
+          active
+            ? h(ProductWorkspace, { t, project: active, busy, act, onReload: () => refresh(active.id, true), acked, setAcked, wish, setWish })
+            : h('p', { id: 'ww-workspace-empty' }, t(busy ? 'loading' : 'empty'))),
+        h('div', { className: 'ww-sep' }),
+        h(LegacyArea, { t, legacy, legacyActive, legacyDraft, setLegacyDraft, busy,
+          onSelect: selectLegacy, onCreate: createLegacy, onSave: saveLegacy, onReload: reloadLegacy, onImport: importLegacy, dirty: legacyDirty }),
+        error && h('p', { role: 'alert', id: 'ww-error' }, t(error)),
+        h('p', { role: 'status', id: 'ww-notice', 'aria-live': 'polite' },
+          t(busy ? 'loading' : legacyDirty ? 'unsaved' : notice)));
     }
     return {
       inject: ['slots', 'locale', 'connection'],
-      createApi, ProductPanel, dictionaries,
+      createApi, Panel, ProductWorkspace, LegacyArea, dictionaries,
       apply(ctx) {
         ctx.effect(() => ctx.locale.register(NS, dictionaries), 'wish-willow: dictionaries');
-        const call = createApi(ctx.connection);
+        const api = createApi(ctx.connection);
         ctx.slots.inject('settings.section', () => ctx.slots.register({
-          name: 'settings.section', id: 'wish-willow-p0', order: 30,
-          label: () => ctx.locale.bind(NS)('title'), locale: NS, inject: () => ({ call }),
-        }, ProductPanel));
+          name: 'settings.section', id: 'wish-willow', order: 30,
+          label: () => ctx.locale.bind(NS)('title'), locale: NS, inject: () => ({ api }),
+        }, Panel));
       },
     };
   },

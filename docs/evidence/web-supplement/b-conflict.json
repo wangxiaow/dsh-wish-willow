@@ -1,0 +1,322 @@
+﻿{
+    "at":  "2026-10-10T18:10:39.2629967+08:00",
+    "target":  "BrowserB",
+    "pid":  9908,
+    "handle":  395682,
+    "action":  "inspect",
+    "name":  "",
+    "id":  "",
+    "value":  "",
+    "keys":  "",
+    "bounds":  "491,197,1280,960",
+    "label":  "b-conflict",
+    "elements":  [
+                     {
+                         "type":  "ControlType.Group",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "731,342,188,783"
+                     },
+                     {
+                         "type":  "ControlType.Group",
+                         "name":  "",
+                         "id":  ":rh:",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "743,364,164,24"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "Settings",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "755,365,59,21"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "General",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "743,406,164,40"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "Models",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "743,450,164,40"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "Built-in plugins",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "743,494,164,40"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "Agent presets",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "743,538,164,40"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "Wish Willow · P0",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "743,582,164,40"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "Open configuration file",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1336,362,145,28"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "Close",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1489,362,28,28"
+                     },
+                     {
+                         "type":  "ControlType.Group",
+                         "name":  "Wish Willow · P0",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "943,396,559,874"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "Wish Willow · P0",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "963,416,519,27"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "Product state independent of DSH sessions. This phase stores data only; no autonomous coding.",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "963,461,507,47"
+                     },
+                     {
+                         "type":  "ControlType.Group",
+                         "name":  "Products",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "963,526,220,724"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "New product",
+                         "id":  "",
+                         "enabled":  false,
+                         "offscreen":  false,
+                         "bounds":  "963,526,220,40"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "[P0 ACCEPTANCE TEST] Web edited",
+                         "id":  "",
+                         "enabled":  false,
+                         "offscreen":  false,
+                         "bounds":  "963,573,220,61"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "Product name",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1203,538,102,22"
+                     },
+                     {
+                         "type":  "ControlType.Edit",
+                         "name":  "Product name",
+                         "id":  "ww-title",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1203,565,279,40",
+                         "value":  "[P0 ACCEPTANCE TEST] Web losing draft B"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "Software wish",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1203,616,102,22"
+                     },
+                     {
+                         "type":  "ControlType.Edit",
+                         "name":  "Software wish",
+                         "id":  "ww-wish",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1203,643,279,141",
+                         "value":  "B local draft / 冲突后必须保留，不得覆盖 A"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "Manual product status",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1203,799,164,22"
+                     },
+                     {
+                         "type":  "ControlType.ComboBox",
+                         "name":  "Manual product status",
+                         "id":  "ww-status",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1203,826,279,42",
+                         "value":  "Confirmed"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "Save",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1203,883,59,40"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "Reload (discard unsaved edits)",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1203,930,241,40"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1203,985,279,77"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "Another page changed this product. Your draft is preserved; reload before editing again.",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1203,987,262,73"
+                     },
+                     {
+                         "type":  "ControlType.StatusBar",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1203,1077,279,27"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "Unsaved edits",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1203,1079,99,22"
+                     },
+                     {
+                         "type":  "ControlType.List",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1203,1119,279,119"
+                     },
+                     {
+                         "type":  "ControlType.ListItem",
+                         "name":  "Stable product ID",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1203,1119,279,17"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "Stable product ID",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1203,1119,93,17"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "cbfe4850-a928-4b32-8af8-cb95dfe5db8c",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  true,
+                         "bounds":  "1203,1137,218,17"
+                     },
+                     {
+                         "type":  "ControlType.ListItem",
+                         "name":  "Revision",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  true,
+                         "bounds":  "1203,1161,279,17"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "Revision",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  true,
+                         "bounds":  "1203,1161,44,17"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "2",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  true,
+                         "bounds":  "1203,1179,7,17"
+                     },
+                     {
+                         "type":  "ControlType.ListItem",
+                         "name":  "Updated",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  true,
+                         "bounds":  "1203,1203,279,17"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "Updated",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  true,
+                         "bounds":  "1203,1203,46,17"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "2026-10-10T08:54:22.589Z",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  true,
+                         "bounds":  "1203,1221,141,17"
+                     }
+                 ]
+}

@@ -1,0 +1,723 @@
+﻿{
+    "observedAt":  "2026-10-09T22:28:56.4574518+08:00",
+    "pid":  31400,
+    "title":  "# Wish Willow — P0 — DeepSeek Harness",
+    "bounds":  "872,259,1296,828",
+    "elementCount":  119,
+    "elements":  [
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  false
+                     },
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "# Wish Willow — P0 — DeepSeek Harness",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "最小化",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "最大化",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "关闭",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Document",
+                         "name":  "# Wish Willow — P0 — DeepSeek Harness",
+                         "id":  "RootWebArea",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Group",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Group",
+                         "name":  "",
+                         "id":  "root",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "新建会话",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "收起侧边栏",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "新建会话",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Group",
+                         "name":  "全局面板",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "插件",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "工作区",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Group",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "搜索会话",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Edit",
+                         "name":  "搜索会话名称",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "视图选项",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "添加工作区",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Tree",
+                         "name":  "会话",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.TreeItem",
+                         "name":  "Wish-Willow",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.TreeItem",
+                         "name":  "进行中 # Wish Willow — P0 8分钟",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.TreeItem",
+                         "name":  "Wish-Willow 插件 P0 开发验证 24分钟",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.TreeItem",
+                         "name":  "YH2",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.TreeItem",
+                         "name":  "YH",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.TreeItem",
+                         "name":  "xl",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.TreeItem",
+                         "name":  "xiaolan",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.TreeItem",
+                         "name":  "NovelMaster",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.TreeItem",
+                         "name":  "downloader",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.TreeItem",
+                         "name":  "未分组",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "账号菜单",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Group",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Group",
+                         "name":  "会话层级",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "# Wish Willow — P0",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "智能体团队",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Group",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "标准模式",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "1 个后台任务运行中",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "用 文件资源管理器 打开",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "更多打开方式",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "更多操作",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "打开右侧边栏",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Tab",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.TabItem",
+                         "name":  "对话",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.TabItem",
+                         "name":  "轨迹",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "# Wish Willow — P0 最终独立验收任务\r\n\r\n## 一、你的角色与任务\r\n\r\n你是一名资深软件测试工程师、质量保障专家和 Agent 系统验证工程师。\r\n\r\n你需要对已经完成开发的 **Wish Willow P0** 进行独立验收，判断它是否真正达到 P0 的交付标准。\r\n\r\nWish Willow 是基于原版 DeepSeek Harness（DSH）开发的独立插件，目标是构建一个能够通过自然语言持续创造和演化软件的 AI 系统。\r\n\r\n但当前 P0 只包含：\r\n\r\n- 独立 DSH Bundle 的安装和加载。\r\n- 独立于 DSH Session 的产品状态持久化。\r\n- 最小产品创建与编辑 UI。\r\n- Revision 并发冲突保护。\r\n- Web/Desktop 共享插件能力。\r\n\r\n主 Agent、任务规划、产品看板、自动编程、Reviewer 和跨模型接管不属于 P0，不得因这些能力尚未实现而判定 P0 失败。\r\n\r\n**本次只执行 P0 最终验收。不得进入 P1，也不得擅自开发新功能。**\r\n\r\n## 二、执行环境与前提\r\n\r\n用户已在发送本任务前正常重启 DSH Desktop。\r\n\r\n请先检查以下前提是否成立：\r\n\r\n1. 当前 DSH Desktop 已正常运行。\r\n2. Wish Willow 插件已安装、启用并成功加载。\r\n3. 当前 DSH 版本为 `0.2.0-rc.2`，或与本次插件实际兼容的版本。\r\n4. 当前工作目录为 Wish Willow 源代码仓库。\r\n5. 当前会话为新的标准模式会话，与此前开发会话分离。\r\n6. 当前具备执行相关测试所需的文件、Shell 和其他必要工具。\r\n\r\n不要仅凭用户声称已经重启，就认定重启恢复验收通过；应检查重启后的实际运行状态与持久化数据。\r\n\r\n如果某项前提不成立，先记录事实并判断是否能够安全解决。不要擅自修改 DSH 核心或绕过兼容性限制。\r\n\r\n## 三、必须阅读的项目资料\r\n\r\n开始验收前，请读取：\r\n\r\n1. `AGENTS.md`\r\n2. `README.md`\r\n3. `docs/COMPATIBILITY.md`\r\n4. `docs/P0-REPORT.md`\r\n5. `docs/ARCHITECTURE.md`（如存在）\r\n6. `docs/API-EVIDENCE.md`（如存在）\r\n\r\n请遵守 `AGENTS.md` 中的工程规范。\r\n\r\n以实际源码、运行结果和测试证据为判断依据。历史报告属于需要核验的记录，不能直接当作本次验收已经通过的证明。\r\n\r\n如果文件缺失，记录缺失情况，不要编造内容。\r\n\r\n## 四、验收范围\r\n\r\n### T1：DSH 重启后的插件恢复\r\n\r\n**目标：** 验证正常重启 DSH 后，Wish Willow 仍能够正确加载。\r\n\r\n执行：\r\n\r\n1. 检查当前 DSH 版本和运行状态。\r\n2. 检查 Wish Willow Bundle 的安装及启用状态。\r\n3. 检查 Host 插件是否为 active。\r\n4. 检查 Wish Willow UI Slot 是否已经注册。\r\n5. 打开或检查 Wish Willow 设置页面。\r\n6. 验证此前的产品测试记录是否仍然存在。\r\n7. 对比已有持久化记录中的 UUID、revision 和内容。\r\n\r\n如能够取得可信的重启前记录，请进行前后对照。\r\n\r\n如果只能验证当前插件加载成功，却无法证明完整重启后的状态连续性，应明确区分两项结论。\r\n\r\n**不得为了完成测试再次强制重启 DSH。**\r\n\r\n### T2：产品状态持久化\r\n\r\n**目标：** 验证产品数据能够正确创建、修改、保存和恢复。\r\n\r\n执行：\r\n\r\n1. 创建一条明确标记为 `[P0 ACCEPTANCE TEST]` 的测试产品。\r\n2. 填写产品名称、愿望和手动状态。\r\n3. 保存后读取实际持久化结果。\r\n4. 记录 UUID、revision、创建时间和更新时间。\r\n5. 修改产品名称或愿望并保存。\r\n6. 验证 revision 正确递增。\r\n7. 通过页面刷新、重新加载或重新打开数据 Domain 的方式验证状态恢复。\r\n8. 检查是否存在数据丢失、意外覆盖或错误状态。\r\n\r\n注意：\r\n\r\n- 不修改或删除用户已有的产品记录。\r\n- 不把数据写入 DSH Session 作为产品状态的替代。\r\n- 不将普通 Domain 重新加载冒充完整 DSH 应用重启。\r\n- 不直接编辑正在被 Host 写入的 JSON 文件。\r\n\r\n### T3：真实 Desktop UI 验收\r\n\r\n**目标：** 验证 Wish Willow 在真实 DSH Desktop 窗口中能够正常操作。\r\n\r\n如果具备桌面 GUI 自动化能力，请执行：\r\n\r\n1. 打开 DSH Desktop 原生窗口。\r\n2. 进入 Wish Willow 设置页面。\r\n3. 确认界面正常渲染。\r\n4. 创建测试产品。\r\n5. 编辑产品名称、愿望和状态。\r\n6. 保存并检查结果。\r\n7. 重新打开页面并验证数据。\r\n8. 检查基本键盘操作。\r\n9. 检查亮色/暗色主题下的基本可用性。\r\n10. 记录异常及可复现步骤。\r\n\r\n如果没有真实 Desktop GUI 自动化工具，不能以 React SSR、组件测试、Slot 注册或 Host 加载成功代替。\r\n\r\n这种情况下，将 Desktop GUI E2E 明确标记为 **UNVERIFIED**。\r\n\r\n### T4：真实 Web 浏览器 E2E\r\n\r\n**目标：** 验证插件在实际 DSH Web 客户端中的交互能力。\r\n\r\n优先使用 Playwright 或已有的浏览器自动化工具。\r\n\r\n在真实 DSH Web 环境中验证：\r\n\r\n1. Wish Willow 页面能够打开。\r\n2. 可以创建测试产品。\r\n3. 可以编辑和保存。\r\n4. 页面刷新后数据仍然存在。\r\n5. 表单错误能得到合理提示。\r\n6. 基础布局在不同窗口宽度下可用。\r\n7. 中英文界面能够正常显示（如当前配置支持）。\r\n\r\n禁止：\r\n\r\n- 使用另建的模拟服务代替实际 DSH。\r\n- 绕过身份认证。\r\n- 读取或泄露未经授权的认证凭据。\r\n- 将接口级测试冒充浏览器 DOM E2E。\r\n\r\n如果无法访问已认证的真实浏览器环境，标记为 **UNVERIFIED**，并说明限制。\r\n\r\n### T5：Revision 并发冲突保护\r\n\r\n**目标：** 验证旧版本编辑不会静默覆盖新版本数据。\r\n\r\n使用两个连接同一 Host 的页面或等价的真实客户端环境：\r\n\r\n1. 两个客户端读取同一测试产品。\r\n2. 确认两者最初获得相同 revision。\r\n3. 客户端 A 修改并保存。\r\n4. 客户端 B 基于旧 revision 修改并尝试保存。\r\n5. 确认客户端 B 收到冲突提示。\r\n6. 确认客户端 A 的修改仍然存在。\r\n7. 确认客户端 B 未保存的草稿得到保留。\r\n8. 记录冲突处理结果和测试证据。\r\n\r\n不得启动两个独立写入 Host 共同修改同一个 JSON Storage Root。\r\n\r\n如果只能在 Service 层验证 CAS，而无法操作两个真实客户端，需要分别报告 Service 验证和 UI 验证的结果。\r\n\r\n### T6：GitHub 安装验证\r\n\r\n**目标：** 检查 Wish Willow 是否具备通过 GitHub 仓库安装到原版 DSH 的能力。\r\n\r\n首先确认是否存在用户明确授权使用的远程 GitHub 仓库。\r\n\r\n如果存在：\r\n\r\n1. 检查仓库和插件入口结构。\r\n2. 检查插件是否包含安装所需的构建产物。\r\n3. 在安全、可恢复的环境中测试从固定 Git Commit 安装。\r\n4. 检查插件加载结果。\r\n5. 记录安装地址、Commit、DSH 版本和测试结果。\r\n\r\n在重新安装、覆盖当前插件或执行影响现有会话的操作之前，必须确认是否获得授权。\r\n\r\n如果不存在已授权的远程仓库：\r\n\r\n1. 检查本地 Bundle 打包结果。\r\n2. 检查 GitHub 安装准备情况。\r\n3. 记录真实 GitHub 安装为 **UNVERIFIED**。\r\n4. 不擅自创建远程仓库。\r\n5. 不擅自 Push、发布 Release 或修改用户 GitHub 资源。\r\n\r\n## 五、回归测试\r\n\r\n完成上述验收后，重新执行项目已有自动化测试。\r\n\r\n参考历史报告，P0 此前共有 14 项自动化测试通过。\r\n\r\n请在当前环境中实际执行项目定义的检查命令，例如：\r\n\r\n```bash\r\npnpm run check\r\n```\r\n\r\n根据项目实际脚本，必要时分别运行单元测试、集成测试、构建检查。\r\n\r\n记录：\r\n\r\n- 实际执行的命令。\r\n- 进程退出码。\r\n- 通过、失败、跳过的测试数量。\r\n- 失败测试及其原因。\r\n- 测试日志的保存位置。\r\n\r\n不要直接复制历史报告的 14/14 结果作为本次执行结论。\r\n\r\n## 六、执行权限与安全边界\r\n\r\n你可以自主：\r\n\r\n- 阅读源码和文档。\r\n- 运行非破坏性的测试。\r\n- 编写必要的临时自动化测试脚本。\r\n- 创建明确标记的测试数据。\r\n- 检查日志、构建产物及插件状态。\r\n- 分析失败原因。\r\n- 编写验收报告。\r\n\r\n但未经用户明确授权，不得：\r\n\r\n- 修改 DSH 核心。\r\n- 修改 Wish Willow 的产品功能代码。\r\n- 强制终止或再次重启 DSH。\r\n- 删除、覆盖已有用户数据。\r\n- 擅自重新安装或升级 DSH。\r\n- 修改安全权限或绕过身份验证。\r\n- 推送 GitHub 仓库或公开发布。\r\n- 启动 P1 或其他开发阶段。\r\n\r\n如果发现缺陷：\r\n\r\n**先记录缺陷、复现步骤、影响范围和建议修复方案，不要擅自扩大任务范围。**\r\n\r\n如果执行某项测试缺少必要工具，可以尝试使用已安装的合法测试能力；无法满足条件时应停止该项并标记未验证，而不是伪造结果。\r\n\r\n## 七、验收结果判定\r\n\r\n每个项目必须使用以下状态之一：\r\n\r\n- **PASS**：已实际执行，存在充分证据证明通过。\r\n- **FAIL**：已实际执行，结果不满足验收标准。\r\n- **UNVERIFIED**：缺少环境、权限或工具，无法完成充分验证。\r\n- **BLOCKED**：存在明确阻塞条件，需要额外授权或依赖。\r\n\r\n请严格区分：\r\n\r\n- 插件安装成功与插件已加载。\r\n- Host 加载成功与 UI 可正常操作。\r\n- Service 测试通过与真实浏览器 E2E 通过。\r\n- 数据 Domain 重新加载与完整 DSH 重启恢复。\r\n- Bundle 本地打包成功与 GitHub 远程安装成功。\r\n- 功能已经实现与功能已经经过独立验收。\r\n\r\n不允许通过降低验收标准或修改测试断言，使原本失败的测试显示为通过。\r\n\r\n## 八、最终交付报告\r\n\r\n在项目中生成：\r\n\r\n`docs/P0-FINAL-ACCEPTANCE.md`\r\n\r\n报告至少包含以下部分：\r\n\r\n### 1. 验收环境\r\n\r\n- 操作系统\r\n- DSH 版本\r\n- Wish Willow 插件版本\r\n- 当前 Git Commit\r\n- Host 与客户端运行方式\r\n- 参与验收的工具和测试框架\r\n\r\n### 2. 验收结果矩阵\r\n\r\n分别列出 T1–T6：\r\n\r\n- 测试项目\r\n- PASS / FAIL / UNVERIFIED / BLOCKED\r\n- 实际执行内容\r\n- 证据文件位置\r\n- 问题和备注\r\n\r\n### 3. 自动化回归测试\r\n\r\n列出实际执行的测试命令、结果和日志。\r\n\r\n### 4. 发现的问题\r\n\r\n包含：\r\n\r\n- 问题描述\r\n- 严重程度\r\n- 复现步骤\r\n- 影响范围\r\n- 推荐修复方向\r\n\r\n### 5. 未验证项目\r\n\r\n解释无法完成的原因，以及后续最小补验方式。\r\n\r\n### 6. 最终验收建议\r\n\r\n明确回答：\r\n\r\n1. P0 核心功能是否通过验收？\r\n2. Web/Desktop 双端兼容是否已有充分证据？\r\n3. 是否存在阻止后续 P1 开发的技术问题？\r\n4. 哪些问题可以保留为已知限制？\r\n5. 是否建议正式关闭 P0？\r\n\r\n最终建议可以是：\r\n\r\n- 建议正式通过 P0。\r\n- 建议有条件通过 P0，并列明遗留事项。\r\n- 不建议通过 P0，需要先修复问题。\r\n\r\n结论必须与证据一致。\r\n\r\n## 九、执行完成后的停止条件\r\n\r\n生成完整验收报告后：\r\n\r\n1. 汇总实际通过、失败与未验证项目。\r\n2. 提供报告路径。\r\n3. 明确是否建议关闭 P0。\r\n4. 如需用户操作，仅提出必要的最少操作。\r\n5. **停止执行，等待用户反馈。**\r\n\r\n不要自动修复超出验收范围的代码，不要进入 P1，也不要启动新的开发任务。\r\n\r\n**最终目标是获得一份能够独立审查、证据真实、边界明确的 P0 验收结论，而不是尽可能让所有状态显示为 PASS。**",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "22:20",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "复制",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "我会先核验仓库资料和当前 DSH 实际运行状态，再执行权限范围内的持久化、冲突及回归测试。真实 UI、重启连续性和 GitHub 安装会分别取证；证据不足就明确标为 UNVERIFIED，不修改功能代码、不重启 DSH，也不进入 P1。",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "已读取文件，执行了命令，已搜索代码等",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "发现一项关键差异：当前 Web Host 仍是历史记录中的 PID 31800，进程启动时间早于此前测试数据的创建时间。因此目前不能认定发生过完整 Host 重启；我会将“当前数据仍在”与“重启恢复通过”分开报告。已有产品记录内容与历史记录一致，接下来继续检查真实 UI 和可用测试入口。",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "正在运行命令 · Inspect Wish Willow page within one native navigation sequence",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.StatusBar",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "深度求索中",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "深度求索中，用时 8分50秒 ···",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Group",
+                         "name":  "任务",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "任务 1 进行中 · 4 待处理",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "进行中的目标",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "独立完成 Wish Willow P0 最终验收：核验前提与 T1–T6，实际运行回归测试，保存可审查证据并生成 docs/P0-FINAL-ACCEPTANCE.md；不修改产品功能或 DSH 核心、不重启、不进入 P1。",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "暂停目标",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "编辑目标",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "清除目标",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Edit",
+                         "name":  "发消息或创建任务, / 调用指令, @ 文件或对话",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "添加文件或调用指令",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "访问模式，当前：完全权限",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "当前：标准速度。点击开启 1.5 倍速度",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "选择模型，当前 GPT-6 Astra，推理等级 Xhigh",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "停止生成",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "1 轮 36 步 · 67 tok/s",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "2.1M tok · 缓存命中 96%",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "上下文已用 27%",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.MenuBar",
+                         "name":  "应用菜单",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.MenuItem",
+                         "name":  "应用",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.MenuItem",
+                         "name":  "编辑",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Window",
+                         "name":  "设置",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Group",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Group",
+                         "name":  "",
+                         "id":  ":rj6:",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "设置",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "账号与余额",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "通用设置",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "模型",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "内置插件",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "Agent 预设",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "Wish Willow · P0",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "打开配置文件",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "关闭",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Group",
+                         "name":  "Wish Willow · P0",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "Wish Willow · P0",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "独立于 DSH 会话的产品状态。此阶段仅保存数据，不执行自动编程。",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Group",
+                         "name":  "产品列表",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "新建产品",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "[P0 TEST] Wish Willow 加载验证",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "产品名称",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Edit",
+                         "name":  "产品名称",
+                         "id":  "ww-title",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "软件愿望",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Edit",
+                         "name":  "软件愿望",
+                         "id":  "ww-wish",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "手动产品状态",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.ComboBox",
+                         "name":  "手动产品状态",
+                         "id":  "ww-status",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "保存",
+                         "id":  "",
+                         "enabled":  false
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "重新读取（放弃未保存修改）",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.StatusBar",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.List",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.ListItem",
+                         "name":  "稳定产品 ID",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "稳定产品 ID",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "61dce9a9-7ec2-414f-84a2-7b5f3f7e11bf",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.ListItem",
+                         "name":  "修订号",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "修订号",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "2",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.ListItem",
+                         "name":  "更新时间",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "更新时间",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "2026-10-09T13:41:24.667Z",
+                         "id":  "",
+                         "enabled":  true
+                     },
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true
+                     }
+                 ]
+}

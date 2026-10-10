@@ -1,0 +1,24 @@
+{"observedAt":"2026-10-09T14:37:49.555Z","home":"G:\\dsh\\Wish-Willow\\.test-data\\final-github-home-20261009","command":"dsh plugin --profile web add <fixed-git-spec> --ignore-scripts","target":"https://github.com/wangxiaow/dsh-wish-willow.git#d72ab3c6ae6808aef9337f648acffa37459b8b4f","liveProfileTouched":false,"serverStarted":false}
+node.exe : dsh: initialized profile web at G:\dsh\Wish-Willow\.test-data\final-github-home-20261009\profiles\web
+所在位置 行:1 字符: 228
++ ... +$env:PATH; & 'C:\Users\wangw\.dsh\dsh-runtimes\dsh-primary-runtime\d ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (dsh: initialize...09\profiles\web:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[WARN] Tarball download average speed 22 KiB/s (size 113 KiB) is below 50 KiB/s: https://codeload.github.com/wangxiaow/dsh-wish-willow/tar.gz/d72ab3c6ae6808aef9337f648acffa37459b8b4f (GET)
+Packages are hard linked from the content-addressable store to the virtual store.
+  Content-addressable store is at: G:\.pnpm-store\v11
+  Virtual store is at:             node_modules/.pnpm
+[WARN] The git-hosted package fetched from "https://codeload.github.com/wangxiaow/dsh-wish-willow/tar.gz/d72ab3c6ae6808aef9337f648acffa37459b8b4f" has to be built but the build scripts were ignored.
+Progress: resolved 0, reused 0, downloaded 1, added 0
+
+dependencies:
++ dsh-wish-willow github:wangxiaow/dsh-wish-willow#d72ab3c6ae6808aef9337f648acffa37459b8b4f
+
+Packages: +2
+++
+Progress: resolved 2, reused 1, downloaded 1, added 1
+Progress: resolved 2, reused 1, downloaded 1, added 2, done
+Done in 19.2s using pnpm v11.7.0
+exitCode=0

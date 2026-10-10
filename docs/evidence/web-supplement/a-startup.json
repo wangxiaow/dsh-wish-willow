@@ -1,0 +1,23 @@
+﻿{
+    "at":  "2026-10-10T16:50:57.1978851+08:00",
+    "target":  "BrowserA",
+    "pid":  9908,
+    "handle":  21497424,
+    "action":  "inspect",
+    "name":  "",
+    "id":  "",
+    "value":  "",
+    "keys":  "",
+    "bounds":  "481,187,1935,1057",
+    "label":  "a-startup",
+    "elements":  [
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "继续",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1600,880,121,36"
+                     }
+                 ]
+}

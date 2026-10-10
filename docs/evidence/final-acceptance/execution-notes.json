@@ -1,0 +1,48 @@
+{
+  "source": "Reduced factual notes from this acceptance session's tool results; not a fabricated raw runtime response",
+  "initialObservation": {
+    "localDate": "2026-10-09",
+    "desktopPid": 31400,
+    "desktopStartedAt": "2026-10-09T21:12:36.015+08:00",
+    "hostPid": 31800,
+    "hostStartedAt": "2026-10-09T21:12:37.497+08:00",
+    "listener": "127.0.0.1:19387",
+    "fullRestartProvenAtThatTime": false,
+    "reason": "Same Host PID as the historical evidence, with a start time before the historical product was created"
+  },
+  "continuation": {
+    "localDate": "2026-10-10",
+    "desktopPid": 5932,
+    "hostPid": 29280,
+    "restartInitiatedByAgent": false,
+    "shutdownSequenceObserved": false,
+    "evidence": "environment-after-restart.json, after-restart.json, after-restart-wish.png, verified-environment.json"
+  },
+  "nonProductFailures": [
+    "First inline UIAutomation probe had a PowerShell pipeline syntax error (exit 1); corrected the test command only.",
+    "First screen-coordinate capture failed to acquire the intended foreground window; the invalid capture was discarded and removed. Subsequent captures use target-only PrintWindow; key/click input is refused unless the expected native window is foreground.",
+    "The account menu exposes ExpandCollapsePattern, not InvokePattern. Product selection and theme controls expose TogglePattern. Unsupported-pattern, missing-target and disabled-element attempts stopped without falling back to blind input; the helper was adjusted to the actual patterns.",
+    "Early theme captures were taken while data was still loading; they were not used as proof of loaded editor usability. Later explicit readiness checks and new screenshots provide that evidence.",
+    "On continuation the old PIDs were absent; discovered the new application and Host PIDs instead of assuming continuity.",
+    "PowerShell reported HTTP401 as a WebException in the first anonymous Web probe; the later structured Fetch probe records the expected 401 statuses without treating them as plugin failures."
+  ],
+  "testScope": {
+    "nativeDesktop": "Actual Electron window via Windows UI Automation and target-only PrintWindow, plus foreground-guarded keyboard input",
+    "web": "No authenticated controllable browser target obtained. Chrome launch and anonymous HTTP probes are NOT Web DOM E2E.",
+    "concurrency": "Real DSH Service/Gateway and durable JSON CAS passed in an isolated single-Host storage root. Existing React conflict test uses a mocked callback. Neither proves a two-real-client UI conflict flow.",
+    "github": "Official DSH CLI runCli in an isolated home; fixed Git commit; no live-profile reinstall, no server. Downloaded package loaded in real Cordis/DSH storage/Gateway components."
+  },
+  "warnings": [
+    "GitHub installation logged a slow download warning and an ignored-build-scripts warning; exit 0 and installed runtime entrypoints subsequently loaded successfully.",
+    "PowerShell's NativeCommandError formatting around normal DSH CLI stderr did not change the native installation exit code (0).",
+    "Regression uses the existing node_modules junction into the ignored local DSH dependency copy; this is not a newly provisioned clean-machine regression."
+  ],
+  "changes": {
+    "productSourceOrDshCoreChanged": false,
+    "existingProductsChanged": false,
+    "newLiveProductCount": 1,
+    "newLiveProductId": "7dee98d3-e9f1-4441-a917-8a5175967fc8",
+    "themeRestored": "Follow system",
+    "p1Started": false
+  }
+}

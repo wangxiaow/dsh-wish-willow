@@ -1,0 +1,111 @@
+{
+  "at": "2026-10-10T10:11:22.975468+00:00",
+  "method": "Assertions over real Chrome UIA snapshots and actual JSON disk records; not mocked UI or API substitution",
+  "checks": [
+    {
+      "scope": "T4",
+      "name": "Actual browser A is on isolated authenticated Web origin",
+      "pass": true
+    },
+    {
+      "scope": "T4",
+      "name": "Empty and whitespace-only title disable Save",
+      "pass": true
+    },
+    {
+      "scope": "T4",
+      "name": "Browser create durably stored labelled UUID/revision 1",
+      "pass": true
+    },
+    {
+      "scope": "T4",
+      "name": "Edit and status saved with stable UUID and incremented revision",
+      "pass": true
+    },
+    {
+      "scope": "T4",
+      "name": "Full browser refresh recovered saved text/status/revision",
+      "pass": true
+    },
+    {
+      "scope": "T4",
+      "name": "Actual Chinese and English labelled controls rendered",
+      "pass": true
+    },
+    {
+      "scope": "T4",
+      "name": "640px window uses stacked list/form within horizontal viewport",
+      "pass": true
+    },
+    {
+      "scope": "T4",
+      "name": "Oversized title gives actual UI error and retains rejected draft",
+      "pass": true
+    },
+    {
+      "scope": "T4",
+      "name": "Oversized wish gives actual UI error and retains rejected draft",
+      "pass": false
+    },
+    {
+      "scope": "T4",
+      "name": "Invalid input attempts leave committed disk bytes unchanged",
+      "pass": true
+    },
+    {
+      "scope": "T5",
+      "name": "Two distinct real browser windows use the same single Host origin",
+      "pass": true
+    },
+    {
+      "scope": "T5",
+      "name": "Both clients loaded the same UUID at revision 2",
+      "pass": true
+    },
+    {
+      "scope": "T5",
+      "name": "A save durably commits revision 3",
+      "pass": true
+    },
+    {
+      "scope": "T5",
+      "name": "B remained on old revision before attempting save",
+      "pass": true
+    },
+    {
+      "scope": "T5",
+      "name": "Actual B UI reports conflict",
+      "pass": true
+    },
+    {
+      "scope": "T5",
+      "name": "B losing title and wish are preserved after conflict",
+      "pass": true
+    },
+    {
+      "scope": "T5",
+      "name": "Rejected B request cannot overwrite winner in durable storage",
+      "pass": true
+    },
+    {
+      "scope": "T5",
+      "name": "Explicit B reload retrieves A and discards draft only on request",
+      "pass": true
+    },
+    {
+      "scope": "safety",
+      "name": "Production bytes remain unchanged throughout supplemental writes",
+      "pass": true
+    },
+    {
+      "scope": "safety",
+      "name": "Original Chinese locale restored in isolated browser",
+      "pass": true
+    }
+  ],
+  "passed": 19,
+  "failed": 1,
+  "T4": "FAIL",
+  "T5": "PASS",
+  "uuid": "cbfe4850-a928-4b32-8af8-cb95dfe5db8c"
+}

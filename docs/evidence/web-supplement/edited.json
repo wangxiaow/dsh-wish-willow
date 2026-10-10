@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-10T08:54:23.177114+00:00",
+  "storage": "G:\\dsh\\Wish-Willow\\.test-data\\final-github-home-20261009\\storages\\wish_willow.json",
+  "exists": true,
+  "sha256": "423e7966138536b9c592c451ebd3c8f454fe886da9af453cd62675dfe4d53b63",
+  "products": [
+    {
+      "title": "[P0 ACCEPTANCE TEST] Web edited",
+      "wish": "Web 第二次保存；UUID stable. 中文与 English 均可编辑。",
+      "status": "confirmed",
+      "id": "cbfe4850-a928-4b32-8af8-cb95dfe5db8c",
+      "schemaVersion": 1,
+      "revision": 2,
+      "createdAt": "2026-10-10T08:52:56.660Z",
+      "updatedAt": "2026-10-10T08:54:22.589Z"
+    }
+  ],
+  "expectedRevision": 2,
+  "productionSha256": "dbbb88bfb5c4d723f6803f63f8f942ef0b48a22dd4238c0ecec0362c9b9ecbcc",
+  "productionUnchanged": true
+}

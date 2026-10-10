@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-10T10:10:38.743254+00:00",
+  "storage": "G:\\dsh\\Wish-Willow\\.test-data\\final-github-home-20261009\\storages\\wish_willow.json",
+  "exists": true,
+  "sha256": "eca706c51836a9224ec769844714ac7358558ebc98787c2cc63fc1a05c4b7c50",
+  "products": [
+    {
+      "title": "[P0 ACCEPTANCE TEST] Web winner A",
+      "wish": "A committed winner / 成功写入，B 不可覆盖",
+      "status": "confirmed",
+      "id": "cbfe4850-a928-4b32-8af8-cb95dfe5db8c",
+      "schemaVersion": 1,
+      "revision": 3,
+      "createdAt": "2026-10-10T08:52:56.660Z",
+      "updatedAt": "2026-10-10T10:10:38.159Z"
+    }
+  ],
+  "expectedRevision": 3,
+  "productionSha256": "dbbb88bfb5c4d723f6803f63f8f942ef0b48a22dd4238c0ecec0362c9b9ecbcc",
+  "productionUnchanged": true
+}

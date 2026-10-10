@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-10T08:49:01.126Z",
+  "pid": 29872,
+  "origin": "http://127.0.0.1:3081",
+  "home": "G:\\dsh\\Wish-Willow\\.test-data\\final-github-home-20261009",
+  "profile": "web",
+  "boot": "official runProfile",
+  "fiberState": 2,
+  "bundles": [
+    "@deepseek-ai/dsh-base",
+    "@deepseek-ai/dsh-web-app",
+    "dsh-wish-willow"
+  ],
+  "storageRoot": "G:\\dsh\\Wish-Willow\\.test-data\\final-github-home-20261009\\storages",
+  "authenticatedUrlRecorded": false,
+  "liveProfilesModified": false,
+  "stopFile": "G:\\dsh\\Wish-Willow\\.test-data\\final-github-home-20261009\\stop-web-supplement"
+}

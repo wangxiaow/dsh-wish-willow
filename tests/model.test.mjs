@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createProductStore, productSchema } from '../src/model.js';
+import { createProductStore, productSchema } from '../src/p0/model.js';
 const id = 'fbdb1e1d-65cc-40e7-a06e-22d21d2d7fb1';
 const fields = { title: '测试产品', wish: '一个简单应用', status: 'draft' };
 function fixture() {

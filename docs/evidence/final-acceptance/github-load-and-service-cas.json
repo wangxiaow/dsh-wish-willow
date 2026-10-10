@@ -1,0 +1,59 @@
+{
+  "observedAt": "2026-10-09T14:40:00.842Z",
+  "target": "github:wangxiaow/dsh-wish-willow#d72ab3c6ae6808aef9337f648acffa37459b8b4f",
+  "installedVersion": "0.1.0-p0.1",
+  "profile": "G:\\dsh\\Wish-Willow\\.test-data\\final-github-home-20261009\\profiles\\web",
+  "storage": "G:\\dsh\\Wish-Willow\\.test-data\\final-github-service-storage-20261009",
+  "selected": true,
+  "hashes": {
+    "src/host.js": "66480847ecdcdd17ebeae9c0c6cc41e5e3c61c934f0c2889582029f3fb4a0622",
+    "src/model.js": "fa519760e21f66502995bbc3d1032f0ecf0fbc57b308a19c7a23300204810367",
+    "client.js": "41ad80c683b59a51514a5287cc42652085038ecddbb6149ad7578b5e9c59018e",
+    "cordis.patch.yml": "2e8f51153fcb1af8b99dd5f50ee05557c91ec2e58d352a12ce7c18365b4282f6",
+    "locale/en.json": "8ce556ef55a1ff419904728b2e2e375d38473682c7f514d8931a08e10c502346",
+    "locale/zh.json": "22c167e974c11d9deb30ac2b4d87969f11333f68d2fb4835cb8f7a60de679e47"
+  },
+  "boundaries": [
+    "Isolated real DSH services; not a second Web/Desktop app",
+    "No network server, no production storage root",
+    "Service CAS; not two browser DOM clients"
+  ],
+  "hostFiberState": 2,
+  "created": {
+    "title": "[P0 ACCEPTANCE TEST] GitHub installed service",
+    "wish": "Isolated fixed-commit installation acceptance",
+    "status": "draft",
+    "id": "0b711aa3-2390-42c1-a138-ab055f189516",
+    "schemaVersion": 1,
+    "revision": 1,
+    "createdAt": "2026-10-09T14:40:00.853Z",
+    "updatedAt": "2026-10-09T14:40:00.853Z"
+  },
+  "initialReadRevisions": [
+    1,
+    1
+  ],
+  "updated": {
+    "title": "[P0 ACCEPTANCE TEST] Service winner A",
+    "wish": "Isolated fixed-commit installation acceptance",
+    "status": "draft",
+    "id": "0b711aa3-2390-42c1-a138-ab055f189516",
+    "schemaVersion": 1,
+    "revision": 2,
+    "createdAt": "2026-10-09T14:40:00.853Z",
+    "updatedAt": "2026-10-09T14:40:00.874Z"
+  },
+  "conflict": {
+    "code": "wish-willow/conflict",
+    "message": "Product changed; reload before saving",
+    "details": {
+      "id": "0b711aa3-2390-42c1-a138-ab055f189516",
+      "expectedRevision": 1,
+      "actualRevision": 2
+    }
+  },
+  "staleWriteRejected": true,
+  "winnerPreservedOnDisk": true,
+  "domainReopened": true,
+  "status": "PASS"
+}

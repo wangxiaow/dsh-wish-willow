@@ -1,0 +1,72 @@
+﻿[
+    {
+        "path":  "src\\host.js",
+        "bytes":  1931,
+        "sha256":  "66480847ECDCDD17EBEAE9C0C6CC41E5E3C61C934F0C2889582029F3FB4A0622"
+    },
+    {
+        "path":  "src\\model.js",
+        "bytes":  2496,
+        "sha256":  "FA519760E21F66502995BBC3D1032F0ECF0FBC57B308A19C7A23300204810367"
+    },
+    {
+        "path":  "client.js",
+        "bytes":  9691,
+        "sha256":  "41AD80C683B59A51514A5287CC42652085038ECDDBB6149AD7578B5E9C59018E"
+    },
+    {
+        "path":  "cordis.patch.yml",
+        "bytes":  80,
+        "sha256":  "2E8F51153FCB1AF8B99DD5F50EE05557C91EC2E58D352A12CE7C18365B4282F6"
+    },
+    {
+        "path":  "package.json",
+        "bytes":  2187,
+        "sha256":  "4DE7D3AD31ECF3E7BB5350FF4921148903F195D64D85F0267073DE5D0A6DB6EC"
+    },
+    {
+        "path":  "packages\\p1\\src\\host.js",
+        "bytes":  6010,
+        "sha256":  "4E36110F4C1F84179861E4BF462F9032C11C4C4551AB5BE30051D4562AF8C26E"
+    },
+    {
+        "path":  "packages\\p1\\src\\state.js",
+        "bytes":  12950,
+        "sha256":  "AB535ED68743DA75788108FCF7731EB08937529FC0B48D1183481F92DC0D9034"
+    },
+    {
+        "path":  "packages\\p1\\src\\orchestrator.js",
+        "bytes":  20644,
+        "sha256":  "95509C9B6A36D17E2FA0BBD37E6F4D0824068C575A2542E301E4C440556A8D52"
+    },
+    {
+        "path":  "packages\\p1\\src\\artifacts.js",
+        "bytes":  3312,
+        "sha256":  "0905C7BB20358D6761DBC235C1C3138414BE8A048F25B7CC02E39A85D7E2D1E8"
+    },
+    {
+        "path":  "packages\\p1\\client.js",
+        "bytes":  21779,
+        "sha256":  "C1CD1802F248CD770FEC815D8F7274EFAC3BED1D49F307ED7AF12AD73D6994CF"
+    },
+    {
+        "path":  "packages\\p1\\cordis.patch.yml",
+        "bytes":  173,
+        "sha256":  "CB0A7E56508E56FCA999C0A63C0B5E2AB6FC886A440D36FE32B47AC24DB35976"
+    },
+    {
+        "path":  "packages\\p1\\package.json",
+        "bytes":  1563,
+        "sha256":  "2B12BDA96CE8959402B3C45E5445CC2545C89324C19D5F366B7E77273B2EFE4E"
+    },
+    {
+        "path":  "artifacts\\dsh-wish-willow-0.1.0-p0.1.tgz",
+        "bytes":  29423,
+        "sha256":  "7BFFE6B7B2D13FF7D4F5139CBA0F1DCC90D64E1DF915DDEB4326746998D25E77"
+    },
+    {
+        "path":  "artifacts\\dsh-wish-willow-p1-0.2.0-p1.1.tgz",
+        "bytes":  22821,
+        "sha256":  "C48D4555C2B8F4C856A512CC73BE023FFB59ABBE4680D81147C7D75CD4F70476"
+    }
+]

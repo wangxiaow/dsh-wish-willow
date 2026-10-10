@@ -1,0 +1,57 @@
+﻿{
+    "observedAt":  "2026-10-10T07:55:04.0727599+08:00",
+    "workspace":  "G:\\dsh\\Wish-Willow",
+    "os":  "Microsoft Windows 11 专业版",
+    "osVersion":  "10.0.26300",
+    "build":  "26300",
+    "sessionId":  "session-2e9f015d-7a71-4e5c-ad19-a30ebc12e16f",
+    "profile":  "desktop",
+    "webUrl":  "http://127.0.0.1:19387",
+    "oldProcessIdsAbsent":  true,
+    "processes":  [
+                      {
+                          "pid":  5932,
+                          "parentPid":  11200,
+                          "startedAt":  "2026-10-10T07:53:06.7041070+08:00",
+                          "executable":  "D:\\Program Files\\DeepSeek Harness\\DeepSeek Harness.exe"
+                      },
+                      {
+                          "pid":  28696,
+                          "parentPid":  5932,
+                          "startedAt":  "2026-10-10T07:53:07.6210030+08:00",
+                          "executable":  "D:\\Program Files\\DeepSeek Harness\\DeepSeek Harness.exe"
+                      },
+                      {
+                          "pid":  28736,
+                          "parentPid":  5932,
+                          "startedAt":  "2026-10-10T07:53:07.6358140+08:00",
+                          "executable":  "D:\\Program Files\\DeepSeek Harness\\DeepSeek Harness.exe"
+                      },
+                      {
+                          "pid":  28804,
+                          "parentPid":  5932,
+                          "startedAt":  "2026-10-10T07:53:07.7000310+08:00",
+                          "executable":  "D:\\Program Files\\DeepSeek Harness\\DeepSeek Harness.exe"
+                      },
+                      {
+                          "pid":  29280,
+                          "parentPid":  5932,
+                          "startedAt":  "2026-10-10T07:53:08.5510470+08:00",
+                          "executable":  "D:\\Program Files\\DeepSeek Harness\\DeepSeek Harness.exe"
+                      },
+                      {
+                          "pid":  8836,
+                          "parentPid":  29280,
+                          "startedAt":  "2026-10-10T07:55:02.3812250+08:00",
+                          "executable":  "D:\\Program Files\\DeepSeek Harness\\DeepSeek Harness.exe"
+                      }
+                  ],
+    "listener":  [
+                     {
+                         "LocalAddress":  "127.0.0.1",
+                         "LocalPort":  19387,
+                         "OwningProcess":  29280
+                     }
+                 ],
+    "asarSha256":  "983CA71114E6DFD353FC79AF5A1F9481A250EE64C2A3C757673029B811B23BC2"
+}

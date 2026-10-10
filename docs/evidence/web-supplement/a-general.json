@@ -1,0 +1,367 @@
+﻿{
+    "at":  "2026-10-10T16:57:17.6498986+08:00",
+    "target":  "BrowserA",
+    "pid":  9908,
+    "handle":  21497424,
+    "action":  "inspect",
+    "name":  "",
+    "id":  "",
+    "value":  "",
+    "keys":  "",
+    "bounds":  "481,187,1280,960",
+    "label":  "a-general",
+    "elements":  [
+                     {
+                         "type":  "ControlType.Group",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "721,332,188,783"
+                     },
+                     {
+                         "type":  "ControlType.Group",
+                         "name":  "",
+                         "id":  ":rh:",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "733,354,164,24"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "设置",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "745,355,32,21"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "通用设置",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "733,396,164,40"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "模型",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "733,440,164,40"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "内置插件",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "733,484,164,40"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "Agent 预设",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "733,528,164,40"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "Wish Willow · P0",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "733,572,164,40"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "打开配置文件",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1377,352,94,28"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "关闭",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1479,352,28,28"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "权限",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "933,403,28,19"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "选择新会话的默认权限模式",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "933,429,144,16"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "工作区内修改",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1354,406,138,36"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "语言",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "933,487,28,19"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "中文",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1410,479,82,36"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "外观",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "933,549,28,19"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "浅色",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "933,578,181,84"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "深色",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1122,578,181,84"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "跟随系统",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1311,578,181,84"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "字号大小",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "933,696,56,19"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "仅影响会话内容的字号",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "933,722,120,16"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "14",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1425,707,16,19"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "增大字号",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1444,704,18,12"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "减小字号",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1444,718,18,12"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "px",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1477,707,15,19"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "工作步骤展示",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "933,773,84,19"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "选择希望看到多少工具调用细节",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "933,799,168,16"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "详细",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1410,776,82,36"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "显示代码工作视图",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "933,849,112,19"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "开启后，显示轨迹、本轮代码差异，可选择完整的 Agent 预设切换",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "933,874,351,16"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "显示代码工作视图",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1456,860,36,20"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "快捷键",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "933,925,42,19"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "查看和编辑当前可用的快捷键和输入操作",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "933,951,216,16"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "编辑快捷键",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1394,928,98,36"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "繁忙时的发送行为",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "933,1002,112,19"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "智能体运行时 Enter 键和发送按钮的行为；Cmd/Ctrl+Enter 使用另一行为",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "933,1028,385,16"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "排队发送",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1382,1005,110,36"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "性能与用量",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "933,1079,70,19"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "选择性能与用量信息展示的详细程度",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "933,1105,192,16"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "详细",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1410,1082,82,36"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "在使用官方模型 API 时上传 Session Log",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  true,
+                         "bounds":  "933,1155,246,19"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "帮助改进 DeepSeek 模型与产品",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  true,
+                         "bounds":  "933,1180,168,16"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "在使用官方模型 API 时上传 Session Log",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  true,
+                         "bounds":  "1456,1166,36,20"
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "当前版本：0.2.0-rc.2",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  true,
+                         "bounds":  "933,1231,127,19"
+                     }
+                 ]
+}

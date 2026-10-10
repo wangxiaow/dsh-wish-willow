@@ -1,0 +1,19 @@
+﻿{
+    "at":  "2026-10-10T18:15:14.8734579+08:00",
+    "isolatedHostStopped":  true,
+    "isolatedExitCode":  0,
+    "existingListeners":  [
+                              {
+                                  "LocalAddress":  "127.0.0.1",
+                                  "LocalPort":  19387,
+                                  "OwningProcess":  29280
+                              },
+                              {
+                                  "LocalAddress":  "127.0.0.1",
+                                  "LocalPort":  3080,
+                                  "OwningProcess":  8860
+                              }
+                          ],
+    "productionSha256":  "DBBB88BFB5C4D723F6803F63F8F942EF0B48A22DD4238C0ECEC0362C9B9ECBCC",
+    "productionUnchanged":  true
+}
