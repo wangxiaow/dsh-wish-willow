@@ -60,21 +60,36 @@ for (const script of scripts) {
 }
 check('build: node --check passes for every delivered script', buildOk, `${scripts.length} scripts`);
 
-// 4. The project's own test suite, executed independently.
+// 4. The project's own build and test commands, executed independently.
+const generic = args.includes('--generic');
+const manifestPkg = existsSync(join(deliveryRoot, 'package.json')) ? JSON.parse(readFileSync(join(deliveryRoot, 'package.json'), 'utf8')) : null;
+const scriptsOf = manifestPkg?.scripts ?? {};
+if (generic && scriptsOf.build) {
+  const result = spawnSync(process.platform === 'win32' ? 'npm run build' : 'npm', process.platform === 'win32' ? [] : ['run', 'build'],
+    { cwd: deliveryRoot, shell: process.platform === 'win32', encoding: 'utf8', timeout: 300000 });
+  report.commands.push({ command: 'npm run build', status: result.status, stdout: result.stdout?.slice(-2000), stderr: result.stderr?.slice(-1000) });
+  check('build: the delivered project build command passes', result.status === 0, `npm run build exit=${result.status}`);
+}
 const ownTests = ['todo-test-runner.js', 'scripts/test.js', 'test.js'].find(name => existsSync(join(deliveryRoot, name)));
-if (ownTests) {
-  const result = spawnSync(process.execPath, [ownTests], { cwd: deliveryRoot, encoding: 'utf8', timeout: 300000 });
-  report.commands.push({ command: `node ${ownTests}`, status: result.status, stdout: result.stdout?.slice(-2000), stderr: result.stderr?.slice(-1000) });
-  check('test: the delivered project own test suite passes', result.status === 0, `node ${ownTests} exit=${result.status}`);
+const npmTest = generic && scriptsOf.test && !ownTests;
+if (ownTests || npmTest) {
+  const result = ownTests
+    ? spawnSync(process.execPath, [ownTests], { cwd: deliveryRoot, encoding: 'utf8', timeout: 300000 })
+    : spawnSync(process.platform === 'win32' ? 'npm test' : 'npm', process.platform === 'win32' ? [] : ['test'], { cwd: deliveryRoot, shell: process.platform === 'win32', encoding: 'utf8', timeout: 300000 });
+  report.commands.push({ command: ownTests ? `node ${ownTests}` : 'npm test', status: result.status, stdout: result.stdout?.slice(-2000), stderr: result.stderr?.slice(-1000) });
+  check('test: the delivered project own test suite passes', result.status === 0, `${ownTests ? `node ${ownTests}` : 'npm test'} exit=${result.status}`);
 } else {
   check('test: the delivered project own test suite passes', false, 'no runner found');
 }
 
 // 5. The documented start command over real HTTP.
-const port = 4300 + round;
-const server = spawn(process.execPath, ['server.js'], { cwd: deliveryRoot, env: { ...process.env, PORT: String(port), HOST: '127.0.0.1' }, stdio: 'ignore' });
+const port = Number(option('port') ?? 4300 + round);
+const startCommand = option('start') ?? (generic ? (scriptsOf.start ?? 'node server.js') : 'node server.js');
+const server = generic
+  ? spawn(startCommand, { cwd: deliveryRoot, env: { ...process.env, PORT: String(port), HOST: '127.0.0.1' }, stdio: 'ignore', shell: process.platform === 'win32' })
+  : spawn(process.execPath, ['server.js'], { cwd: deliveryRoot, env: { ...process.env, PORT: String(port), HOST: '127.0.0.1' }, stdio: 'ignore' });
 let httpStatus = 0; let body = '';
-const deadline = Date.now() + 20000;
+const deadline = Date.now() + 30000;
 while (Date.now() < deadline) {
   try {
     const response = await fetch(`http://127.0.0.1:${port}/`);
@@ -84,21 +99,30 @@ while (Date.now() < deadline) {
   } catch { await new Promise(ok => setTimeout(ok, 300)); }
 }
 let pageOk = httpStatus === 200;
-const requiredSelectors = round === 1
+const requiredSelectors = generic ? [] : (round === 1
   ? ['id="todo-list"', 'id="todo-input"', 'id="todo-submit"', 'id="todo-progress"']
-  : ['id="todo-list"', 'id="todo-input"', 'id="todo-submit"'];
+  : ['id="todo-list"', 'id="todo-input"', 'id="todo-submit"']);
 for (const selector of requiredSelectors) if (!body.includes(selector)) pageOk = false;
-check('run: documented start command serves the real page over HTTP', pageOk, `status=${httpStatus} bytes=${body.length}`);
-if (round >= 2) {
+const expectText = option('expect-text');
+if (generic) {
+  if (!expectText) pageOk = false;
+  else if (!body.includes(expectText)) pageOk = false;
+}
+check(`run: documented start command '${startCommand}' serves the real page over HTTP`, pageOk,
+  `status=${httpStatus} bytes=${body.length}${expectText ? ` expect='${expectText}' found=${body.includes(expectText)}` : ''}`);
+if (round >= 2 && !generic) {
   const priorityUi = /priority/i.test(body) || body.includes('优先级');
   check('round 2 UI: the page exposes a task priority and priority filter control', priorityUi);
 }
 const textBody = await (async () => { try { return await (await fetch(`http://127.0.0.1:${port}/index.html`)).text(); } catch { return ''; } })();
 check('run: the served page is the delivered index.html', textBody.length > 0 && textBody.includes('<html'));
 server.kill();
-report.http = { status: httpStatus, bytes: body.length, pageHasPriority: /priority/i.test(body) || body.includes('优先级') };
+report.http = { status: httpStatus, bytes: body.length, startCommand, expectText: expectText ?? null,
+  pageHasPriority: /priority/i.test(body) || body.includes('优先级') };
 
 // 6. Behaviour of the delivered data layer: round-1 requirements, and round-1 regression on round 2.
+//    In generic mode the deliverable is not the two-round todo app, so the documented
+//    build/test/start/HTTP expectations above carry the behavioural verdict instead.
 const require = createRequire(import.meta.url);
 const candidates = manifest.entries.map(entry => entry.path).filter(path => /core|todo.*\.js$/i.test(path) && !/test/i.test(path));
 let core = null; let corePath = null;
@@ -106,7 +130,11 @@ for (const candidate of candidates) {
   try { core = require(join(deliveryRoot, candidate)); corePath = candidate; break; } catch { /* not a CommonJS module */ }
 }
 const behaviour = { corePath };
-if (core) {
+if (generic) {
+  const deliveryChecks = report.checks.filter(entry => /^(snapshot manifest|released snapshot|build:|test:|run:)/.test(entry.name));
+  check('generic delivery: snapshot, build, own tests, start command and page content all verified',
+    deliveryChecks.length >= 4 && deliveryChecks.every(entry => entry.ok), `${deliveryChecks.length} delivery checks`);
+} else if (core) {
   const first = core.createTask('  买牛奶  ');
   behaviour.created = first;
   let tasks = core.appendTask([], first);
@@ -127,7 +155,7 @@ if (core) {
 } else {
   check('round 1 behaviour: add, list, complete and delete work through the delivered data layer', false, 'no loadable core module');
 }
-if (round >= 2 && core) {
+if (round >= 2 && core && !generic) {
   const api = Object.keys(core);
   behaviour.api = api;
   const priorityApi = api.filter(name => /priorit/i.test(name));
