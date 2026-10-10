@@ -5,7 +5,7 @@ import vm from 'node:vm';
 
 const manifest = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'));
 assert.equal(manifest.name, 'dsh-wish-willow');
-assert.equal(manifest.version, '0.3.0');
+assert.equal(manifest.version, '0.3.1');
 assert.equal(manifest.license, 'MIT');
 assert.equal(manifest.author, 'wangxiaow');
 assert.equal(manifest.repository.url, 'git+https://github.com/wangxiaow/dsh-wish-willow.git');
@@ -16,7 +16,7 @@ assert.equal(manifest.dsh.client.platform, 'web');
 assert.equal(manifest.dsh.bundle.patch, './cordis.patch.yml');
 assert.equal(manifest.scripts.prepare, undefined, 'Git install must not need lifecycle build scripts');
 assert.equal(manifest.peerDependencies['@deepseek-ai/dsh'], '0.2.0-rc.2');
-for (const entry of ['src/', 'packages/', 'client.js', 'cordis.patch.yml', 'README.md', 'LICENSE']) {
+for (const entry of ['src/', 'packages/p1/src/', 'client.js', 'cordis.patch.yml', 'README.md', 'LICENSE']) {
   assert.ok(manifest.files.includes(entry), `unified bundle must ship ${entry}`);
 }
 
@@ -92,3 +92,4 @@ assert.equal(legacyHost.evolutionDomain.version, 1);
 const p1Readme = await readFile(new URL('../packages/p1/README.md', import.meta.url), 'utf8');
 assert.match(p1Readme, /wish_willow_p1/);
 console.log('Build PASS: one installable Wish Willow bundle (composition root, P0 + P1 internal modules, single Client entry) with the frozen legacy companion retained for rollback. No transpilation needed.');
+

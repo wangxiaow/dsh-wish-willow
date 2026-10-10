@@ -1,4 +1,8 @@
-# Web / Desktop 验证记录
+# Web / Desktop 验证记录（P0 历史记录）
+
+> **本文件是 P0 阶段（`dsh-wish-willow` 0.1.0-p0.1，单页面）的验证记录，保留历史原文。**
+> 统一 Bundle 0.3.0 的双端验收记录已迁移到 [P1-FINAL-ACCEPTANCE.md](<P1-FINAL-ACCEPTANCE.md>) 与 [P1-UNIFICATION-REPORT.md](<P1-UNIFICATION-REPORT.md>)：其中 Web 端为真实 Host + 真实浏览器完整流程，Desktop 端为真实 profile 安装级升级 + 单入口实测（面板复验待重启）。
+> 下表最后三行「未验证」项在统一 Bundle 阶段已被上述记录取代。
 
 环境：Windows、官方 Desktop 0.2.0-rc.2；`DSH_PROFILE=desktop`；现有 Web GUI URL 为 `http://127.0.0.1:19387`。没有创建替代服务器、改造核心或终止应用。
 

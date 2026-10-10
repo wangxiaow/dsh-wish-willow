@@ -19,13 +19,14 @@ const loadClient = async relative => {
 test('the install surface is one Bundle: one manifest, one patch row, one Client entry', async () => {
   const manifest = await readJson('package.json');
   assert.equal(manifest.name, 'dsh-wish-willow');
-  assert.equal(manifest.version, '0.3.0');
+  assert.equal(manifest.version, '0.3.1');
   assert.equal(manifest.dsh.bundle.patch, './cordis.patch.yml');
   assert.equal(manifest.dsh.client.platform, 'web');
   assert.equal(manifest.exports['.'], './src/host.js');
   assert.equal(manifest.exports['./client'], './client.js');
-  assert.ok(manifest.files.includes('packages/'), 'the internal P1 module ships inside the unified tarball');
+  assert.ok(manifest.files.includes('packages/p1/src/'), 'the internal P1 module ships inside the unified tarball');
   assert.ok(manifest.files.includes('src/'), 'the internal P0 module ships inside the unified tarball');
+  assert.equal(manifest.files.some(entry => entry.includes('evidence')), false, 'test evidence is not shipped in the install artifact');
   assert.equal(Object.keys(manifest.dsh).sort().join(','), 'bundle,client', 'exactly one bundle and one client declaration per install');
 
   const layer = loadOptionalPatches('test', resolve(repo, 'cordis.patch.yml'));
@@ -104,3 +105,4 @@ test('the unified Bundle declares the same compatibility window it was verified 
   }
   assert.equal(manifest.scripts.prepare, undefined, 'no lifecycle script runs on install');
 });
+

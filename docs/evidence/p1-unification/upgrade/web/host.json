@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-10T12:50:42.927Z",
+  "pid": 20964,
+  "origin": "http://127.0.0.1:3082",
+  "home": "C:\\Users\\wangw\\AppData\\Local\\dsh-wish-willow-acceptance\\home-legacy",
+  "profile": "web",
+  "boot": "official runProfile",
+  "fiberState": 2,
+  "bundles": [
+    "@deepseek-ai/dsh-base",
+    "@deepseek-ai/dsh-web-app",
+    "dsh-wish-willow"
+  ],
+  "storageRoot": "C:\\Users\\wangw\\AppData\\Local\\dsh-wish-willow-acceptance\\home-legacy\\storages",
+  "liveProfilesModified": false,
+  "authenticatedUrlRecorded": false,
+  "stopFile": "C:\\Users\\wangw\\AppData\\Local\\dsh-wish-willow-acceptance\\home-legacy\\stop-host",
+  "chromeProfile": "G:\\dsh\\Wish-Willow\\.test-data\\chrome-home-legacy-3082",
+  "chromeDebugPort": 9334,
+  "chromePid": 34512
+}

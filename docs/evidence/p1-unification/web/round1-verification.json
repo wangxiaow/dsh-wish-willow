@@ -1,0 +1,127 @@
+{
+  "at": "2026-10-10T12:48:05.869Z",
+  "round": 1,
+  "deliveryRoot": "C:\\Users\\wangw\\AppData\\Local\\dsh-wish-willow-acceptance\\home-unified\\wish-willow\\deliveries\\b41b8242-db6c-416f-bd27-85110219d5d9\\f901cfff-ef63-4f5b-88bc-58daa7739fef\\source",
+  "workspace": "C:\\Users\\wangw\\AppData\\Local\\dsh-wish-willow-acceptance\\home-unified\\wish-willow\\projects\\b41b8242-db6c-416f-bd27-85110219d5d9",
+  "checks": [
+    {
+      "name": "snapshot manifest hashes and bytes match the delivered files",
+      "ok": true,
+      "detail": "8 entries"
+    },
+    {
+      "name": "released snapshot equals the live product workspace",
+      "ok": true
+    },
+    {
+      "name": "build: node --check passes for every delivered script",
+      "ok": true,
+      "detail": "5 scripts"
+    },
+    {
+      "name": "test: the delivered project own test suite passes",
+      "ok": true,
+      "detail": "node todo-test-runner.js exit=0"
+    },
+    {
+      "name": "run: documented start command serves the real page over HTTP",
+      "ok": true,
+      "detail": "status=200 bytes=1588"
+    },
+    {
+      "name": "run: the served page is the delivered index.html",
+      "ok": true
+    },
+    {
+      "name": "round 1 behaviour: add, list, complete and delete work through the delivered data layer",
+      "ok": true,
+      "detail": "{\"total\":2,\"done\":1,\"pending\":1}"
+    },
+    {
+      "name": "release metadata: history is ordered, append-only and uniquely snapshotted",
+      "ok": true,
+      "detail": "releases=1"
+    },
+    {
+      "name": "release metadata: every release links a passed build and a Released version",
+      "ok": true
+    },
+    {
+      "name": "release metadata: passed builds carry real build+test+run exit 0 evidence",
+      "ok": true
+    },
+    {
+      "name": "release metadata: every release snapshot directory exists and matches its manifest",
+      "ok": true
+    }
+  ],
+  "commands": [
+    {
+      "command": "node --check app.js",
+      "status": 0,
+      "stderr": ""
+    },
+    {
+      "command": "node --check server.js",
+      "status": 0,
+      "stderr": ""
+    },
+    {
+      "command": "node --check todo-core.js",
+      "status": 0,
+      "stderr": ""
+    },
+    {
+      "command": "node --check todo-core.test.js",
+      "status": 0,
+      "stderr": ""
+    },
+    {
+      "command": "node --check todo-test-runner.js",
+      "status": 0,
+      "stderr": ""
+    },
+    {
+      "command": "node todo-test-runner.js",
+      "status": 0,
+      "stdout": "✔ 新增任务：空标题与纯空白被拒绝\n✔ 新增任务：标题去除首尾空白并压缩内部空白\n✔ 新增任务：追加后总数增加且不修改原数组\n✔ 标记完成：可来回切换且不修改原数组\n✔ 删除任务：移除指定项并保留其余项\n✔ 统计：正确统计已完成与待办数量\n✔ 持久化：序列化与反序列化可完整往返\n✔ 持久化：坏数据与旧格式不会抛错\n✔ 内存兜底存储：localStorage 不可用时仍可读写\n✔ 页面资源：index.html 引用的脚本、样式与挂载点存在\n✔ 路径解析：目录穿越请求被拒绝\n✔ run 冒烟：真实启动服务器并访问首页与静态资源\n\n测试文件: todo-core.test.js\n共 12 项，通过 12 项，失败 0 项\n\nTEST OK（全部通过）\n",
+      "stderr": ""
+    }
+  ],
+  "http": {
+    "status": 200,
+    "bytes": 1588,
+    "pageHasPriority": false
+  },
+  "releases": [
+    {
+      "id": "baefabcf-a08b-43ad-b20d-ca7cf1423f38",
+      "versionId": "f901cfff-ef63-4f5b-88bc-58daa7739fef",
+      "releasedAt": "2026-10-10T12:45:55.196Z",
+      "snapshotPath": "C:\\Users\\wangw\\AppData\\Local\\dsh-wish-willow-acceptance\\home-unified\\wish-willow\\deliveries\\b41b8242-db6c-416f-bd27-85110219d5d9\\f901cfff-ef63-4f5b-88bc-58daa7739fef\\source",
+      "startCommand": "node server.js"
+    }
+  ],
+  "runs": [
+    {
+      "id": "3c41d008-d724-4a60-b496-81b3837c080b",
+      "status": "completed",
+      "provider": "deepseek-official",
+      "model": "deepseek-flash",
+      "modelCalls": 31,
+      "toolCalls": 35,
+      "failures": 2,
+      "inputTokens": 94535,
+      "outputTokens": 22032,
+      "durationMs": 106430
+    }
+  ],
+  "project": {
+    "id": "b41b8242-db6c-416f-bd27-85110219d5d9",
+    "revision": 16,
+    "status": "delivered",
+    "confirmed": 1,
+    "inferred": 8
+  },
+  "passed": true
+}

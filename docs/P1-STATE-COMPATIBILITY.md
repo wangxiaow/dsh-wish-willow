@@ -1,4 +1,8 @@
-# P1 状态兼容方案（实施中）
+# P1 状态兼容方案
+
+> **状态：本文件记录的「P1 作为独立 companion Bundle」是 P1 开发期的过渡实现，已被统一 Bundle（`dsh-wish-willow` 0.3.0）取代。**
+> 数据层结论全部继续有效（两个 Domain、schema、幂等、恢复与失败关闭语义一字未改）；安装/入口层面的最新方案见 [ARCHITECTURE.md](<ARCHITECTURE.md>)、[P1-UNIFICATION-REPORT.md](<P1-UNIFICATION-REPORT.md>)、[WISH-WILLOW-UPGRADE.md](<WISH-WILLOW-UPGRADE.md>)。
+> 统一后：`wish_willow`/`products` 与 `wish_willow_p1`/`projects` 仍是两个独立 Domain，统一 Bundle 由组合根同时打开它们；P0 记录保持字节不变，只由用户显式按 UUID 导入。
 
 ## 选择、原因与替代方案
 

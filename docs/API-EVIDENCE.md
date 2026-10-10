@@ -65,3 +65,20 @@ ASAR 的 `dsh/` 只读提取于被 Git 忽略的 `.research/installed/dsh/`。�
 - 未使用 `session.eventAt/snapshotEvents/ownEvents` 等已弃用同步读取；P1 只使用 scoped `session/event` 与 `sessionQuery.readSession`。
 
 自动化与实际管理器运行结果分别见验收报告，源码依据不替代实际平台验收。
+
+## P1 统一 Bundle（2026-10-10 追加）
+
+先 `cordis_inspect_list` 再按需 `cordis_inspect_query`；源码行号指向同版本官方实现。
+
+| 结论 | 依据 |
+|---|---|
+| `dsh.bundle.patch` 可以是字符串**或文件数组**；每层 patch 的 `insert` 可插入**多行**；行的 `name` 允许**子路径** | `.research/installed/dsh/node_modules/@deepseek-ai/dsh-app-boot/lib/index.js:489–509`（`bundlePatchFiles`/`bundlePatchPaths`）；官方自带子路径行 `@deepseek-ai/dsh-tool-subagent-control/list-agents`、`@deepseek-ai/dsh-plugin-manager/tools` |
+| 一个包只能提供**一个** Client 模块：client 资源按 Loader row 扫描，client 文件由包 `exports["./client"]` 定位，资源 id 为 row id，模块 id 必须等于 package name | `dsh-client-modules/lib/index.js:104–105`（Node 半边扫描 row）、`:700–720`（`resolveMeta` → `clientExportOf(packageName, pkg.exports)`）、`:204`（`/plugins/<rowId>/client.js` 组合 URL）；`dsh-agent-preset/skills/cordis-plugin-development/templates/decoration/client.js` 的 lazy factory 约定 |
+| 同一个包插入两行会导致同一 client 文件被装载两次 → 必须「一行 + 一个 Client 模块」 | 上一条 + 本次 `tests/unified-bundle.test.mjs`（组合层断言） |
+| Cordis `apply` 的**返回值会被当作 effect 处理**，返回对象会报 `Invalid effect` | 运行时实测（本次首次组合根实现报错）；`@deepseek-ai/cordis/lib/index.js` 的 `safeCollect`/`Fiber._reload` |
+| 组合层可离线核对：`composeEntries` 与 `loadOptionalPatches` 是官方导出 | `dsh-app-boot/lib/index.js` 导出列表；用于 `tests/unified-bundle.test.mjs` |
+| 插件管理器只能管理**当前 profile**；隔离 profile 用官方 CLI `dsh plugin --profile <name> add|remove <pkg>`（内部转发 pnpm） | `dsh/lib/bin.js:115–120,234–236`；`dsh/lib/plugin-BGnVfe_D.js:63–98`（`runPlugin` → `runProfilePnpm`）；本次隔离安装实测 exit 0 |
+| Bundle 内容被替换后，安装回执可能为 `application: restart-required`：Client 入口可立即更新，Host row 需重启 DSH 才生效 | 本次真实 Desktop 实测：入口 `settings.section` 立即变为单个 `wish-willow`，但 `plugin_list` 中旧 row `include:wish-willow-p0` 仍 `fiberPhase=active`，面板 RPC 在重启前失败 |
+| 默认模型：base 默认 `provider: deepseek-official` / `model: deepseek-flash`，显示名为 **DeepSeek-V41-Flash** | `dsh-base/cordis.patch.yml` 的 `agent-default-model`；`dsh-llm-deepseek/lib/index.js:43–51`（`deepseek-flash` → `DeepSeek-V41-Flash`） |
+| Windows 沙箱 `grantWrite` 需要工作目录对当前用户具备 **WRITE_OWNER**（强制完整性标签位于 SACL）；继承 ACE 只有 `Modify` 的目录会以 `ACCESS_DENIED` 失败 | `dsh-sandbox-windows-acl/lib/index.js:583–611` 注释与实现；本次实测报错 `SetNamedSecurityInfoW failed (Win32 5): grantWrite(<workspace>)`；迁移到用户 profile 下（FullControl 继承）后通过 |
+| P0/P1 的 Domain、Service、Slot、RPC 名称在统一 Bundle 中全部保持不变 | `tests/unified-bundle.test.mjs`、`tests/integration/unified-runtime.test.mjs` 断言；升级前后真实存储文件 SHA256 一致 |

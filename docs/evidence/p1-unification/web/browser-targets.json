@@ -1,0 +1,14 @@
+﻿{
+    "at":  "2026-10-10T20:40:44.3632219+08:00",
+    "origin":  "http://127.0.0.1:3081",
+    "debugPort":  9333,
+    "chromeProfile":  "G:\\dsh\\Wish-Willow\\.test-data\\chrome-home-unified-3081",
+    "pageTitle":  "DeepSeek Harness",
+    "targets":  [
+                    {
+                        "handle":  264938,
+                        "pid":  33488,
+                        "bounds":  "10,10,1265,1372"
+                    }
+                ]
+}

@@ -1,0 +1,361 @@
+{
+  "panelPresent": true,
+  "ariaBusy": "false",
+  "panelText": "Wish Willow一个入口：许愿、执行、证据与交付。提交自然语言愿望，由真实 DSH Agent 规划、开发、构建、测试并交付可运行软件；产品状态独立于会话并持久保存。统一 Bundle 0.3.0：P0 与 P1 能力来自同一安装单元。[P1 E2E TEST] 待办事项应用 · 0.2.0产品名称软件愿望创建产品重新读取[P1 E2E TEST] 待办事项应用工作目录: C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\projects\\72e73806-11ac-44f4-b58a-01ff32153e00产品状态已交付修订号32产品目标我想做一个简单的待办事项应用，可以添加任务、标记完成、删除任务。当前愿望给待办事项增加优先级，并且能够按优先级筛选。当前版本0.2.0 · 正式交付 · 交付时间 2026-10-10T11:18:09.263Z已确认需求我想做一个简单的待办事项应用，可以添加任务、标记完成、删除任务。给待办事项增加优先级，并且能够按优先级筛选。Agent 推断需求（未确认）[confirmed] 我想做一个简单的待办事项应用，可以添加任务、标记完成、删除任务。[inferred] 待办列表需持久化保存，刷新页面后数据不丢失。[inferred] 标记完成需可切换（已完成 ↔ 未完成），并显示清晰的完成态视觉反馈。[inferred] 删除任务为单条删除，删除后立即从列表消失。[inferred] 空列表需有占位提示，输入为空或纯空白时不允许添加。[inferred] 提供最小可用性：确认任务总数与已完成数量统计。[confirmed] 给待办事项增加优先级，并且能够按优先级筛选。[confirmed·保留] 我想做一个简单的待办事项应用，可以添加任务、标记完成、删除任务。[inferred] 优先级为三档：高(high) / 中(medium) / 低(low)，新任务默认「中」；未知或缺失的优先级一律归一化为「中」。[inferred] 添加任务时可选择优先级；列表项需以徽标清晰展示优先级，并带 data-priority 属性便于样式与测试。[inferred] 提供按优先级筛选控件，选项为「全部 / 高 / 中 / 低」；筛选为视图态，不改动也不重排底层数据。[inferred] 筛选后无结果时显示区分于空列表的占位提示（如「没有符合当前优先级的任务。」）。[inferred] 向后兼容：已有 localStorage 数据（无 priority 字段）加载后自动补为「中」，任务不丢失、不报错。[inferred·保留] 待办列表需持久化保存，刷新页面后数据不丢失；标记完成可双向切换并显示完成态视觉反馈；删除为单条删除。[inferred·保留] 空列表需有占位提示，输入为空或纯空白时不允许添加；提供总数与已完成数量统计。[inferred] 优先级筛选不持久化：刷新后筛选回到「全部」；任务顺序保持插入顺序（不因优先级自动排序）。核心约束仅修改产品工作目录 C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\projects\\72e73806-11ac-44f4-b58a-01ff32153e00，不读凭据/私人文件，不改 DSH 核心。 (Agent 推断)不调用团队/子Agent/工作流，不公网部署，不安装系统组件，不扩大权限。 (Agent 推断)优先最简单、零第三方依赖的 Web 工程；若需任何安装必须显式说明。 (Agent 推断)单次调用最多 60 步，失败做有界修复，不无限重试。 (Agent 推断)验证必须拆分为 build/test/run 三类独立真实执行，并用 wish_verify 保存结构化退出码。 (Agent 推断)run 必须真实启动服务并做可重复烟测，未实际访问过的 URL 不得宣称为可用预览。 (Agent 推断)wish_deliver 的 startCommand 必须能在源码目录重复启动。 (Agent 推断)仅修改产品工作目录 C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\projects\\72e73806-11ac-44f4-b58a-01ff32153e00，不读凭据/私人文件，不改 DSH 核心。 (Agent 推断)不调用团队/子Agent/工作流，不公网部署，不安装系统组件，不扩大权限。 (Agent 推断)优先最简单、零第三方依赖的 Web 工程；若需任何安装必须显式说明（本计划不需要任何安装）。 (Agent 推断)单次调用最多 60 步，失败做有界修复，不无限重试。 (Agent 推断)验证必须拆分为 build/test/run 三类独立真实执行，并用 wish_verify 保存结构化退出码。 (Agent 推断)run 必须真实启动服务并做可重复烟测，未实际访问过的 URL 不得宣称为可用预览。 (Agent 推断)wish_deliver 的 startCommand 必须能在源码目录重复启动（沿用 npm start）。 (Agent 推断)保持既有契约不回归：现有 8 个 DOM 挂载点、STORAGE_KEY 与 27 项既有测试必须继续通过。 (Agent 推断)写入前必须先读取现有文件，不盲覆盖；保持零第三方依赖（dependencies/devDependencies 为空）。 (Agent 推断)需要你决策的事项技术形态选择：纯静态 HTML + CSS + 原生 ES Module JavaScript 单页应用，零第三方依赖、零构建工具链，双击 index.html 或任意静态服务器即可运行。理由：需求最简单，无需安装任何依赖，避免网络与供应链风险。 — 普通 · 已接受数据持久化：使用浏览器 localStorage 存储待办列表（JSON），不做后端与数据库。理由：单用户本地应用，零服务端依赖。 — 普通 · 已接受核心逻辑与 DOM 分离：把 add/toggle/delete/持久化 等纯逻辑抽到独立 ES Module（如 src/todos.js），UI 层只负责渲染与事件绑定，从而可用 Node.js 原生 node:test 直接对逻辑做单元测试，无需浏览器自动化依赖。 — 普通 · 已接受运行与烟测方式：用 Node.js 内置 http 模块编写零依赖静态服务器脚本，run 阶段真实启动并请求首页，断言 HTTP 200 与关键 DOM 挂载点存在，然后关闭进程。 — 普通 · 已接受优先级建模：三档 high/medium/low（界面「高/中/低」），新增 PRIORITIES 常量、DEFAULT_PRIORITY='medium' 与 normalizePriority(value) 归一化函数；addTodo 增加第三个参数 priority，缺省或非法时取 medium。理由：三档足够表达优先级且不引入过度复杂度。 — 普通 · 已接受向后兼容策略：不更换 localStorage 键（仍为 wish-willow.todos.v1），而是在 deserializeTodos/loadTodos 中对缺失或非法 priority 归一化为 medium，旧任务自动升级且绝不丢失。理由：避免迁移过程中丢数据或双键冲突。 — 普通 · 已接受筛选语义：新增纯函数 filterTodos(list, priority)，priority 为 'all' 时返回全部；筛选仅作用于渲染视图，不修改底层列表、不重排顺序、不写回存储。筛选状态为内存态，刷新后回到「全部」。 — 普通 · 已接受统计语义保持不变：#stats-total / #stats-completed 继续统计全部任务（全局），避免既有 27 项测试与用户认知回归；另加 #filter-summary 显示当前筛选与命中数量。 — 普通 · 已接受新增 DOM 契约：#new-priority（表单内优先级选择器）、#priority-filter（筛选控件）、#filter-summary（筛选摘要），列表项渲染 .todo__priority 徽标与 data-priority 属性；既有 8 个挂载点 id 一律不变。 — 普通 · 已接受非目标（明确不做，避免扩大范围）：不支持修改已有任务的优先级与文本、不支持优先级自动排序、不做多条件/关键词组合筛选、筛选状态不持久化。 — 普通 · 已接受验证方式沿用既有零依赖方案：build=node scripts/build.js 静态检查（新增挂载点/新导出/版本 0.2.0），test=npm test（node --test-isolation=none，规避沙箱 spawn EPERM），run=npm run smoke（真实启动静态服务器抓取首页断言）。 — 普通 · 已接受当前任务及执行状态已完成 (19)plan体验类已完成理解愿望、保留正式需求并制定执行计划任务 ID06b2aabe-9f7b-4f7b-a5d9-39551f497742实际结果真实 Agent 已保存 6 项开发任务code技术类已完成在工作目录创建零依赖静态 Web 工程骨架：index.html（含输入框、添加按钮、列表容器、空态占位、计数统计挂载点）、styles.css、src/todos.js（纯逻辑模块）、src/app.js（UI 绑定）、package.json（仅声明 scripts，无第三方依赖）、README.md（含重复启动说明）。写入前先检查目录现有内容，不盲覆盖已有文件。任务 ID256d6121-a3db-48ba-8382-428c00545340依赖06b2aabe实际结果实际源码已修改并保存不可覆盖快照，构建及回归验证通过。证据源码 exit=n/a ✓code技术类已完成实现 src/todos.js 核心领域逻辑：addTodo(list, text) 拒绝空/纯空白输入并 trim、toggleTodo(list, id) 双向切换 completed、deleteTodo(list, id) 删除单条、以及 loadTodos/saveTodos 的 localStorage 读写（对损坏 JSON 做安全回退为空列表）。逻辑必须为纯函数或仅依赖注入的存储适配器，便于 Node 直接测试。任务 IDc3dfcd9e-f5ec-465c-ae91-42dedc716119依赖256d6121实际结果实际源码已修改并保存不可覆盖快照，构建及回归验证通过。证据源码 exit=n/a ✓code体验类已完成实现 index.html 与 src/app.js 的 UI 与交互：添加任务（回车与按钮均可提交，输入框提交后清空）、点击复选框切换完成态并加删除线样式、点击删除按钮移除任务、实时渲染空态占位与「总数 / 已完成」统计，并在每次变更后同步持久化。任务 ID82c49fc4-df31-421d-9b33-78aae601e31f依赖c3dfcd9e实际结果实际源码已修改并保存不可覆盖快照，构建及回归验证通过。证据源码 exit=n/a ✓code技术类已完成编写并执行自动化测试：使用 Node.js 内置 node:test + node:assert（零依赖）编写 tests/todos.test.js，覆盖添加/空白拒绝/切换完成/删除/持久化往返/损坏数据回退等用例，在 package.json 暴露 npm test。构建与测试脚本需显式传递退出码。任务 ID60829ddf-b3d0-4e67-b3b7-111399151e58依赖82c49fc4实际结果实际源码已修改并保存不可覆盖快照，构建及回归验证通过。证据源码 exit=n/a ✓code体验类已完成三重真实验证：build=执行零依赖静态检查（Node --check 语法校验全部 JS + 断言必需文件与挂载点存在）；test=运行 node --test 全部用例；run=启动零依赖静态服务器抓取首页验证 HTTP 200 与 DOM 挂载点，做可重复烟测后关闭。三类分别调用 wish_verify 保存结构化退出码，全部 exit 0 后方可交付。任务 ID1f7765c8-d461-4d44-b9a9-c83f83160797依赖60829ddf实际结果实际源码已修改并保存不可覆盖快照，构建及回归验证通过。证据源码 exit=n/a ✓code体验类已完成交付：确认工作目录内为可重复运行的源码快照，撰写交付摘要（功能范围、目录结构、验证证据、已知限制），调用 wish_deliver 并提供可在源码目录重复启动的 startCommand。任务 ID630f60a8-bbd7-4b8a-82b9-aaabf5779246依赖1f7765c8实际结果实际源码已修改并保存不可覆盖快照，构建及回归验证通过。证据源码 exit=n/a ✓verify技术类已完成执行真实构建、回归测试和运行验证任务 IDb69e9275-043c-4c84-8d8d-345388435aa0依赖630f60a8实际结果构建、测试、运行分别取得真实 exit 0。证据最近构建 exit=0 ✓; test exit=0 ✓; run exit=0 ✓; 最近构建 exit=0 ✓deliver技术类已完成绑定证据、保存源码快照并交付版本任务 ID56fdaba9-8d61-4923-a0c9-9387d9631b48依赖b69e9275实际结果## 交付物：待办事项应用（零依赖静态 Web） 源码目录：`C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\projects\\72e73806-11ac-44f4-b58a-01ff32153e00`（11 个文件，无 node_modules，零第三方依赖，无需任何安装） ### 功能范围（对齐已确认需求 + 推断需求） - **添加任务**：输入框回车或点击「添加」共用同一表单提交路径；提交后输入框清空。 - **标记完成**：点击复选框在「已完成 ↔ 未完成」双向切换，完成态显示删除线（`.todo",
+  "status": "已交付",
+  "revision": "32",
+  "version": "0.2.0 · 正式交付 · 交付时间 2026-10-10T11:18:09.263Z",
+  "workspace": "产品状态已交付修订号32产品目标我想做一个简单的待办事项应用，可以添加任务、标记完成、删除任务。当前愿望给待办事项增加优先级，并且能够按优先级筛选。当前版本0.2.0 · 正式交付 · 交付时间 2026-10-10T11:18:09.263Z",
+  "notice": "",
+  "error": null,
+  "productTitle": "[P1 E2E TEST] 待办事项应用",
+  "goal": "我想做一个简单的待办事项应用，可以添加任务、标记完成、删除任务。",
+  "currentWish": "给待办事项增加优先级，并且能够按优先级筛选。",
+  "confirmed": [
+    {
+      "id": null,
+      "text": "我想做一个简单的待办事项应用，可以添加任务、标记完成、删除任务。"
+    },
+    {
+      "id": null,
+      "text": "给待办事项增加优先级，并且能够按优先级筛选。"
+    }
+  ],
+  "inferred": [
+    {
+      "id": null,
+      "text": "[confirmed] 我想做一个简单的待办事项应用，可以添加任务、标记完成、删除任务。"
+    },
+    {
+      "id": null,
+      "text": "[inferred] 待办列表需持久化保存，刷新页面后数据不丢失。"
+    },
+    {
+      "id": null,
+      "text": "[inferred] 标记完成需可切换（已完成 ↔ 未完成），并显示清晰的完成态视觉反馈。"
+    },
+    {
+      "id": null,
+      "text": "[inferred] 删除任务为单条删除，删除后立即从列表消失。"
+    },
+    {
+      "id": null,
+      "text": "[inferred] 空列表需有占位提示，输入为空或纯空白时不允许添加。"
+    },
+    {
+      "id": null,
+      "text": "[inferred] 提供最小可用性：确认任务总数与已完成数量统计。"
+    },
+    {
+      "id": null,
+      "text": "[confirmed] 给待办事项增加优先级，并且能够按优先级筛选。"
+    },
+    {
+      "id": null,
+      "text": "[confirmed·保留] 我想做一个简单的待办事项应用，可以添加任务、标记完成、删除任务。"
+    },
+    {
+      "id": null,
+      "text": "[inferred] 优先级为三档：高(high) / 中(medium) / 低(low)，新任务默认「中」；未知或缺失的优先级一律归一化为「中」。"
+    },
+    {
+      "id": null,
+      "text": "[inferred] 添加任务时可选择优先级；列表项需以徽标清晰展示优先级，并带 data-priority 属性便于样式与测试。"
+    },
+    {
+      "id": null,
+      "text": "[inferred] 提供按优先级筛选控件，选项为「全部 / 高 / 中 / 低」；筛选为视图态，不改动也不重排底层数据。"
+    },
+    {
+      "id": null,
+      "text": "[inferred] 筛选后无结果时显示区分于空列表的占位提示（如「没有符合当前优先级的任务。」）。"
+    },
+    {
+      "id": null,
+      "text": "[inferred] 向后兼容：已有 localStorage 数据（无 priority 字段）加载后自动补为「中」，任务不丢失、不报错。"
+    },
+    {
+      "id": null,
+      "text": "[inferred·保留] 待办列表需持久化保存，刷新页面后数据不丢失；标记完成可双向切换并显示完成态视觉反馈；删除为单条删除。"
+    },
+    {
+      "id": null,
+      "text": "[inferred·保留] 空列表需有占位提示，输入为空或纯空白时不允许添加；提供总数与已完成数量统计。"
+    },
+    {
+      "id": null,
+      "text": "[inferred] 优先级筛选不持久化：刷新后筛选回到「全部」；任务顺序保持插入顺序（不因优先级自动排序）。"
+    }
+  ],
+  "constraints": [
+    {
+      "id": null,
+      "text": "仅修改产品工作目录 C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\projects\\72e73806-11ac-44f4-b58a-01ff32153e00，不读凭据/私人文件，不改 DSH 核心。 (Agent 推断)"
+    },
+    {
+      "id": null,
+      "text": "不调用团队/子Agent/工作流，不公网部署，不安装系统组件，不扩大权限。 (Agent 推断)"
+    },
+    {
+      "id": null,
+      "text": "优先最简单、零第三方依赖的 Web 工程；若需任何安装必须显式说明。 (Agent 推断)"
+    },
+    {
+      "id": null,
+      "text": "单次调用最多 60 步，失败做有界修复，不无限重试。 (Agent 推断)"
+    },
+    {
+      "id": null,
+      "text": "验证必须拆分为 build/test/run 三类独立真实执行，并用 wish_verify 保存结构化退出码。 (Agent 推断)"
+    },
+    {
+      "id": null,
+      "text": "run 必须真实启动服务并做可重复烟测，未实际访问过的 URL 不得宣称为可用预览。 (Agent 推断)"
+    },
+    {
+      "id": null,
+      "text": "wish_deliver 的 startCommand 必须能在源码目录重复启动。 (Agent 推断)"
+    },
+    {
+      "id": null,
+      "text": "仅修改产品工作目录 C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\projects\\72e73806-11ac-44f4-b58a-01ff32153e00，不读凭据/私人文件，不改 DSH 核心。 (Agent 推断)"
+    },
+    {
+      "id": null,
+      "text": "不调用团队/子Agent/工作流，不公网部署，不安装系统组件，不扩大权限。 (Agent 推断)"
+    },
+    {
+      "id": null,
+      "text": "优先最简单、零第三方依赖的 Web 工程；若需任何安装必须显式说明（本计划不需要任何安装）。 (Agent 推断)"
+    },
+    {
+      "id": null,
+      "text": "单次调用最多 60 步，失败做有界修复，不无限重试。 (Agent 推断)"
+    },
+    {
+      "id": null,
+      "text": "验证必须拆分为 build/test/run 三类独立真实执行，并用 wish_verify 保存结构化退出码。 (Agent 推断)"
+    },
+    {
+      "id": null,
+      "text": "run 必须真实启动服务并做可重复烟测，未实际访问过的 URL 不得宣称为可用预览。 (Agent 推断)"
+    },
+    {
+      "id": null,
+      "text": "wish_deliver 的 startCommand 必须能在源码目录重复启动（沿用 npm start）。 (Agent 推断)"
+    },
+    {
+      "id": null,
+      "text": "保持既有契约不回归：现有 8 个 DOM 挂载点、STORAGE_KEY 与 27 项既有测试必须继续通过。 (Agent 推断)"
+    },
+    {
+      "id": null,
+      "text": "写入前必须先读取现有文件，不盲覆盖；保持零第三方依赖（dependencies/devDependencies 为空）。 (Agent 推断)"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "ww-decision-70f2996f",
+      "text": "技术形态选择：纯静态 HTML + CSS + 原生 ES Module JavaScript 单页应用，零第三方依赖、零构建工具链，双击 index.html 或任意静态服务器即可运行。理由：需求最简单，无需安装任何依赖，避免网络与供应链风险。 — 普通 · 已接受"
+    },
+    {
+      "id": "ww-decision-7ccd048c",
+      "text": "数据持久化：使用浏览器 localStorage 存储待办列表（JSON），不做后端与数据库。理由：单用户本地应用，零服务端依赖。 — 普通 · 已接受"
+    },
+    {
+      "id": "ww-decision-153ad39f",
+      "text": "核心逻辑与 DOM 分离：把 add/toggle/delete/持久化 等纯逻辑抽到独立 ES Module（如 src/todos.js），UI 层只负责渲染与事件绑定，从而可用 Node.js 原生 node:test 直接对逻辑做单元测试，无需浏览器自动化依赖。 — 普通 · 已接受"
+    },
+    {
+      "id": "ww-decision-92de0339",
+      "text": "运行与烟测方式：用 Node.js 内置 http 模块编写零依赖静态服务器脚本，run 阶段真实启动并请求首页，断言 HTTP 200 与关键 DOM 挂载点存在，然后关闭进程。 — 普通 · 已接受"
+    },
+    {
+      "id": "ww-decision-a7f1766a",
+      "text": "优先级建模：三档 high/medium/low（界面「高/中/低」），新增 PRIORITIES 常量、DEFAULT_PRIORITY='medium' 与 normalizePriority(value) 归一化函数；addTodo 增加第三个参数 priority，缺省或非法时取 medium。理由：三档足够表达优先级且不引入过度复杂度。 — 普通 · 已接受"
+    },
+    {
+      "id": "ww-decision-d202d7dc",
+      "text": "向后兼容策略：不更换 localStorage 键（仍为 wish-willow.todos.v1），而是在 deserializeTodos/loadTodos 中对缺失或非法 priority 归一化为 medium，旧任务自动升级且绝不丢失。理由：避免迁移过程中丢数据或双键冲突。 — 普通 · 已接受"
+    },
+    {
+      "id": "ww-decision-1a1d3c5d",
+      "text": "筛选语义：新增纯函数 filterTodos(list, priority)，priority 为 'all' 时返回全部；筛选仅作用于渲染视图，不修改底层列表、不重排顺序、不写回存储。筛选状态为内存态，刷新后回到「全部」。 — 普通 · 已接受"
+    },
+    {
+      "id": "ww-decision-ba733273",
+      "text": "统计语义保持不变：#stats-total / #stats-completed 继续统计全部任务（全局），避免既有 27 项测试与用户认知回归；另加 #filter-summary 显示当前筛选与命中数量。 — 普通 · 已接受"
+    },
+    {
+      "id": "ww-decision-80691a03",
+      "text": "新增 DOM 契约：#new-priority（表单内优先级选择器）、#priority-filter（筛选控件）、#filter-summary（筛选摘要），列表项渲染 .todo__priority 徽标与 data-priority 属性；既有 8 个挂载点 id 一律不变。 — 普通 · 已接受"
+    },
+    {
+      "id": "ww-decision-aabec603",
+      "text": "非目标（明确不做，避免扩大范围）：不支持修改已有任务的优先级与文本、不支持优先级自动排序、不做多条件/关键词组合筛选、筛选状态不持久化。 — 普通 · 已接受"
+    },
+    {
+      "id": "ww-decision-f95119df",
+      "text": "验证方式沿用既有零依赖方案：build=node scripts/build.js 静态检查（新增挂载点/新导出/版本 0.2.0），test=npm test（node --test-isolation=none，规避沙箱 spawn EPERM），run=npm run smoke（真实启动静态服务器抓取首页断言）。 — 普通 · 已接受"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "ww-task-06b2aabe",
+      "text": "plan体验类已完成理解愿望、保留正式需求并制定执行计划 任务 ID 06b2aabe-9f7b-4f7b-a5d9-39551f497742 实际结果 真实 Agent 已保存 6 项开发任务"
+    },
+    {
+      "id": "ww-task-256d6121",
+      "text": "code技术类已完成在工作目录创建零依赖静态 Web 工程骨架：index.html（含输入框、添加按钮、列表容器、空态占位、计数统计挂载点）、styles.css、src/todos.js（纯逻辑模块）、src/app.js（UI 绑定）、package.json（仅声明 scripts，无第三方依赖）、README.md（含重复启动说明）。写入前先检查目录现有内容，不盲覆盖已有文件。 任务 ID 256d6121-a3db-48ba-8382-428c00545340 依赖 06b2aabe 实际结果 实际源码已修改并保存不可覆盖快照，构建及回归验证通过。 证据 源码 exit=n/a ✓"
+    },
+    {
+      "id": "ww-task-c3dfcd9e",
+      "text": "code技术类已完成实现 src/todos.js 核心领域逻辑：addTodo(list, text) 拒绝空/纯空白输入并 trim、toggleTodo(list, id) 双向切换 completed、deleteTodo(list, id) 删除单条、以及 loadTodos/saveTodos 的 localStorage 读写（对损坏 JSON 做安全回退为空列表）。逻辑必须为纯函数或仅依赖注入的存储适配器，便于 Node 直接测试。 任务 ID c3dfcd9e-f5ec-465c-ae91-42dedc716119 依赖 256d6121 实际结果 实际源码已修改并保存不可覆盖快照，构建及回归验证通过。 证据 源码 exit=n/a ✓"
+    },
+    {
+      "id": "ww-task-82c49fc4",
+      "text": "code体验类已完成实现 index.html 与 src/app.js 的 UI 与交互：添加任务（回车与按钮均可提交，输入框提交后清空）、点击复选框切换完成态并加删除线样式、点击删除按钮移除任务、实时渲染空态占位与「总数 / 已完成」统计，并在每次变更后同步持久化。 任务 ID 82c49fc4-df31-421d-9b33-78aae601e31f 依赖 c3dfcd9e 实际结果 实际源码已修改并保存不可覆盖快照，构建及回归验证通过。 证据 源码 exit=n/a ✓"
+    },
+    {
+      "id": "ww-task-60829ddf",
+      "text": "code技术类已完成编写并执行自动化测试：使用 Node.js 内置 node:test + node:assert（零依赖）编写 tests/todos.test.js，覆盖添加/空白拒绝/切换完成/删除/持久化往返/损坏数据回退等用例，在 package.json 暴露 npm test。构建与测试脚本需显式传递退出码。 任务 ID 60829ddf-b3d0-4e67-b3b7-111399151e58 依赖 82c49fc4 实际结果 实际源码已修改并保存不可覆盖快照，构建及回归验证通过。 证据 源码 exit=n/a ✓"
+    },
+    {
+      "id": "ww-task-1f7765c8",
+      "text": "code体验类已完成三重真实验证：build=执行零依赖静态检查（Node --check 语法校验全部 JS + 断言必需文件与挂载点存在）；test=运行 node --test 全部用例；run=启动零依赖静态服务器抓取首页验证 HTTP 200 与 DOM 挂载点，做可重复烟测后关闭。三类分别调用 wish_verify 保存结构化退出码，全部 exit 0 后方可交付。 任务 ID 1f7765c8-d461-4d44-b9a9-c83f83160797 依赖 60829ddf 实际结果 实际源码已修改并保存不可覆盖快照，构建及回归验证通过。 证据 源码 exit=n/a ✓"
+    },
+    {
+      "id": "ww-task-630f60a8",
+      "text": "code体验类已完成交付：确认工作目录内为可重复运行的源码快照，撰写交付摘要（功能范围、目录结构、验证证据、已知限制），调用 wish_deliver 并提供可在源码目录重复启动的 startCommand。 任务 ID 630f60a8-bbd7-4b8a-82b9-aaabf5779246 依赖 1f7765c8 实际结果 实际源码已修改并保存不可覆盖快照，构建及回归验证通过。 证据 源码 exit=n/a ✓"
+    },
+    {
+      "id": "ww-task-b69e9275",
+      "text": "verify技术类已完成执行真实构建、回归测试和运行验证 任务 ID b69e9275-043c-4c84-8d8d-345388435aa0 依赖 630f60a8 实际结果 构建、测试、运行分别取得真实 exit 0。 证据 最近构建 exit=0 ✓; test exit=0 ✓; run exit=0 ✓; 最近构建 exit=0 ✓"
+    },
+    {
+      "id": "ww-task-56fdaba9",
+      "text": "deliver技术类已完成绑定证据、保存源码快照并交付版本 任务 ID 56fdaba9-8d61-4923-a0c9-9387d9631b48 依赖 b69e9275 实际结果 ## 交付物：待办事项应用（零依赖静态 Web） 源码目录：`C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\projects\\72e73806-11ac-44f4-b58a-01ff32153e00`（11 个文件，无 node_modules，零第三方依赖，无需任何安装） ### 功能范围（对齐已确认需求 + 推断需求） - **添加任务**：输入框回车或点击「添加」共用同一表单提交路径；提交后输入框清空。 - **标记完成**：点击复选框在「已完成 ↔ 未完成」双向切换，完成态显示删除线（`.todo--completed`）。 - **删除任务**：点击「"
+    },
+    {
+      "id": "ww-task-8fdd88a1",
+      "text": "plan体验类已完成理解愿望、保留正式需求并制定执行计划 任务 ID 8fdd88a1-ca37-4343-8236-adc8dc25638f 实际结果 真实 Agent 已保存 7 项开发任务"
+    },
+    {
+      "id": "ww-task-ad96dfb1",
+      "text": "code技术类已完成扩展 src/todos.js 领域模型并保持纯函数性：新增 PRIORITIES=['high','medium','low'] 与 DEFAULT_PRIORITY='medium'、normalizePriority(value)、filterTodos(list, priority)（'all' 返回全部、不改原数组、非法输入安全回退）；addTodo(list, text, priority) 新增优先级参数（缺省/非法→medium），保留空与纯空白拒绝、trim、200 字符截断；deserializeTodos 对缺失或非法 priority 归一化为 medium（旧数据向后兼容），serializeTodos 保留 priority 字段；STORAGE_KEY 不变。完成后用 node --check 校验语法。 任务 ID ad96dfb1-b1"
+    },
+    {
+      "id": "ww-task-a97b65a5",
+      "text": "code体验类已完成更新 index.html 与 styles.css：#new-priority 优先级选择器放入 #todo-form（高/中/低，默认中）；#priority-filter 筛选控件（全部/高/中/低）；#filter-summary 筛选摘要；列表项优先级徽标 .todo__priority 与 data-priority 的样式（三档可区分配色）。严格保留既有 8 个挂载点 id（#todo-form/#new-todo/#add-btn/#todo-list/#empty-state/#stats/#stats-total/#stats-completed）与完成态删除线、空态隐藏规则，不破坏既有静态契约。 任务 ID a97b65a5-018c-4ebf-9182-9a71b711e01f 依赖 ad96dfb1 实际结果 实际源码已修改并保存不可覆盖快照，"
+    },
+    {
+      "id": "ww-task-1ac378d9",
+      "text": "code体验类已完成更新 src/app.js：initApp 读取 #new-priority 参与添加；维护内存态当前筛选并响应 #priority-filter 变更；渲染时使用 filterTodos 仅显示命中项，为每项输出 .todo__priority 徽标与 data-priority；筛选后无结果显示「没有符合当前优先级的任务。」（复用 #empty-state，与真正的空列表文案区分）；#stats-total/#stats-completed 保持全局统计；#filter-summary 显示当前筛选与命中数。保持零依赖、可注入 doc/storage、initApp 返回值与 destroy 语义兼容。 任务 ID 1ac378d9-a47d-4dfa-889d-a743de07b7d4 依赖 a97b65a5 实际结果 实际源码已修改并保存不可覆盖快照，构建及回归"
+    },
+    {
+      "id": "ww-task-79910eef",
+      "text": "code技术类已完成扩展 tests/todos.test.js（沿用 node:test + node:assert，零依赖）新增优先级用例：normalizePriority 对三档与非法值的处理、addTodo 默认 medium 与指定优先级、filterTodos 纯函数性（不改原数组）与全部/高/中/低命中、v1 旧数据（无 priority 字段）加载后补 medium 且任务数量不丢失、损坏数据的既有回退不回归、UI 层：选择优先级后添加渲染正确徽标、切换筛选只显示对应项、筛选空结果提示文案、筛选切换不改变存储内容、统计保持全局。既有 27 项用例必须继续通过（不得删改断言以迁就实现）。 任务 ID 79910eef-df2d-43af-a9f3-e27d5d3d918d 依赖 1ac378d9 实际结果 实际源码已修改并保存不可覆盖快照，构建及回归验证通过。 证据 源码 "
+    },
+    {
+      "id": "ww-task-614084ac",
+      "text": "code技术类已完成同步工具与元数据：scripts/build.js 增加静态检查（#new-priority/#priority-filter/#filter-summary 挂载点存在、todos.js 导出 PRIORITIES/DEFAULT_PRIORITY/normalizePriority/filterTodos、styles.css 含优先级徽标规则、package.json 版本为 0.2.0、仍为零依赖）；scripts/smoke.js 首页断言增加对上述新挂载点的检查，保持可重复烟测；package.json 版本升为 0.2.0，scripts 保持不变。 任务 ID 614084ac-71af-47c7-8f06-f72cda8f2b82 依赖 79910eef 实际结果 实际源码已修改并保存不可覆盖快照，构建及回归验证通过。 证据 源码 exit=n/a ✓"
+    },
+    {
+      "id": "ww-task-43206c95",
+      "text": "code体验类已完成三重真实验证（全部必须真实执行并以 wish_verify 保存结构化 exit code）：build=node scripts/build.js；test=npm test；run=npm run smoke。每条命令使用 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE } 传递失败，且三类各自独立执行、不得互相替代。若 run 需要常驻预览，则真实以 npm start 启动并实际抓取 http://127.0.0.1:4173/ 验证 HTTP 200 与全部挂载点后再声明可用。全部 exit 0 方可进入交付。 任务 ID 43206c95-200c-4450-8328-499505c5952e 依赖 614084ac 实际结果 实际源码已修改并保存不可覆盖快照，构建及回归验证通过。 证据 源码 exit=n/a ✓"
+    },
+    {
+      "id": "ww-task-efbea180",
+      "text": "code体验类已完成交付：更新 README.md（优先级与筛选用法、向后兼容说明、已知限制：不可改已有任务优先级/筛选不持久化/不自动排序、以及 node --test-isolation=none 的沙箱原因）；确认工作目录为可重复运行的零依赖源码快照；调用 wish_deliver 并给出可在源码目录重复启动的 startCommand（npm start），交付摘要需列出功能范围、目录结构、三类验证证据与已知限制。 任务 ID efbea180-4785-4b6f-91ad-1c1be477e241 依赖 43206c95 实际结果 实际源码已修改并保存不可覆盖快照，构建及回归验证通过。 证据 源码 exit=n/a ✓"
+    },
+    {
+      "id": "ww-task-2ea23679",
+      "text": "verify技术类已完成执行真实构建、回归测试和运行验证 任务 ID 2ea23679-adc0-40c6-98ff-2929fb5089a7 依赖 efbea180 实际结果 构建、测试、运行分别取得真实 exit 0。 证据 最近构建 exit=0 ✓; test exit=0 ✓; run exit=0 ✓"
+    },
+    {
+      "id": "ww-task-6997f593",
+      "text": "deliver技术类已完成绑定证据、保存源码快照并交付版本 任务 ID 6997f593-d814-4722-a5d7-5f562e555204 依赖 2ea23679 实际结果 ## 交付物：待办事项应用 0.2.0 — 优先级与按优先级筛选（零依赖静态 Web） 源码目录：`C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\projects\\72e73806-11ac-44f4-b58a-01ff32153e00`（11 个文件，无 node_modules，零第三方依赖，无需任何安装） ### 本次 ChangeSet 对齐的用户愿望 **已确认**：「给待办事项增加优先级，并且能够按优先级筛选。」 原有已确认愿望（添加/标记完成/删除）与其全部推断需求、约束、决策均保留并继续成立，未做任何回退。 ### 功能范围 - **优先级三档*"
+    }
+  ],
+  "runs": [
+    {
+      "id": "ww-run-6a35ce47",
+      "text": "wish-wil command deepseek/deepseek-v4.1-flash 2026-10-10T11:06:27.105Z 2026-10-10T11:11:19.596Z 18 39 1 418649/38907 292494 ms 已完成"
+    },
+    {
+      "id": "ww-run-a4c169c2",
+      "text": "wish-wil command deepseek/deepseek-v4.1-flash 2026-10-10T11:11:22.486Z 2026-10-10T11:18:09.270Z 45 63 4 912452/42121 406785 ms 已完成"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "ww-evidence-b418f0bf",
+      "text": "最近构建 0 ✓ 2026-10-10T11:10:06.362Z node: v26.7.0 cwd: C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\projects\\72e73806-11ac-44f4-b58a-01ff32153e00 [build] 工作目录: C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\projects\\72e73806-11ac-44f4-b58a-01ff32153e00 [build] 1/4 必需文件 ok 存在且非空: index.html ok 存在且非空: styles.css ok 存在且非空: src/todos.js ok 存在且非空: src/app.js ok 存在且非空: scripts/build.js ok 存在且非空: scr"
+    },
+    {
+      "id": "ww-evidence-8b80268e",
+      "text": "test 1 ✗ 2026-10-10T11:10:07.373Z ✖ tests\\todos.test.js (2.1311ms) ℹ tests 1 ℹ suites 0 ℹ pass 0 ℹ fail 1 ℹ cancelled 0 ℹ skipped 0 ℹ todo 0 ℹ duration_ms 7.9026 ✖ failing tests: test at tests\\todos.test.js:1:1 ✖ tests\\todos.test.js (2.1311ms) Error: spawn EPERM at ChildProcess.spawn (node:internal/child_process:457:11) at spawn (node:child_process:813:9) at TestContext.<anonymous> (node:internal/"
+    },
+    {
+      "id": "ww-evidence-a162b85d",
+      "text": "test 0 ✓ 2026-10-10T11:10:39.543Z > wish-willow-todo@0.1.0 test > node --test-isolation=none --test tests/todos.test.js ✔ A1 normalizeText 去空白、拒非字符串、截断超长 (0.8418ms) ✔ A2 addTodo 追加任务并 trim，返回新数组且不修改原数组 (2.8925ms) ✔ A3 addTodo 为每条任务生成唯一 id (0.1456ms) ✔ A4 addTodo 拒绝空、纯空白与非字符串输入（返回原引用） (0.1295ms) ✔ A5 addTodo 截断超长文本到上限 (0.1133ms) ✔ A6 toggleTodo 双向切换完成状态，不修改原数组 (0.5788ms) ✔ A7 toggleTodo 对未知 id 返回原引"
+    },
+    {
+      "id": "ww-evidence-d086d5b7",
+      "text": "run 0 ✓ 2026-10-10T11:10:41.208Z > wish-willow-todo@0.1.0 smoke > node scripts/smoke.js [smoke] 启动零依赖静态服务器… [smoke] 服务已监听 http://127.0.0.1:62875/ (pid=33720) [smoke] 1/4 首页请求 ok GET / 返回 HTTP 200 ok Content-Type 为 text/html ok 响应体非空 ok 首页含 DOM 挂载点 #todo-form ok 首页含 DOM 挂载点 #new-todo ok 首页含 DOM 挂载点 #add-btn ok 首页含 DOM 挂载点 #todo-list ok 首页含 DOM 挂载点 #empty-state ok 首页含 DOM 挂载点 #stats ok 首页含 DOM 挂载点 #"
+    },
+    {
+      "id": "ww-evidence-8f1fd05f",
+      "text": "最近构建 0 ✓ 2026-10-10T11:11:00.367Z > wish-willow-todo@0.1.0 build > node scripts/build.js [build] 工作目录: C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\projects\\72e73806-11ac-44f4-b58a-01ff32153e00 [build] 1/4 必需文件 ok 存在且非空: index.html ok 存在且非空: styles.css ok 存在且非空: src/todos.js ok 存在且非空: src/app.js ok 存在且非空: scripts/build.js ok 存在且非空: scripts/serve.js ok 存在且非空: scripts/smoke.js ok 存在且非空: tests/to"
+    },
+    {
+      "id": "ww-evidence-8cacac1e",
+      "text": "源码 — ✓ 2026-10-10T11:11:19.472Z 11 个实际源码文件；快照 SHA256 b7305f137356b61ba4c95670e1661b8cd36fd0ae5bfb45164f55f1394623d800"
+    },
+    {
+      "id": "ww-evidence-413949d8",
+      "text": "最近构建 0 ✓ 2026-10-10T11:16:49.681Z node: v26.7.0 cwd: C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\projects\\72e73806-11ac-44f4-b58a-01ff32153e00 > wish-willow-todo@0.2.0 build > node scripts/build.js [build] 工作目录: C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\projects\\72e73806-11ac-44f4-b58a-01ff32153e00 [build] 1/4 必需文件 ok 存在且非空: index.html ok 存在且非空: styles.css ok 存在且非空: src/todos.js ok 存在且"
+    },
+    {
+      "id": "ww-evidence-49c46e3f",
+      "text": "test 0 ✓ 2026-10-10T11:16:51.253Z > wish-willow-todo@0.2.0 test > node --test-isolation=none --test tests/todos.test.js ✔ A1 normalizeText 去空白、拒非字符串、截断超长 (0.8815ms) ✔ A2 addTodo 追加任务并 trim，返回新数组且不修改原数组 (2.3168ms) ✔ A3 addTodo 为每条任务生成唯一 id (0.1351ms) ✔ A4 addTodo 拒绝空、纯空白与非字符串输入（返回原引用） (0.1452ms) ✔ A5 addTodo 截断超长文本到上限 (0.1275ms) ✔ A6 toggleTodo 双向切换完成状态，不修改原数组 (0.6203ms) ✔ A7 toggleTodo 对未知 id 返回原引"
+    },
+    {
+      "id": "ww-evidence-ef6c5ab9",
+      "text": "run 1 ✗ 2026-10-10T11:17:03.562Z > wish-willow-todo@0.2.0 smoke > node scripts/smoke.js [smoke] 启动零依赖静态服务器… [smoke] 服务已监听 http://127.0.0.1:50357/ (pid=32904) [smoke] 1/4 首页请求 ok GET / 返回 HTTP 200 ok Content-Type 为 text/html ok 响应体非空 ok 首页含 DOM 挂载点 #todo-form ok 首页含 DOM 挂载点 #new-todo ok 首页含 DOM 挂载点 #add-btn ok 首页含 DOM 挂载点 #todo-list ok 首页含 DOM 挂载点 #empty-state ok 首页含 DOM 挂载点 #stats ok 首页含 DOM 挂载点 #"
+    },
+    {
+      "id": "ww-evidence-1b21e6dc",
+      "text": "run 0 ✓ 2026-10-10T11:17:13.183Z > wish-willow-todo@0.2.0 smoke > node scripts/smoke.js [smoke] 启动零依赖静态服务器… [smoke] 服务已监听 http://127.0.0.1:53903/ (pid=3164) [smoke] 1/4 首页请求 ok GET / 返回 HTTP 200 ok Content-Type 为 text/html ok 响应体非空 ok 首页含 DOM 挂载点 #todo-form ok 首页含 DOM 挂载点 #new-todo ok 首页含 DOM 挂载点 #add-btn ok 首页含 DOM 挂载点 #todo-list ok 首页含 DOM 挂载点 #empty-state ok 首页含 DOM 挂载点 #stats ok 首页含 DOM 挂载点 #s"
+    },
+    {
+      "id": "ww-evidence-3fee85a7",
+      "text": "源码 — ✓ 2026-10-10T11:18:09.164Z 11 个实际源码文件；快照 SHA256 e1ac9e4b715a51d31eefd5af59c7abaa3ebd40ba1a537e4458b497a695c84bf8"
+    }
+  ],
+  "build": "最近构建: 通过 · 2026-10-10T11:18:09.164Z",
+  "evidenceKinds": "证据类型: 最近构建 exit=0; test exit=0; run exit=0",
+  "tests": "测试状态: ✓",
+  "artifacts": "交付产物: C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\deliveries\\72e73806-11ac-44f4-b58a-01ff32153e00\\85c5989f-a1df-43d9-bd31-1d24be26839d\\source-snapshot.json (b7305f137356…); C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\deliveries\\72e73806-11ac-44f4-b58a-01ff32153e00\\3147cf4c-1191-4907-8096-590f9e2bc1d1\\source-snapshot.json (e1ac9e4b715a…)",
+  "snapshot": "不可覆盖源码快照: C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\deliveries\\72e73806-11ac-44f4-b58a-01ff32153e00\\3147cf4c-1191-4907-8096-590f9e2bc1d1\\source",
+  "startCommand": "启动方式: npm start",
+  "versions": [
+    {
+      "id": "ww-version-85c5989f",
+      "text": "0.1.0 正式交付 2026-10-10T11:11:19.590Z npm start"
+    },
+    {
+      "id": "ww-version-3147cf4c",
+      "text": "0.2.0 正式交付 2026-10-10T11:18:09.263Z npm start"
+    }
+  ],
+  "suggestions": "已交付。可用“启动方式”在本地运行；如需改动，继续提交新的愿望。",
+  "products": [
+    "[P1 E2E TEST] 待办事项应用 · 0.2.0"
+  ],
+  "legacyProducts": [
+    "[P0 ACCEPTANCE TEST] Desktop edited",
+    "[P0 TEST] Wish Willow 加载验证"
+  ],
+  "legacyEditorOpen": false
+}

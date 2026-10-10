@@ -1,0 +1,312 @@
+﻿{
+    "at":  "2026-10-10T20:25:58.3239192+08:00",
+    "origin":  "http://127.0.0.1:3081",
+    "pid":  31668,
+    "handle":  330194,
+    "action":  "inspect",
+    "id":  "",
+    "name":  "",
+    "value":  "",
+    "keys":  "",
+    "label":  "web-initial2",
+    "elementCount":  37,
+    "elements":  [
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  false,
+                         "offscreen":  false,
+                         "bounds":  "18,10,1249,1364"
+                     },
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "DeepSeek Harness - Google Chrome",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "18,10,1249,1364"
+                     },
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "18,10,1249,1364"
+                     },
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "18,10,1249,1364"
+                     },
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1130,11,137,39"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "最小化",
+                         "id":  "view_1",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1130,11,45,39"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "最大化",
+                         "id":  "view_2",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1175,11,46,39"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "关闭",
+                         "id":  "view_4",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1221,11,46,39"
+                     },
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "18,10,1249,1364"
+                     },
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "18,50,1249,46"
+                     },
+                     {
+                         "type":  "ControlType.ToolBar",
+                         "name":  "",
+                         "id":  "view_1000",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "18,50,1249,46"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "返回",
+                         "id":  "view_1001",
+                         "enabled":  false,
+                         "offscreen":  false,
+                         "bounds":  "24,56,34,34"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "前进",
+                         "id":  "view_1002",
+                         "enabled":  false,
+                         "offscreen":  false,
+                         "bounds":  "60,56,34,34"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "重新加载",
+                         "id":  "view_1003",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "96,56,34,34"
+                     },
+                     {
+                         "type":  "ControlType.Group",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "139,56,973,34"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "查看网站信息",
+                         "id":  "view_1011",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "144,61,24,24"
+                     },
+                     {
+                         "type":  "ControlType.Edit",
+                         "name":  "地址和搜索栏",
+                         "id":  "view_1012",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "176,61,818,24",
+                         "value":  "127.0.0.1:3081"
+                     },
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1002,61,98,24"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "安装“DeepSeek Harness”",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1002,61,66,24"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "为此标签页添加书签",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1076,61,24,24"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "您",
+                         "id":  "view_1018",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1121,56,34,34"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "请采取行动",
+                         "id":  "view_1007",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "1160,56,100,34"
+                     },
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "18,96,1249,1278"
+                     },
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "18,97,1249,1277"
+                     },
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "Empty"
+                     },
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "18,96,1249,1"
+                     },
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "18,10,1112,41"
+                     },
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "24,10,28,41"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "标签页搜索",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "24,16,28,28"
+                     },
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "",
+                         "id":  "view_21",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "46,10,256,41"
+                     },
+                     {
+                         "type":  "ControlType.Tab",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "46,10,256,41"
+                     },
+                     {
+                         "type":  "ControlType.TabItem",
+                         "name":  "DeepSeek Harness - 内存用量 - 81.2 MB",
+                         "id":  "view_20",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "46,10,256,41"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "关闭",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "260,16,28,28"
+                     },
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "46,10,256,41"
+                     },
+                     {
+                         "type":  "ControlType.Button",
+                         "name":  "新标签页",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "296,10,28,41"
+                     },
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "336,10,794,41"
+                     },
+                     {
+                         "type":  "ControlType.Pane",
+                         "name":  "",
+                         "id":  "",
+                         "enabled":  true,
+                         "offscreen":  false,
+                         "bounds":  "Empty"
+                     }
+                 ]
+}

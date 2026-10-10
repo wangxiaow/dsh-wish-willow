@@ -32,7 +32,7 @@ window.__ModuleLoader__.load({
         invalid: '请检查名称（1–120 字符）与愿望（1–10000 字符）。', busy: '当前变更尚未结束。请先等待、取消或处理，再提交新的愿望。',
         saved: '已持久化保存', submitted: '愿望已提交，Agent 开始执行', retried: '已提交重试', cancelled: '已请求取消执行', decided: '决策已保存', unsaved: '有未保存修改',
         suggestion: { deliver: '已交付。可用“启动方式”在本地运行；如需改动，继续提交新的愿望。', running: 'Agent 正在执行。看板会自动刷新。', blocked: '存在重大决策，需要你先接受或拒绝后才能继续。', failed: '上次执行失败，请查看失败任务后重试或提交修订愿望。', uncertain: '执行状态待确认，请检查工作目录后显式重试。', draft: '尚未提交愿望。写下愿望即可开始。' },
-        language: '语言', stageNote: '统一 Bundle 0.3.0：P0 与 P1 能力来自同一安装单元。',
+        language: '语言', stageNote: '统一 Bundle 0.3.1：P0 与 P1 能力来自同一安装单元。',
       },
       en: {
         title: 'Wish Willow', description: 'One entry point: wish, execution, evidence and delivery. Submit a natural-language wish; a real DSH Agent plans, codes, builds, tests and delivers running software. Product state persists independently of sessions.',
@@ -61,7 +61,7 @@ window.__ModuleLoader__.load({
         invalid: 'Check the name (1–120 characters) and wish (up to 10000 characters).', busy: 'The current change is unfinished. Wait, cancel or resolve it before submitting another wish.',
         saved: 'Durably saved', submitted: 'Wish submitted; the Agent started', retried: 'Retry submitted', cancelled: 'Cancellation requested', decided: 'Decision saved', unsaved: 'Unsaved edits',
         suggestion: { deliver: 'Delivered. Run it locally with the start command; submit a new wish for further changes.', running: 'The Agent is working. The board refreshes automatically.', blocked: 'Major decisions are pending; accept or reject them to continue.', failed: 'The last run failed. Inspect failed tasks, then retry or submit a revised wish.', uncertain: 'Execution needs confirmation; inspect the workspace, then retry explicitly.', draft: 'No wish submitted yet. Write one to begin.' },
-        language: 'Language', stageNote: 'Unified bundle 0.3.0: P0 and P1 capabilities come from one install unit.',
+        language: 'Language', stageNote: 'Unified bundle 0.3.1: P0 and P1 capabilities come from one install unit.',
       },
     };
     const css = `
@@ -428,3 +428,4 @@ window.__ModuleLoader__.load({
     };
   },
 });
+

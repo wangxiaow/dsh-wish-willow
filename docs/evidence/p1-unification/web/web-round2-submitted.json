@@ -1,0 +1,198 @@
+{
+  "panelPresent": true,
+  "ariaBusy": "false",
+  "panelText": "Wish Willow一个入口：许愿、执行、证据与交付。提交自然语言愿望，由真实 DSH Agent 规划、开发、构建、测试并交付可运行软件；产品状态独立于会话并持久保存。统一 Bundle 0.3.0：P0 与 P1 能力来自同一安装单元。待办事项应用 · 0.2.0产品名称软件愿望创建产品重新读取待办事项应用工作目录: C:\\Users\\wangw\\AppData\\Local\\dsh-wish-willow-acceptance\\home-unified\\wish-willow\\projects\\b41b8242-db6c-416f-bd27-85110219d5d9产品状态执行中修订号18产品目标我希望有一个简单的个人待办事项应用，可以新增任务、查看任务、标记完成和删除任务。界面容易使用，数据能够保存。当前愿望请增加任务优先级，并允许按照优先级筛选，但不要破坏现有的新增、完成和删除功能。当前版本0.1.0 · 正式交付 · 交付时间 2026-10-10T12:45:55.196Z已确认需求我希望有一个简单的个人待办事项应用，可以新增任务、查看任务、标记完成和删除任务。界面容易使用，数据能够保存。请增加任务优先级，并允许按照优先级筛选，但不要破坏现有的新增、完成和删除功能。Agent 推断需求（未确认）[confirmed] 我希望有一个简单的个人待办事项应用，可以新增任务、查看任务、标记完成和删除任务。界面容易使用，数据能够保存。[inferred] 新增任务：输入标题（必填，去除首尾空白）并提交；空标题或纯空白不允许新增，并给出可见提示。[inferred] 查看任务：列表展示全部任务及其完成状态，新增后立即可见；无任务时显示空状态提示。[inferred] 标记完成：单个任务可在已完成/未完成之间切换，列表中有清晰的视觉区分（勾选框+样式）。[inferred] 删除任务：可删除任意单个任务（含已完成任务），删除后立即从列表消失。[inferred] 数据持久化：所有增删改在浏览器本地保存（localStorage），刷新或重开页面后数据与完成状态保持不变。[inferred] 界面易用：单一页面、中文标签、键盘可直接回车提交、可点击区域足够大，无需登录或配置。[inferred] 显示完成进度（如“已完成 x / 共 y”），让查看任务时一目了然。核心约束零外部依赖、无需安装任何包：纯静态 HTML + CSS + 原生 JavaScript，不使用框架、构建器或 CDN 资源。 (Agent 推断)仅在本项目工作目录内创建/修改文件，不读取凭据或私人文件，不改动 DSH 核心，不安装系统组件，不部署到公网。 (Agent 推断)数据只保存在用户本机浏览器 localStorage，不上传任何数据、不申请额外系统权限。 (Agent 推断)保持单一变更范围：先交付 v0.1.0 的 CRUD+持久化，不引入用户账号、多设备同步、提醒通知等未请求功能。 (Agent 推断)需要你决策的事项技术形态采用可直接打开的本地静态 Web 页面（index.html + styles.css + app.js），无需 npm install、无需构建产物；理由：满足“界面容易使用”且最简、无安装负担。 — 普通 · 已接受持久化使用浏览器 localStorage，并以版本化键 dsh.todos.v1 保存 JSON 数组；理由：纯前端无后端即可满足“数据能够保存”，且便于后续迁移。 — 普通 · 已接受将任务数据逻辑（add/toggle/remove/统计/序列化）抽到无 DOM 依赖的纯函数模块，便于用 node:test 做真实自动化测试；页面仅负责渲染与事件绑定。 — 普通 · 已接受验证拆分为三步且互不替代：build 用 node --check 校验全部脚本语法（无编译步骤，如实说明）；test 用 node --test 运行数据逻辑单测；run 用 Node 内置静态服务器真实启动并做可重复 HTTP 烟测。 — 普通 · 已接受预览方式为本地 Node 静态服务器（server.js，端口可由 PORT 覆盖），startCommand 在源码目录可重复启动，不依赖任何全局安装。 — 普通 · 已接受当前任务及执行状态执行中 (1)plan体验类执行中理解愿望、保留正式需求并制定执行计划任务 ID5f947055-edb3-46a6-b53f-b5a53769056b已完成 (9)plan体验类已完成理解愿望、保留正式需求并制定执行计划任务 ID4f132b96-39c6-4ad6-8c4f-113f0dbc4fa0实际结果真实 Agent 已保存 6 项开发任务code体验类已完成搭建纯静态项目骨架：index.html、styles.css、app.js、README.md，实现新增/查看/标记完成/删除与 localStorage 持久化的完整界面任务 ID09e2bb91-27b1-4b04-ae32-471247e67af9依赖4f132b96实际结果实际源码已修改并保存不可覆盖快照，构建及回归验证通过。证据源码 exit=n/a ✓code技术类已完成抽取无 DOM 依赖的任务数据模块 todo-core.js（新增、切换完成、删除、统计、序列化/反序列化、空标题校验）任务 IDdb96ff4f-e604-4364-9ac3-bd3781069755依赖09e2bb91实际结果实际源码已修改并保存不可覆盖快照，构建及回归验证通过。证据源码 exit=n/a ✓code技术类已完成编写自动化测试 todo-core.test.js 与静态服务器 server.js（固定端口、可重复启动）任务 ID9af2bb19-49ed-44da-9abe-11cd5a493fac依赖db96ff4f实际结果实际源码已修改并保存不可覆盖快照，构建及回归验证通过。证据源码 exit=n/a ✓code技术类已完成执行 build 校验：node --check 检查全部脚本语法，确保构建步骤真实通过任务 IDa58b971d-90aa-494b-b0e2-699e7242d988依赖9af2bb19实际结果实际源码已修改并保存不可覆盖快照，构建及回归验证通过。证据源码 exit=n/a ✓code技术类已完成执行 test：node --test 运行数据逻辑单测，覆盖新增/完成/删除/持久化序列化边界任务 ID2f96a981-cd31-46da-8243-cb0e5e082ea1依赖a58b971d实际结果实际源码已修改并保存不可覆盖快照，构建及回归验证通过。证据源码 exit=n/a ✓code技术类已完成执行 run：启动静态服务器并以真实 HTTP 请求烟测首页与脚本资源可用，随后关闭进程任务 ID25175576-da30-4e1e-a4bf-fdc9795121fb依赖2f96a981实际结果实际源码已修改并保存不可覆盖快照，构建及回归验证通过。证据源码 exit=n/a ✓verify技术类已完成执行真实构建、回归测试和运行验证任务 IDaed7c7c5-895c-49b6-bd8a-65b1a24e1269依赖25175576实际结果构建、测试、运行分别取得真实 exit 0。证据最近构建 exit=0 ✓; test exit=0 ✓; run exit=0 ✓deliver技术类已完成绑定证据、保存源码快照并交付版本任务 IDc7404dc5-e6e8-47ee-917d-dd5b58d97018依赖aed7c7c5实际结果交付 v0.1.0「待办事项应用」：零依赖纯静态 Web 工程（无 npm install、无构建产物），已按要求实现确认愿望的全部功能。 【功能对应需求】 - 新增任务：输入框 + 按钮，支持回车提交；标题自动去除首尾空白并压缩内部空白，空/纯空白被拒绝并显示可访问提示（role=\"alert\"）。 - 查看任务：列表展示全部任务、完成状态与创建时间，顶部显示「已完成 x / 共 y」进度；无任务时显示空状态提示。 - 标记完成：每条任务复选框可来回切换，完成项加删除线并置灰。 - 删除任务：每条任务独立「删除」按钮，含已完成任务，删除后立即消失。 - 数据保存：每次增删改即时写入 localStorage（版本化键 dsh.todos.v1，JSON {version:1,tasks:[]}）；刷新/重开页面恢复数据与完成状态；localStorage 不可用（隐私模式、file:// 受限）时自动退回内存存储，界面不报错。 - 界面易用：单页中文界面、最大 640px 窄栏、移动端自适应、大点击区域、键盘可直接操作。 【架构】数据层 todo-core.js 无 DOM 依赖（新增/切换/删除/统计/序列化/校验，纯 UMD：浏览器 window.TodoCore 与 Node require 共用），界面层 app.js 仅做渲染与事件绑定，server.js 为可复用的零依赖静态服务器（含目录穿越防护）。 【真实验证，三步互相独立、均 exit 0】 - build（evidence 3547a4d5）：node --check 校验 app.js/todo-core.js/server.js/todo-core.test.js 全部通过；确认无 package.json，即零依赖、无需安装。本项目无编译/打包步骤，此点已在 README 中如实说明。 - test（evidence e32a8216）：12/12 通过，覆盖空标题拒绝与去空白、追加不改原数组、完成状态来回切换、定向删除、统计、序列化往返与完成状态保留、坏 JSON/旧格式/脏数据容错、id 去重、内存兜底存储、页面挂载点与脚本接线检查、路径穿越拒绝，以及真实启动服务器后的 HTTP 冒烟。 - run（evidence 64818c6f）：以真实前台进程启动 node server.js（端口 4173），实际请求 http://127.0.0.1:4173/ 得到 200 text/html 且含标题与表单挂载点，/app.js、/todo-core.js、/styles.css 均 200 且 MIME 正确，不存在的路径返回 404；随后关闭进程并确认 4173 已释放。 【两次有界修正，如实记录】 1. 首轮 test 用 node --test 失败（spawn EPERM）：受限沙箱禁止子进程管道捕获，而 node --test 的文件运行器会 spawn 子进程。未绕过沙箱，改为自写零子进程的进程内运行器 todo-test-runner.js 执行同一批测试（node --test 仍保留为备选），失败时同样以退出码 1 结束。 2. 首轮 run 因我脚本使用只读变量 $home 报错退出码 1：已清理该轮残留进程（确认无 node 进程、4173 空闲）后重跑成功。 【如何运行】在该源码目录执行 `node server.js` 即可重复启动，浏览器访问 http://127.0.0.1:4173/ ；端口可用 $env:PORT 覆盖。也可直接双击 index.html 打开。 【范围与隐私】严格遵守约束：仅在本项目工作目录内新增 8 个文件，未读取凭据或私人文件、未改动 DSH 核心、未调用子 Agent/工作流、未公网部署、未安装系统组件。全部数据仅存于本机浏览器 localStorage，不上传、不申请额外权限。证据最近构建 exit=0 ✓; test exit=0 ✓; run exit=0 ✓; 源码 exit=n/a ✓Agent 执行记录Session IDProvider模型开始结束模型调用工具调用记录失败Tokens（输入/输出）耗时原因wish-wildeepseek-officialdeepseek-flash2026-10-10T12:44:08.784Z2026-10-10T12:45:55.204Z3135294535/22032106430 ms已完成wish-wildeepseek-officialdeepseek-flash2026-10-10T12:48:24.443Z—000—/——执行中构建、测试与交付证据最近构建: 通过 · 2026-10-10T12:45:55.113Z证据类型: 最近构建 exit=0; test exit=0; run exit=0测试状态: ✓交付产物: C:\\Users\\wangw\\AppData\\Local\\dsh-wish-willow-acceptance\\home-unified\\wish-willow\\deliveries\\b41b8242-db6c-416f-bd27-85110219d5d9\\f901cfff-ef63-4f5b-88bc-58daa7739fef\\source-snapshot.json (4a5f31019c45…)不可覆盖源码快照: C:\\Users\\wangw\\AppData\\Local\\dsh-wish-willow-acceptance\\home-unified\\wish-willow\\deliveries\\b41b8242-db6c-416f-bd27-85110219d5d9\\f901cfff-ef63-4f5b-88bc-58daa7739fef\\source没有真实构建、测试与运行证据时不会标记为已交付。阶段退出码实际结果记录时间证据最近构建0✓2026-10-10T12:45:05.797Znode: v26.7.0 OK: node --check app.js OK: node --check todo-core.js OK: node --check server.js OK: node --check todo-core.test.js OK: 无 package.json（零依赖、无 npm install） BUILD OK test1✗2026-10-10T12:45:08.779Z✖ todo-core.test.js (2.3232ms) ℹ tests 1 ℹ suites 0 ℹ pass 0 ℹ fail 1 ℹ cancelled 0 ℹ skipped 0 ℹ",
+  "status": "执行中",
+  "revision": "18",
+  "version": "0.1.0 · 正式交付 · 交付时间 2026-10-10T12:45:55.196Z",
+  "workspace": "产品状态执行中修订号18产品目标我希望有一个简单的个人待办事项应用，可以新增任务、查看任务、标记完成和删除任务。界面容易使用，数据能够保存。当前愿望请增加任务优先级，并允许按照优先级筛选，但不要破坏现有的新增、完成和删除功能。当前版本0.1.0 · 正式交付 · 交付时间 2026-10-10T12:45:55.196Z",
+  "notice": "愿望已提交，Agent 开始执行",
+  "error": null,
+  "productTitle": "待办事项应用",
+  "goal": "我希望有一个简单的个人待办事项应用，可以新增任务、查看任务、标记完成和删除任务。界面容易使用，数据能够保存。",
+  "currentWish": "请增加任务优先级，并允许按照优先级筛选，但不要破坏现有的新增、完成和删除功能。",
+  "confirmed": [
+    {
+      "id": null,
+      "text": "我希望有一个简单的个人待办事项应用，可以新增任务、查看任务、标记完成和删除任务。界面容易使用，数据能够保存。"
+    },
+    {
+      "id": null,
+      "text": "请增加任务优先级，并允许按照优先级筛选，但不要破坏现有的新增、完成和删除功能。"
+    }
+  ],
+  "inferred": [
+    {
+      "id": null,
+      "text": "[confirmed] 我希望有一个简单的个人待办事项应用，可以新增任务、查看任务、标记完成和删除任务。界面容易使用，数据能够保存。"
+    },
+    {
+      "id": null,
+      "text": "[inferred] 新增任务：输入标题（必填，去除首尾空白）并提交；空标题或纯空白不允许新增，并给出可见提示。"
+    },
+    {
+      "id": null,
+      "text": "[inferred] 查看任务：列表展示全部任务及其完成状态，新增后立即可见；无任务时显示空状态提示。"
+    },
+    {
+      "id": null,
+      "text": "[inferred] 标记完成：单个任务可在已完成/未完成之间切换，列表中有清晰的视觉区分（勾选框+样式）。"
+    },
+    {
+      "id": null,
+      "text": "[inferred] 删除任务：可删除任意单个任务（含已完成任务），删除后立即从列表消失。"
+    },
+    {
+      "id": null,
+      "text": "[inferred] 数据持久化：所有增删改在浏览器本地保存（localStorage），刷新或重开页面后数据与完成状态保持不变。"
+    },
+    {
+      "id": null,
+      "text": "[inferred] 界面易用：单一页面、中文标签、键盘可直接回车提交、可点击区域足够大，无需登录或配置。"
+    },
+    {
+      "id": null,
+      "text": "[inferred] 显示完成进度（如“已完成 x / 共 y”），让查看任务时一目了然。"
+    }
+  ],
+  "constraints": [
+    {
+      "id": null,
+      "text": "零外部依赖、无需安装任何包：纯静态 HTML + CSS + 原生 JavaScript，不使用框架、构建器或 CDN 资源。 (Agent 推断)"
+    },
+    {
+      "id": null,
+      "text": "仅在本项目工作目录内创建/修改文件，不读取凭据或私人文件，不改动 DSH 核心，不安装系统组件，不部署到公网。 (Agent 推断)"
+    },
+    {
+      "id": null,
+      "text": "数据只保存在用户本机浏览器 localStorage，不上传任何数据、不申请额外系统权限。 (Agent 推断)"
+    },
+    {
+      "id": null,
+      "text": "保持单一变更范围：先交付 v0.1.0 的 CRUD+持久化，不引入用户账号、多设备同步、提醒通知等未请求功能。 (Agent 推断)"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "ww-decision-0bbdda72",
+      "text": "技术形态采用可直接打开的本地静态 Web 页面（index.html + styles.css + app.js），无需 npm install、无需构建产物；理由：满足“界面容易使用”且最简、无安装负担。 — 普通 · 已接受"
+    },
+    {
+      "id": "ww-decision-46ea26a4",
+      "text": "持久化使用浏览器 localStorage，并以版本化键 dsh.todos.v1 保存 JSON 数组；理由：纯前端无后端即可满足“数据能够保存”，且便于后续迁移。 — 普通 · 已接受"
+    },
+    {
+      "id": "ww-decision-f6ece5a6",
+      "text": "将任务数据逻辑（add/toggle/remove/统计/序列化）抽到无 DOM 依赖的纯函数模块，便于用 node:test 做真实自动化测试；页面仅负责渲染与事件绑定。 — 普通 · 已接受"
+    },
+    {
+      "id": "ww-decision-a582b75b",
+      "text": "验证拆分为三步且互不替代：build 用 node --check 校验全部脚本语法（无编译步骤，如实说明）；test 用 node --test 运行数据逻辑单测；run 用 Node 内置静态服务器真实启动并做可重复 HTTP 烟测。 — 普通 · 已接受"
+    },
+    {
+      "id": "ww-decision-4348db5a",
+      "text": "预览方式为本地 Node 静态服务器（server.js，端口可由 PORT 覆盖），startCommand 在源码目录可重复启动，不依赖任何全局安装。 — 普通 · 已接受"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "ww-task-5f947055",
+      "text": "plan体验类执行中理解愿望、保留正式需求并制定执行计划任务 ID5f947055-edb3-46a6-b53f-b5a53769056b"
+    },
+    {
+      "id": "ww-task-4f132b96",
+      "text": "plan体验类已完成理解愿望、保留正式需求并制定执行计划任务 ID4f132b96-39c6-4ad6-8c4f-113f0dbc4fa0实际结果真实 Agent 已保存 6 项开发任务"
+    },
+    {
+      "id": "ww-task-09e2bb91",
+      "text": "code体验类已完成搭建纯静态项目骨架：index.html、styles.css、app.js、README.md，实现新增/查看/标记完成/删除与 localStorage 持久化的完整界面任务 ID09e2bb91-27b1-4b04-ae32-471247e67af9依赖4f132b96实际结果实际源码已修改并保存不可覆盖快照，构建及回归验证通过。证据源码 exit=n/a ✓"
+    },
+    {
+      "id": "ww-task-db96ff4f",
+      "text": "code技术类已完成抽取无 DOM 依赖的任务数据模块 todo-core.js（新增、切换完成、删除、统计、序列化/反序列化、空标题校验）任务 IDdb96ff4f-e604-4364-9ac3-bd3781069755依赖09e2bb91实际结果实际源码已修改并保存不可覆盖快照，构建及回归验证通过。证据源码 exit=n/a ✓"
+    },
+    {
+      "id": "ww-task-9af2bb19",
+      "text": "code技术类已完成编写自动化测试 todo-core.test.js 与静态服务器 server.js（固定端口、可重复启动）任务 ID9af2bb19-49ed-44da-9abe-11cd5a493fac依赖db96ff4f实际结果实际源码已修改并保存不可覆盖快照，构建及回归验证通过。证据源码 exit=n/a ✓"
+    },
+    {
+      "id": "ww-task-a58b971d",
+      "text": "code技术类已完成执行 build 校验：node --check 检查全部脚本语法，确保构建步骤真实通过任务 IDa58b971d-90aa-494b-b0e2-699e7242d988依赖9af2bb19实际结果实际源码已修改并保存不可覆盖快照，构建及回归验证通过。证据源码 exit=n/a ✓"
+    },
+    {
+      "id": "ww-task-2f96a981",
+      "text": "code技术类已完成执行 test：node --test 运行数据逻辑单测，覆盖新增/完成/删除/持久化序列化边界任务 ID2f96a981-cd31-46da-8243-cb0e5e082ea1依赖a58b971d实际结果实际源码已修改并保存不可覆盖快照，构建及回归验证通过。证据源码 exit=n/a ✓"
+    },
+    {
+      "id": "ww-task-25175576",
+      "text": "code技术类已完成执行 run：启动静态服务器并以真实 HTTP 请求烟测首页与脚本资源可用，随后关闭进程任务 ID25175576-da30-4e1e-a4bf-fdc9795121fb依赖2f96a981实际结果实际源码已修改并保存不可覆盖快照，构建及回归验证通过。证据源码 exit=n/a ✓"
+    },
+    {
+      "id": "ww-task-aed7c7c5",
+      "text": "verify技术类已完成执行真实构建、回归测试和运行验证任务 IDaed7c7c5-895c-49b6-bd8a-65b1a24e1269依赖25175576实际结果构建、测试、运行分别取得真实 exit 0。证据最近构建 exit=0 ✓; test exit=0 ✓; run exit=0 ✓"
+    },
+    {
+      "id": "ww-task-c7404dc5",
+      "text": "deliver技术类已完成绑定证据、保存源码快照并交付版本任务 IDc7404dc5-e6e8-47ee-917d-dd5b58d97018依赖aed7c7c5实际结果交付 v0.1.0「待办事项应用」：零依赖纯静态 Web 工程（无 npm install、无构建产物），已按要求实现确认愿望的全部功能。\n\n【功能对应需求】\n- 新增任务：输入框 + 按钮，支持回车提交；标题自动去除首尾空白并压缩内部空白，空/纯空白被拒绝并显示可访问提示（role=\"alert\"）。\n- 查看任务：列表展示全部任务、完成状态与创建时间，顶部显示「已完成 x / 共 y」进度；无任务时显示空状态提示。\n- 标记完成：每条任务复选框可来回切换，完成项加删除线并置灰。\n- 删除任务：每条任务独立「删除」按钮，含已完成任务，删除后立即消失。\n- 数据保存：每次增删改即时写入 localStorage（版本化键 d"
+    }
+  ],
+  "runs": [
+    {
+      "id": "ww-run-3c41d008",
+      "text": "wish-wildeepseek-officialdeepseek-flash2026-10-10T12:44:08.784Z2026-10-10T12:45:55.204Z3135294535/22032106430 ms已完成"
+    },
+    {
+      "id": "ww-run-191bbb1d",
+      "text": "wish-wildeepseek-officialdeepseek-flash2026-10-10T12:48:24.443Z—000—/——执行中"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "ww-evidence-3547a4d5",
+      "text": "最近构建0✓2026-10-10T12:45:05.797Znode: v26.7.0\r\nOK: node --check app.js\r\nOK: node --check todo-core.js\r\nOK: node --check server.js\r\nOK: node --check todo-core.test.js\r\nOK: 无 package.json（零依赖、无 npm install）\r\nBUILD OK"
+    },
+    {
+      "id": "ww-evidence-cdf6660d",
+      "text": "test1✗2026-10-10T12:45:08.779Z✖ todo-core.test.js (2.3232ms)\nℹ tests 1\nℹ suites 0\nℹ pass 0\nℹ fail 1\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 8.0813\n\n✖ failing tests:\n\ntest at todo-core.test.js:1:1\n✖ todo-core.test.js (2.3232ms)\n  Error: spawn EPERM\n      at ChildProcess.spawn (node:internal/child_process:457:11)\n      at spawn (node:child_process:813:9)\n      at TestContext.<anonymous> (no"
+    },
+    {
+      "id": "ww-evidence-e32a8216",
+      "text": "test0✓2026-10-10T12:45:30.076Z✔ 新增任务：空标题与纯空白被拒绝\n✔ 新增任务：标题去除首尾空白并压缩内部空白\n✔ 新增任务：追加后总数增加且不修改原数组\n✔ 标记完成：可来回切换且不修改原数组\n✔ 删除任务：移除指定项并保留其余项\n✔ 统计：正确统计已完成与待办数量\n✔ 持久化：序列化与反序列化可完整往返\n✔ 持久化：坏数据与旧格式不会抛错\n✔ 内存兜底存储：localStorage 不可用时仍可读写\n✔ 页面资源：index.html 引用的脚本、样式与挂载点存在\n✔ 路径解析：目录穿越请求被拒绝\n✔ run 冒烟：真实启动服务器并访问首页与静态资源\n\n测试文件: todo-core.test.js\n共 12 项，通过 12 项，失败 0 项\n\nTEST OK（全部通过）\nTEST OK, exit=0"
+    },
+    {
+      "id": "ww-evidence-4d29d766",
+      "text": "run1✗2026-10-10T12:45:35.793Zserver pid=33016\r\n\nCannot overwrite variable HOME because it is read-only or constant.\r\nAt line:12 char:1\r\n+ $home = $null\r\n+ ~~~~~~~~~~~~~\r\n    + CategoryInfo          : WriteError: (HOME:String) [], ParentContainsErrorRecordException\r\n    + FullyQualifiedErrorId : VariableNotWritable"
+    },
+    {
+      "id": "ww-evidence-64818c6f",
+      "text": "run0✓2026-10-10T12:45:46.837Zserver pid=29532\r\nGET /              -> 200 text/html; charset=utf-8 bytes=1826\r\n首页包含标题: True\r\n首页包含新增表单挂载点: True\r\nGET /app.js        -> 200 text/javascript; charset=utf-8 bytes=4896\r\nGET /todo-core.js  -> 200 text/javascript; charset=utf-8 bytes=5479\r\nGET /styles.css    -> 200 text/css; charset=utf-8 bytes=4123\r\nGET /no-such-file  -> 404\r\n--- server stdout ---\r\n寰呭姙浜嬮」搴"
+    },
+    {
+      "id": "ww-evidence-99a41a2e",
+      "text": "源码—✓2026-10-10T12:45:55.113Z8 个实际源码文件；快照 SHA256 4a5f31019c459d92c680a3f5c6fbb3d0a9ec1b44e652395fb087a143dfd6a260"
+    }
+  ],
+  "build": "最近构建: 通过 · 2026-10-10T12:45:55.113Z",
+  "evidenceKinds": "证据类型: 最近构建 exit=0; test exit=0; run exit=0",
+  "tests": "测试状态: ✓",
+  "artifacts": "交付产物: C:\\Users\\wangw\\AppData\\Local\\dsh-wish-willow-acceptance\\home-unified\\wish-willow\\deliveries\\b41b8242-db6c-416f-bd27-85110219d5d9\\f901cfff-ef63-4f5b-88bc-58daa7739fef\\source-snapshot.json (4a5f31019c45…)",
+  "snapshot": "不可覆盖源码快照: C:\\Users\\wangw\\AppData\\Local\\dsh-wish-willow-acceptance\\home-unified\\wish-willow\\deliveries\\b41b8242-db6c-416f-bd27-85110219d5d9\\f901cfff-ef63-4f5b-88bc-58daa7739fef\\source",
+  "startCommand": "启动方式: node server.js",
+  "versions": [
+    {
+      "id": "ww-version-f901cfff",
+      "text": "0.1.0正式交付2026-10-10T12:45:55.196Znode server.js"
+    },
+    {
+      "id": "ww-version-1e79d8f8",
+      "text": "0.2.0计划中——"
+    }
+  ],
+  "suggestions": "已交付。可用“启动方式”在本地运行；如需改动，继续提交新的愿望。",
+  "products": [
+    "待办事项应用 · 0.2.0"
+  ],
+  "legacyProducts": [],
+  "legacyEditorOpen": false
+}
