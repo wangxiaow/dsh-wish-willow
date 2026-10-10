@@ -80,7 +80,7 @@
 
 ## 4. 限制与风险
 
-1. **UI 真实点击链路未验证**：本会话没有浏览器/桌面自动化通道可用，因此只在真实运行页面确认了 P1 面板的 Slot 注册（`wish-willow-p1`，order 31，active）与 RPC 契约；Web 与原生 Desktop 的**表单单点击验收标记为 UNVERIFIED**，须按 `docs/P1-ACCEPTANCE.md` D 节由独立验收者执行。真实两轮执行是经临时 Host 探针调用同一公开服务完成的，不是页面点击。
+1. **UI 真实点击链路未验证**：本会话未使用浏览器/桌面自动化（没有授权操作既有窗口，也没有可用的截图/DOM 通道），因此只在真实运行页面确认了 P1 面板的 Slot 注册（`wish-willow-p1`，order 31，active）与 RPC 契约；Web 与原生 Desktop 的**表单点击验收标记为 UNVERIFIED**，须按 `docs/P1-ACCEPTANCE.md` D 节由独立验收者执行。真实两轮执行是经临时 Host 探针调用同一公开服务完成的，不是页面点击。P0 验收证据目录中已有可复用的 Windows UIA 脚本（`docs/evidence/final-acceptance/desktop-probe.ps1`、`docs/evidence/web-supplement/ui-probe.ps1`），但它们硬编码了旧 PID/端口，且需要独立的 UI 操作授权。
 2. **模型成本**：两轮真实执行消耗约 1.33M 输入 / 81K 输出 tokens（DSH 报告的 provider 累计值，非账单金额）。P1 未实现成本上限，只有步数（60）与时间（15 分钟）预算。
 3. **单写入 Host**：JSON 后端无跨进程写锁，P0 与 P1 都由同一 Host 写入；不能两个 Host 共写同一存储 root。
 4. **重试语义**：失败/待确认的 ChangeSet 可重试（≤3 次）；重试会重新规划，因此该尝试的推断需求会追加到产品历史中（已确认需求始终保留且不可覆盖）。重试一个已被后续成功交付取代的旧失败 ChangeSet 是允许的，会产生新的 Attempt。
