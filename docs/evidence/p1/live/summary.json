@@ -1,0 +1,286 @@
+{
+  "extractedAt": "2026-10-10T11:20:27.554Z",
+  "projectId": "72e73806-11ac-44f4-b58a-01ff32153e00",
+  "revision": 32,
+  "status": "delivered",
+  "changes": 2,
+  "releases": 2,
+  "versions": 2,
+  "agentRuns": 2,
+  "userDecisions": 0,
+  "rounds": [
+    {
+      "round": 1,
+      "changeStatus": "completed",
+      "attempt": 1,
+      "version": [
+        "0.1.0",
+        "Released"
+      ],
+      "startCommand": "npm start",
+      "snapshotPath": "C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\deliveries\\72e73806-11ac-44f4-b58a-01ff32153e00\\85c5989f-a1df-43d9-bd31-1d24be26839d\\source",
+      "buildStatus": "passed",
+      "buildEvidence": 4,
+      "tasks": 9,
+      "runStatus": "completed",
+      "modelCalls": 18,
+      "toolCalls": 39,
+      "failures": 1,
+      "inputTokens": 418649,
+      "outputTokens": 38907,
+      "durationMs": 292494,
+      "verification": {
+        "kinds": [
+          "build",
+          "code",
+          "run",
+          "test"
+        ],
+        "exitCodes": [
+          [
+            "build",
+            0,
+            true
+          ],
+          [
+            "test",
+            1,
+            false
+          ],
+          [
+            "test",
+            0,
+            true
+          ],
+          [
+            "run",
+            0,
+            true
+          ],
+          [
+            "build",
+            0,
+            true
+          ]
+        ],
+        "allSuccessful": false,
+        "hasBuildTestRunZero": true
+      }
+    },
+    {
+      "round": 2,
+      "changeStatus": "completed",
+      "attempt": 1,
+      "version": [
+        "0.2.0",
+        "Released"
+      ],
+      "startCommand": "npm start",
+      "snapshotPath": "C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\deliveries\\72e73806-11ac-44f4-b58a-01ff32153e00\\3147cf4c-1191-4907-8096-590f9e2bc1d1\\source",
+      "buildStatus": "passed",
+      "buildEvidence": 3,
+      "tasks": 10,
+      "runStatus": "completed",
+      "modelCalls": 45,
+      "toolCalls": 63,
+      "failures": 4,
+      "inputTokens": 912452,
+      "outputTokens": 42121,
+      "durationMs": 406785,
+      "verification": {
+        "kinds": [
+          "build",
+          "code",
+          "run",
+          "test"
+        ],
+        "exitCodes": [
+          [
+            "build",
+            0,
+            true
+          ],
+          [
+            "test",
+            0,
+            true
+          ],
+          [
+            "run",
+            1,
+            false
+          ],
+          [
+            "run",
+            0,
+            true
+          ]
+        ],
+        "allSuccessful": false,
+        "hasBuildTestRunZero": true
+      }
+    }
+  ],
+  "history": [
+    [
+      1,
+      "create-product",
+      "user"
+    ],
+    [
+      2,
+      "submit-wish",
+      "user"
+    ],
+    [
+      3,
+      "start-agent-run",
+      "agent"
+    ],
+    [
+      4,
+      "record-agent-plan",
+      "agent"
+    ],
+    [
+      5,
+      "task-status",
+      "agent"
+    ],
+    [
+      6,
+      "task-status",
+      "agent"
+    ],
+    [
+      7,
+      "task-status",
+      "agent"
+    ],
+    [
+      8,
+      "task-status",
+      "agent"
+    ],
+    [
+      9,
+      "start-validation",
+      "agent"
+    ],
+    [
+      10,
+      "validation-result",
+      "agent"
+    ],
+    [
+      11,
+      "validation-result",
+      "agent"
+    ],
+    [
+      12,
+      "validation-result",
+      "agent"
+    ],
+    [
+      13,
+      "validation-result",
+      "agent"
+    ],
+    [
+      14,
+      "validation-result",
+      "agent"
+    ],
+    [
+      15,
+      "build-version",
+      "agent"
+    ],
+    [
+      16,
+      "release-version",
+      "agent"
+    ],
+    [
+      17,
+      "finish-agent-run",
+      "runtime"
+    ],
+    [
+      18,
+      "submit-wish",
+      "user"
+    ],
+    [
+      19,
+      "start-agent-run",
+      "agent"
+    ],
+    [
+      20,
+      "record-agent-plan",
+      "agent"
+    ],
+    [
+      21,
+      "task-status",
+      "agent"
+    ],
+    [
+      22,
+      "task-status",
+      "agent"
+    ],
+    [
+      23,
+      "task-status",
+      "agent"
+    ],
+    [
+      24,
+      "task-status",
+      "agent"
+    ],
+    [
+      25,
+      "start-validation",
+      "agent"
+    ],
+    [
+      26,
+      "validation-result",
+      "agent"
+    ],
+    [
+      27,
+      "validation-result",
+      "agent"
+    ],
+    [
+      28,
+      "validation-result",
+      "agent"
+    ],
+    [
+      29,
+      "validation-result",
+      "agent"
+    ],
+    [
+      30,
+      "build-version",
+      "agent"
+    ],
+    [
+      31,
+      "release-version",
+      "agent"
+    ],
+    [
+      32,
+      "finish-agent-run",
+      "runtime"
+    ]
+  ]
+}

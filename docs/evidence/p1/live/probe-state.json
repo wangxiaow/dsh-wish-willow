@@ -1,0 +1,14 @@
+{
+  "startedAt": "2026-10-10T11:06:27.066Z",
+  "phase": "done",
+  "pid": 29280,
+  "projectId": "72e73806-11ac-44f4-b58a-01ff32153e00",
+  "projectCreatedAt": "2026-10-10T11:06:27.069Z",
+  "revision": 1,
+  "round1RequestId": "db2c1d47-afb9-48c8-b760-7c349c8d1d94",
+  "round1ChangeId": "16e180f0-db03-43e7-8be9-f9b53ce117ff",
+  "round1Done": true,
+  "round2RequestId": "b6a331a6-5a32-4d00-8fd1-87053d165a11",
+  "round2ChangeId": "18cafb27-47cf-43bd-8799-1b3f2f29ceb1",
+  "round2Done": true
+}

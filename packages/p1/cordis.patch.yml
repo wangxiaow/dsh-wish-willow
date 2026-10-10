@@ -1,0 +1,5 @@
+# P1 companion Bundle: inserts one Host/Client plugin row beside the shipped composition.
+- insert:
+    - id: wish-willow-p1
+      name: dsh-wish-willow-p1
+      config: {}

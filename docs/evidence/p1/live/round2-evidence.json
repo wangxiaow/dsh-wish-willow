@@ -1,0 +1,375 @@
+{
+  "round": 2,
+  "change": {
+    "id": "18cafb27-47cf-43bd-8799-1b3f2f29ceb1",
+    "requestId": "b6a331a6-5a32-4d00-8fd1-87053d165a11",
+    "wish": "给待办事项增加优先级，并且能够按优先级筛选。",
+    "createdAt": "2026-10-10T11:11:22.481Z",
+    "status": "completed",
+    "versionId": "3147cf4c-1191-4907-8096-590f9e2bc1d1",
+    "attempt": 1,
+    "result": "## 交付物：待办事项应用 0.2.0 — 优先级与按优先级筛选（零依赖静态 Web）\n\n源码目录：`C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\projects\\72e73806-11ac-44f4-b58a-01ff32153e00`（11 个文件，无 node_modules，零第三方依赖，无需任何安装）\n\n### 本次 ChangeSet 对齐的用户愿望\n**已确认**：「给待办事项增加优先级，并且能够按优先级筛选。」\n原有已确认愿望（添加/标记完成/删除）与其全部推断需求、约束、决策均保留并继续成立，未做任何回退。\n\n### 功能范围\n- **优先级三档**：`high`（高）/ `medium`（中）/ `low`（低）；新任务默认「中」；缺失/非法优先级一律归一化为「中」。\n- **添加时选择优先级**：`#new-priority` 位于 `#todo-form` 内，回车与「添加」按钮共用同一 submit 路径；输入为空或纯空白时依旧拒绝添加且不写存储。\n- **优先级可视化**：列表项带 `data-priority` 与 `.todo__priority` 徽标，三档配色不同（浅色/深色主题各一套 CSS 变量）。徽标文字由 CSS `::after` 依据 `data-priority` 生成（高/中/低），因此徽标不产生文本节点，列表项既有 DOM 形态与断言不受影响。\n- **按优先级筛选**：`#priority-filter` 提供「全部 / 高 / 中 / 低」；纯视图操作——不修改、不重排（保持插入顺序）底层数据，也不写入存储；刷新后回到「全部」。\n- **筛选摘要**：`#filter-summary` 显示「显示全部 N 项」或「筛选：高 · 命中 2 项」，并带 `data-filter` / `data-matched`。\n- **空态区分**：真正的空列表显示「还没有任务，先添加一条吧。」；筛选无命中显示「没有符合当前优先级的任务。」。\n- **统计不回归**：`#stats-total` / `#stats-completed` **始终为全局计数**，不随筛选变化。\n- **向后兼容**：存储键仍为 `wish-willow.todos.v1`（不做双键迁移）；旧数据（无 `priority` 字段）在 `deserializeTodos` / `loadTodos` 边界统一补为「中」，任务不丢失、不报错，下次保存时写回该字段。\n- **非目标（明确不做）**：不支持修改已创建任务的优先级或文本；不按优先级自动排序；不做多条件/组合筛选；筛选状态不持久化。\n\n### 目录结构\n```\nindex.html            页面结构（既有 8 个挂载点 + #new-priority / #priority-filter / #filter-summary）\nstyles.css            样式（完成态删除线、优先级徽标三档配色、筛选行、深浅色）\nsrc/todos.js          领域逻辑：PRIORITIES / DEFAULT_PRIORITY / FILTER_ALL / normalizePriority /\n                      normalizeFilter / addTodo(list,text,priority) / filterTodos(list,priority) / 持久化\nsrc/app.js            UI 层：initApp(doc, storage) 渲染、事件绑定、内存态筛选（可注入 doc/storage）\nscripts/build.js      build：零依赖静态检查（73 项）\nscripts/serve.js      run：node:http 零依赖静态服务器\nscripts/smoke.js      run：进程内起服务 + 真实 HTTP 断言（29 项）\ntests/todos.test.js   node:test 42 项用例（23 项逻辑 + 19 项 UI 行为）\ntests/fake-dom.js     零依赖最小 DOM（含事件冒泡），驱动真实 app.js\npackage.json          仅声明 scripts，dependencies/devDependencies 均为空\nREADME.md             功能范围、验证命令、向后兼容、已知限制与非目标\n```\n\n### 验证证据（三类独立真实执行，均为最终文件状态）\n- **build**（`npm run build`）：**exit 0** — 73 项静态检查全部通过（必需文件、package.json 版本 0.2.0 与零依赖、11 个 DOM 挂载点、优先级选择器位于表单内且默认「中」、筛选控件含 all/high/medium/low、styles.css 三档徽标规则、todos.js 新导出与 API 形状、filterTodos 在 `all` 时返回原引用）。证据 `413949d8-4141-439c-949d-c729b02a25c3`。\n- **test**（`npm test`）：**exit 0** — 42/42 通过，其中**既有 27 项全部继续通过**。新增覆盖：优先级常量与归一化（合法三档 / 非法回退）、`filterTodos` 纯函数性与各级命中、非法筛选回退全部、v1 旧数据加载补 medium 且任务不丢失、持久化往返保留优先级、UI 层选择优先级添加与 `data-priority` 徽标、切换筛选只显示命中项、筛选空结果专用文案、筛选不写存储且不改顺序、刷新后筛选回到全部但优先级保留、旧数据在 UI 中按「中」显示与筛选、destroy 后筛选控件失效。证据 `49c46e3f-3ef6-419d-a01e-d5ee9e00c105`。\n- **run**（`npm run smoke` + 真实预览抓取）：**exit 0** — 烟测 29/29 通过（真实监听端口、`GET /` = 200 且 Content-Type 为 text/html、11 个挂载点齐全、筛选控件取值完整、styles.css / src/app.js / src/todos.js 均 200、重复请求响应体一致、未知路径 404、服务确实处于监听状态）。另以 `npm start` 真实启动常驻服务于 **http://127.0.0.1:4173/** 并实际抓取：`GET /` = 200（2012 bytes）、11 个挂载点齐全、`GET /styles.css` = 200（4427 bytes）、重复请求响应体一致。证据 `1b21e6dc-280d-4e7a-aa38-8a32fb6d2ee3`。\n- **startCommand 可重复性已实测**：`npm start` 在源码目录重复启动成功（`GET /` = 200），随后已停止进程并确认 4173 端口释放，因此再次 `npm start` 不会端口冲突。\n\n### 诚实声明（含本次的一处失败与一处既有断言调整）\n1. **run 首次尝试曾 exit 1**（证据 `ef6c5ab9-5ed1-4c71-a4eb-949151597256`）：烟测 29 项已全部通过，随后我用 PowerShell 变量 `$home` 接收响应，与大小写不敏感的只读变量 `$HOME` 冲突导致脚本报错退出。这是**我的验证脚本变量命名错误，不是产品缺陷**；改用 `$page` 后同一命令 exit 0（证据 `1b21e6dc`）。\n2. **既有测试中有一处必需的最小改动**：`A13`（反序列化非法条目过滤）对反序列化结果做整对象 `deepEqual`，而本次为领域模型新增了 `priority` 字段作为不变式的一部分，因此该断言的三个期望对象字面量补上了 `priority: 'medium'`。**这不是删改或弱化任何行为断言**：非法条目过滤规则、字段类型修正、返回条目的所有原有断言字面保持不变；其余 26 项既有用例**一字未改**。为保护既有 DOM 断言（`textContent` 拼接形态、子元素索引），优先级徽标刻意不携带文本节点，渲染顺序固定为 `[复选框, 文本, 删除按钮, 徽标]`。\n3. 本环境沙箱禁止命名管道，`node --test` 默认的「每文件 spawn 子进程 + 管道捕获输出」会以 `spawn EPERM` 失败；因此 `npm test` 固定使用 `--test-isolation=none`，已在 README 说明原因，不影响结论。\n4. UI 行为测试经由零依赖最小 DOM（已实现事件冒泡）驱动真实 `src/app.js`，未使用真实浏览器内核；浏览器层证据为「真实 HTTP 抓取服务端页面与资源」+ 静态契约断言。\n5. 单用户本地应用：无后端、无多设备同步；清除站点数据会丢失任务；任务文本上限 200 字符；不支持编辑已创建任务的优先级与文本。\n6. 本次未安装任何第三方依赖或系统组件（`dependencies` / `devDependencies` 保持为空），未调用团队/子 Agent/工作流，未公网部署，仅改动本产品工作目录。"
+  },
+  "tasks": [
+    {
+      "id": "8fdd88a1-ca37-4343-8236-adc8dc25638f",
+      "projectId": "72e73806-11ac-44f4-b58a-01ff32153e00",
+      "changeId": "18cafb27-47cf-43bd-8799-1b3f2f29ceb1",
+      "description": "理解愿望、保留正式需求并制定执行计划",
+      "category": "experience",
+      "phase": "plan",
+      "dependencies": [],
+      "status": "completed",
+      "runId": "a4c169c2-6f8a-4446-9d80-d2c1d61aeea5",
+      "result": "真实 Agent 已保存 7 项开发任务",
+      "evidenceIds": []
+    },
+    {
+      "id": "ad96dfb1-b1d1-4ea4-946d-0713ae068eeb",
+      "projectId": "72e73806-11ac-44f4-b58a-01ff32153e00",
+      "changeId": "18cafb27-47cf-43bd-8799-1b3f2f29ceb1",
+      "description": "扩展 src/todos.js 领域模型并保持纯函数性：新增 PRIORITIES=['high','medium','low'] 与 DEFAULT_PRIORITY='medium'、normalizePriority(value)、filterTodos(list, priority)（'all' 返回全部、不改原数组、非法输入安全回退）；addTodo(list, text, priority) 新增优先级参数（缺省/非法→medium），保留空与纯空白拒绝、trim、200 字符截断；deserializeTodos 对缺失或非法 priority 归一化为 medium（旧数据向后兼容），serializeTodos 保留 priority 字段；STORAGE_KEY 不变。完成后用 node --check 校验语法。",
+      "category": "technical",
+      "phase": "code",
+      "dependencies": [
+        "8fdd88a1-ca37-4343-8236-adc8dc25638f"
+      ],
+      "status": "completed",
+      "runId": "a4c169c2-6f8a-4446-9d80-d2c1d61aeea5",
+      "result": "实际源码已修改并保存不可覆盖快照，构建及回归验证通过。",
+      "evidenceIds": [
+        "3fee85a7-11d5-4b73-a25c-b5111a46dccd"
+      ]
+    },
+    {
+      "id": "a97b65a5-018c-4ebf-9182-9a71b711e01f",
+      "projectId": "72e73806-11ac-44f4-b58a-01ff32153e00",
+      "changeId": "18cafb27-47cf-43bd-8799-1b3f2f29ceb1",
+      "description": "更新 index.html 与 styles.css：#new-priority 优先级选择器放入 #todo-form（高/中/低，默认中）；#priority-filter 筛选控件（全部/高/中/低）；#filter-summary 筛选摘要；列表项优先级徽标 .todo__priority 与 data-priority 的样式（三档可区分配色）。严格保留既有 8 个挂载点 id（#todo-form/#new-todo/#add-btn/#todo-list/#empty-state/#stats/#stats-total/#stats-completed）与完成态删除线、空态隐藏规则，不破坏既有静态契约。",
+      "category": "experience",
+      "phase": "code",
+      "dependencies": [
+        "ad96dfb1-b1d1-4ea4-946d-0713ae068eeb"
+      ],
+      "status": "completed",
+      "runId": "a4c169c2-6f8a-4446-9d80-d2c1d61aeea5",
+      "result": "实际源码已修改并保存不可覆盖快照，构建及回归验证通过。",
+      "evidenceIds": [
+        "3fee85a7-11d5-4b73-a25c-b5111a46dccd"
+      ]
+    },
+    {
+      "id": "1ac378d9-a47d-4dfa-889d-a743de07b7d4",
+      "projectId": "72e73806-11ac-44f4-b58a-01ff32153e00",
+      "changeId": "18cafb27-47cf-43bd-8799-1b3f2f29ceb1",
+      "description": "更新 src/app.js：initApp 读取 #new-priority 参与添加；维护内存态当前筛选并响应 #priority-filter 变更；渲染时使用 filterTodos 仅显示命中项，为每项输出 .todo__priority 徽标与 data-priority；筛选后无结果显示「没有符合当前优先级的任务。」（复用 #empty-state，与真正的空列表文案区分）；#stats-total/#stats-completed 保持全局统计；#filter-summary 显示当前筛选与命中数。保持零依赖、可注入 doc/storage、initApp 返回值与 destroy 语义兼容。",
+      "category": "experience",
+      "phase": "code",
+      "dependencies": [
+        "a97b65a5-018c-4ebf-9182-9a71b711e01f"
+      ],
+      "status": "completed",
+      "runId": "a4c169c2-6f8a-4446-9d80-d2c1d61aeea5",
+      "result": "实际源码已修改并保存不可覆盖快照，构建及回归验证通过。",
+      "evidenceIds": [
+        "3fee85a7-11d5-4b73-a25c-b5111a46dccd"
+      ]
+    },
+    {
+      "id": "79910eef-df2d-43af-a9f3-e27d5d3d918d",
+      "projectId": "72e73806-11ac-44f4-b58a-01ff32153e00",
+      "changeId": "18cafb27-47cf-43bd-8799-1b3f2f29ceb1",
+      "description": "扩展 tests/todos.test.js（沿用 node:test + node:assert，零依赖）新增优先级用例：normalizePriority 对三档与非法值的处理、addTodo 默认 medium 与指定优先级、filterTodos 纯函数性（不改原数组）与全部/高/中/低命中、v1 旧数据（无 priority 字段）加载后补 medium 且任务数量不丢失、损坏数据的既有回退不回归、UI 层：选择优先级后添加渲染正确徽标、切换筛选只显示对应项、筛选空结果提示文案、筛选切换不改变存储内容、统计保持全局。既有 27 项用例必须继续通过（不得删改断言以迁就实现）。",
+      "category": "technical",
+      "phase": "code",
+      "dependencies": [
+        "1ac378d9-a47d-4dfa-889d-a743de07b7d4"
+      ],
+      "status": "completed",
+      "runId": "a4c169c2-6f8a-4446-9d80-d2c1d61aeea5",
+      "result": "实际源码已修改并保存不可覆盖快照，构建及回归验证通过。",
+      "evidenceIds": [
+        "3fee85a7-11d5-4b73-a25c-b5111a46dccd"
+      ]
+    },
+    {
+      "id": "614084ac-71af-47c7-8f06-f72cda8f2b82",
+      "projectId": "72e73806-11ac-44f4-b58a-01ff32153e00",
+      "changeId": "18cafb27-47cf-43bd-8799-1b3f2f29ceb1",
+      "description": "同步工具与元数据：scripts/build.js 增加静态检查（#new-priority/#priority-filter/#filter-summary 挂载点存在、todos.js 导出 PRIORITIES/DEFAULT_PRIORITY/normalizePriority/filterTodos、styles.css 含优先级徽标规则、package.json 版本为 0.2.0、仍为零依赖）；scripts/smoke.js 首页断言增加对上述新挂载点的检查，保持可重复烟测；package.json 版本升为 0.2.0，scripts 保持不变。",
+      "category": "technical",
+      "phase": "code",
+      "dependencies": [
+        "79910eef-df2d-43af-a9f3-e27d5d3d918d"
+      ],
+      "status": "completed",
+      "runId": "a4c169c2-6f8a-4446-9d80-d2c1d61aeea5",
+      "result": "实际源码已修改并保存不可覆盖快照，构建及回归验证通过。",
+      "evidenceIds": [
+        "3fee85a7-11d5-4b73-a25c-b5111a46dccd"
+      ]
+    },
+    {
+      "id": "43206c95-200c-4450-8328-499505c5952e",
+      "projectId": "72e73806-11ac-44f4-b58a-01ff32153e00",
+      "changeId": "18cafb27-47cf-43bd-8799-1b3f2f29ceb1",
+      "description": "三重真实验证（全部必须真实执行并以 wish_verify 保存结构化 exit code）：build=node scripts/build.js；test=npm test；run=npm run smoke。每条命令使用 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE } 传递失败，且三类各自独立执行、不得互相替代。若 run 需要常驻预览，则真实以 npm start 启动并实际抓取 http://127.0.0.1:4173/ 验证 HTTP 200 与全部挂载点后再声明可用。全部 exit 0 方可进入交付。",
+      "category": "experience",
+      "phase": "code",
+      "dependencies": [
+        "614084ac-71af-47c7-8f06-f72cda8f2b82"
+      ],
+      "status": "completed",
+      "runId": "a4c169c2-6f8a-4446-9d80-d2c1d61aeea5",
+      "result": "实际源码已修改并保存不可覆盖快照，构建及回归验证通过。",
+      "evidenceIds": [
+        "3fee85a7-11d5-4b73-a25c-b5111a46dccd"
+      ]
+    },
+    {
+      "id": "efbea180-4785-4b6f-91ad-1c1be477e241",
+      "projectId": "72e73806-11ac-44f4-b58a-01ff32153e00",
+      "changeId": "18cafb27-47cf-43bd-8799-1b3f2f29ceb1",
+      "description": "交付：更新 README.md（优先级与筛选用法、向后兼容说明、已知限制：不可改已有任务优先级/筛选不持久化/不自动排序、以及 node --test-isolation=none 的沙箱原因）；确认工作目录为可重复运行的零依赖源码快照；调用 wish_deliver 并给出可在源码目录重复启动的 startCommand（npm start），交付摘要需列出功能范围、目录结构、三类验证证据与已知限制。",
+      "category": "experience",
+      "phase": "code",
+      "dependencies": [
+        "43206c95-200c-4450-8328-499505c5952e"
+      ],
+      "status": "completed",
+      "runId": "a4c169c2-6f8a-4446-9d80-d2c1d61aeea5",
+      "result": "实际源码已修改并保存不可覆盖快照，构建及回归验证通过。",
+      "evidenceIds": [
+        "3fee85a7-11d5-4b73-a25c-b5111a46dccd"
+      ]
+    },
+    {
+      "id": "2ea23679-adc0-40c6-98ff-2929fb5089a7",
+      "projectId": "72e73806-11ac-44f4-b58a-01ff32153e00",
+      "changeId": "18cafb27-47cf-43bd-8799-1b3f2f29ceb1",
+      "description": "执行真实构建、回归测试和运行验证",
+      "category": "technical",
+      "phase": "verify",
+      "dependencies": [
+        "efbea180-4785-4b6f-91ad-1c1be477e241"
+      ],
+      "status": "completed",
+      "runId": "a4c169c2-6f8a-4446-9d80-d2c1d61aeea5",
+      "result": "构建、测试、运行分别取得真实 exit 0。",
+      "evidenceIds": [
+        "413949d8-4141-439c-949d-c729b02a25c3",
+        "49c46e3f-3ef6-419d-a01e-d5ee9e00c105",
+        "1b21e6dc-280d-4e7a-aa38-8a32fb6d2ee3"
+      ]
+    },
+    {
+      "id": "6997f593-d814-4722-a5d7-5f562e555204",
+      "projectId": "72e73806-11ac-44f4-b58a-01ff32153e00",
+      "changeId": "18cafb27-47cf-43bd-8799-1b3f2f29ceb1",
+      "description": "绑定证据、保存源码快照并交付版本",
+      "category": "technical",
+      "phase": "deliver",
+      "dependencies": [
+        "2ea23679-adc0-40c6-98ff-2929fb5089a7"
+      ],
+      "status": "completed",
+      "runId": "a4c169c2-6f8a-4446-9d80-d2c1d61aeea5",
+      "result": "## 交付物：待办事项应用 0.2.0 — 优先级与按优先级筛选（零依赖静态 Web）\n\n源码目录：`C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\projects\\72e73806-11ac-44f4-b58a-01ff32153e00`（11 个文件，无 node_modules，零第三方依赖，无需任何安装）\n\n### 本次 ChangeSet 对齐的用户愿望\n**已确认**：「给待办事项增加优先级，并且能够按优先级筛选。」\n原有已确认愿望（添加/标记完成/删除）与其全部推断需求、约束、决策均保留并继续成立，未做任何回退。\n\n### 功能范围\n- **优先级三档**：`high`（高）/ `medium`（中）/ `low`（低）；新任务默认「中」；缺失/非法优先级一律归一化为「中」。\n- **添加时选择优先级**：`#new-priority` 位于 `#todo-form` 内，回车与「添加」按钮共用同一 submit 路径；输入为空或纯空白时依旧拒绝添加且不写存储。\n- **优先级可视化**：列表项带 `data-priority` 与 `.todo__priority` 徽标，三档配色不同（浅色/深色主题各一套 CSS 变量）。徽标文字由 CSS `::after` 依据 `data-priority` 生成（高/中/低），因此徽标不产生文本节点，列表项既有 DOM 形态与断言不受影响。\n- **按优先级筛选**：`#priority-filter` 提供「全部 / 高 / 中 / 低」；纯视图操作——不修改、不重排（保持插入顺序）底层数据，也不写入存储；刷新后回到「全部」。\n- **筛选摘要**：`#filter-summary` 显示「显示全部 N 项」或「筛选：高 · 命中 2 项」，并带 `data-filter` / `data-matched`。\n- **空态区分**：真正的空列表显示「还没有任务，先添加一条吧。」；筛选无命中显示「没有符合当前优先级的任务。」。\n- **统计不回归**：`#stats-total` / `#stats-completed` **始终为全局计数**，不随筛选变化。\n- **向后兼容**：存储键仍为 `wish-willow.todos.v1`（不做双键迁移）；旧数据（无 `priority` 字段）在 `deserializeTodos` / `loadTodos` 边界统一补为「中」，任务不丢失、不报错，下次保存时写回该字段。\n- **非目标（明确不做）**：不支持修改已创建任务的优先级或文本；不按优先级自动排序；不做多条件/组合筛选；筛选状态不持久化。\n\n### 目录结构\n```\nindex.html            页面结构（既有 8 个挂载点 + #new-priority / #priority-filter / #filter-summary）\nstyles.css            样式（完成态删除线、优先级徽标三档配色、筛选行、深浅色）\nsrc/todos.js          领域逻辑：PRIORITIES / DEFAULT_PRIORITY / FILTER_ALL / normalizePriority /\n                      normalizeFilter / addTodo(list,text,priority) / filterTodos(list,priority) / 持久化\nsrc/app.js            UI 层：initApp(doc, storage) 渲染、事件绑定、内存态筛选（可注入 doc/storage）\nscripts/build.js      build：零依赖静态检查（73 项）\nscripts/serve.js      run：node:http 零依赖静态服务器\nscripts/smoke.js      run：进程内起服务 + 真实 HTTP 断言（29 项）\ntests/todos.test.js   node:test 42 项用例（23 项逻辑 + 19 项 UI 行为）\ntests/fake-dom.js     零依赖最小 DOM（含事件冒泡），驱动真实 app.js\npackage.json          仅声明 scripts，dependencies/devDependencies 均为空\nREADME.md             功能范围、验证命令、向后兼容、已知限制与非目标\n```\n\n### 验证证据（三类独立真实执行，均为最终文件状态）\n- **build**（`npm run build`）：**exit 0** — 73 项静态检查全部通过（必需文件、package.json 版本 0.2.0 与零依赖、11 个 DOM 挂载点、优先级选择器位于表单内且默认「中」、筛选控件含 all/high/medium/low、styles.css 三档徽标规则、todos.js 新导出与 API 形状、filterTodos 在 `all` 时返回原引用）。证据 `413949d8-4141-439c-949d-c729b02a25c3`。\n- **test**（`npm test`）：**exit 0** — 42/42 通过，其中**既有 27 项全部继续通过**。新增覆盖：优先级常量与归一化（合法三档 / 非法回退）、`filterTodos` 纯函数性与各级命中、非法筛选回退全部、v1 旧数据加载补 medium 且任务不丢失、持久化往返保留优先级、UI 层选择优先级添加与 `data-priority` 徽标、切换筛选只显示命中项、筛选空结果专用文案、筛选不写存储且不改顺序、刷新后筛选回到全部但优先级保留、旧数据在 UI 中按「中」显示与筛选、destroy 后筛选控件失效。证据 `49c46e3f-3ef6-419d-a01e-d5ee9e00c105`。\n- **run**（`npm run smoke` + 真实预览抓取）：**exit 0** — 烟测 29/29 通过（真实监听端口、`GET /` = 200 且 Content-Type 为 text/html、11 个挂载点齐全、筛选控件取值完整、styles.css / src/app.js / src/todos.js 均 200、重复请求响应体一致、未知路径 404、服务确实处于监听状态）。另以 `npm start` 真实启动常驻服务于 **http://127.0.0.1:4173/** 并实际抓取：`GET /` = 200（2012 bytes）、11 个挂载点齐全、`GET /styles.css` = 200（4427 bytes）、重复请求响应体一致。证据 `1b21e6dc-280d-4e7a-aa38-8a32fb6d2ee3`。\n- **startCommand 可重复性已实测**：`npm start` 在源码目录重复启动成功（`GET /` = 200），随后已停止进程并确认 4173 端口释放，因此再次 `npm start` 不会端口冲突。\n\n### 诚实声明（含本次的一处失败与一处既有断言调整）\n1. **run 首次尝试曾 exit 1**（证据 `ef6c5ab9-5ed1-4c71-a4eb-949151597256`）：烟测 29 项已全部通过，随后我用 PowerShell 变量 `$home` 接收响应，与大小写不敏感的只读变量 `$HOME` 冲突导致脚本报错退出。这是**我的验证脚本变量命名错误，不是产品缺陷**；改用 `$page` 后同一命令 exit 0（证据 `1b21e6dc`）。\n2. **既有测试中有一处必需的最小改动**：`A13`（反序列化非法条目过滤）对反序列化结果做整对象 `deepEqual`，而本次为领域模型新增了 `priority` 字段作为不变式的一部分，因此该断言的三个期望对象字面量补上了 `priority: 'medium'`。**这不是删改或弱化任何行为断言**：非法条目过滤规则、字段类型修正、返回条目的所有原有断言字面保持不变；其余 26 项既有用例**一字未改**。为保护既有 DOM 断言（`textContent` 拼接形态、子元素索引），优先级徽标刻意不携带文本节点，渲染顺序固定为 `[复选框, 文本, 删除按钮, 徽标]`。\n3. 本环境沙箱禁止命名管道，`node --test` 默认的「每文件 spawn 子进程 + 管道捕获输出」会以 `spawn EPERM` 失败；因此 `npm test` 固定使用 `--test-isolation=none`，已在 README 说明原因，不影响结论。\n4. UI 行为测试经由零依赖最小 DOM（已实现事件冒泡）驱动真实 `src/app.js`，未使用真实浏览器内核；浏览器层证据为「真实 HTTP 抓取服务端页面与资源」+ 静态契约断言。\n5. 单用户本地应用：无后端、无多设备同步；清除站点数据会丢失任务；任务文本上限 200 字符；不支持编辑已创建任务的优先级与文本。\n6. 本次未安装任何第三方依赖或系统组件（`dependencies` / `devDependencies` 保持为空），未调用团队/子 Agent/工作流，未公网部署，仅改动本产品工作目录。",
+      "evidenceIds": [
+        "3fee85a7-11d5-4b73-a25c-b5111a46dccd",
+        "413949d8-4141-439c-949d-c729b02a25c3",
+        "49c46e3f-3ef6-419d-a01e-d5ee9e00c105",
+        "1b21e6dc-280d-4e7a-aa38-8a32fb6d2ee3"
+      ]
+    }
+  ],
+  "run": {
+    "id": "a4c169c2-6f8a-4446-9d80-d2c1d61aeea5",
+    "changeId": "18cafb27-47cf-43bd-8799-1b3f2f29ceb1",
+    "sessionId": "wish-willow-a546f82d-2c4c-46de-a8dd-0626d0b2431d",
+    "status": "completed",
+    "startedAt": "2026-10-10T11:11:22.486Z",
+    "endedAt": "2026-10-10T11:18:09.270Z",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "provider": "command",
+    "modelCalls": 45,
+    "toolCalls": 63,
+    "failures": 4,
+    "inputTokens": 912452,
+    "outputTokens": 42121,
+    "durationMs": 406785
+  },
+  "evidence": [
+    {
+      "id": "413949d8-4141-439c-949d-c729b02a25c3",
+      "changeId": "18cafb27-47cf-43bd-8799-1b3f2f29ceb1",
+      "runId": "a4c169c2-6f8a-4446-9d80-d2c1d61aeea5",
+      "kind": "build",
+      "sessionId": "wish-willow-a546f82d-2c4c-46de-a8dd-0626d0b2431d",
+      "callId": "wish-check-38cc74c3-06e0-4a16-b64d-bfbd94d036aa",
+      "tool": "pwsh",
+      "command": "Write-Output \"node: $(node --version)\"; Write-Output \"cwd: $(Get-Location)\"; npm run build; $code = $LASTEXITCODE; Write-Output \"build exit code: $code\"; if ($code -ne 0) { exit $code }; Write-Output \"BUILD_STEP_PASSED\"",
+      "exitCode": 0,
+      "success": true,
+      "summary": "node: v26.7.0\r\ncwd: C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\projects\\72e73806-11ac-44f4-b58a-01ff32153e00\r\n\n> wish-willow-todo@0.2.0 build\n> node scripts/build.js\n\n[build] 工作目录: C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\projects\\72e73806-11ac-44f4-b58a-01ff32153e00\n\n[build] 1/4 必需文件\n  ok   存在且非空: index.html\n  ok   存在且非空: styles.css\n  ok   存在且非空: src/todos.js\n  ok   存在且非空: src/app.js\n  ok   存在且非空: scripts/build.js\n  ok   存在且非空: scripts/serve.js\n  ok   存在且非空: scripts/smoke.js\n  ok   存在且非空: tests/todos.test.js\n  ok   存在且非空: tests/fake-dom.js\n  ok   存在且非空: package.json\n  ok   存在且非空: README.md\n\n[build] 2/4 package.json\n  ok   package.json 可解析\n  ok   type = module（保证 ESM 在 Node 下可直接 import）\n  ok   声明 script: build\n  ok   声明 script: test\n  ok   声明 script: smoke\n  ok   声明 script: start\n  ok   版本为 0.2.0（优先级与筛选特性版本）\n  ok   零第三方依赖（dependencies 与 devDependencies 均为空）\n\n[build] 3/4 index.html 挂载点\n  ok   index.html 可读取\n  ok   含挂载点 #todo-form\n  ok   含挂载点 #new-todo\n  ok   含挂载点 #add-btn\n  ok   含挂载点 #todo-list\n  ok   含挂载点 #empty-state\n  ok   含挂载点 #stats\n  ok   含挂载点 #stats-total\n  ok   含挂载点 #stats-completed\n  ok   含挂载点 #new-priority\n  ok   含挂载点 #priority-filter\n  ok   含挂载点 #filter-summary\n  ok   以 ES Module 方式加载 src/app.js\n  ok   「添加」按钮为表单提交按钮（回车与按钮共用 submit 路径）\n  ok   输入框 #new-todo 位于 #todo-form 表单内\n  ok   优先级选择器 #new-priority 位于 #todo-form 表单内\n  ok   优先级选择器含高/中/低三档\n  ok   筛选控件含「全部」选项\n  ok   优先级选择器默认「中」\n  ok   筛选项默认「全部」\n  ok   引用 styles.css\n  ok   styles.css 定义完成态删除线\n  ok   styles.css 定义空态隐藏规则\n  ok   styles.css 定义优先级徽标\n  ok   styles.css 定义优先级样式: high\n  ok   styles.css 定义优先级样式: medium\n  ok   styles.css 定义优先级样式: low\n  ok   styles.css 以 CSS 生成徽标文字（高/中/低）\n\n[build] 4/4 模块加载与 API 形状\n  ok   src/todos.js 可加载\n  ok   todos.js 导出 addTodo\n  ok   todos.js 导出 toggleTodo\n  ok   todos.js 导出 deleteTodo\n  ok   todos.js 导出 countTodos\n  ok   todos.js 导出 normalizeText\n  ok   todos.js 导出 serializeTodos\n  ok   todos.js 导出 deserializeTodos\n  ok   todos.js 导出 loadTodos\n  ok   todos.js 导出 saveTodos\n  ok   todos.js 导出 STORAGE_KEY\n  ok   todos.js 导出 PRIORITIES\n  ok   todos.js 导出 DEFAULT_PRIORITY\n  ok   todos.js 导出 FILTER_ALL\n  ok   todos.js 导出 normalizePriority\n  ok   todos.js 导出 normalizeFilter\n  ok   todos.js 导出 filterTodos\n  ok   核心变更函数均为 function\n  ok   PRIORITIES 为 high/medium/low 三档\n  ok   DEFAULT_PRIORITY 为 medium\n  ok   FILTER_ALL 为 all\n  ok   normalizePriority 非法值回退 medium\n  ok   filterTodos 纯函数性：all 返回原引用、非法筛选回退全部\n  ok   addTodo 支持优先级参数\n  ok   src/app.js 可加载（无 document 时不自动启动）\n  ok   app.js 导出 initApp 函数\n\n[build] OK — 73 项静态检查全部通过\nbuild exit code: 0\r\nBUILD_STEP_PASSED\r\n\n",
+      "recordedAt": "2026-10-10T11:16:49.681Z"
+    },
+    {
+      "id": "49c46e3f-3ef6-419d-a01e-d5ee9e00c105",
+      "changeId": "18cafb27-47cf-43bd-8799-1b3f2f29ceb1",
+      "runId": "a4c169c2-6f8a-4446-9d80-d2c1d61aeea5",
+      "kind": "test",
+      "sessionId": "wish-willow-a546f82d-2c4c-46de-a8dd-0626d0b2431d",
+      "callId": "wish-check-df96bb79-2af4-4b4d-9145-cc21e8c505d7",
+      "tool": "pwsh",
+      "command": "npm test; $code = $LASTEXITCODE; Write-Output \"test exit code: $code\"; if ($code -ne 0) { exit $code }; Write-Output \"TEST_STEP_PASSED\"",
+      "exitCode": 0,
+      "success": true,
+      "summary": "\n> wish-willow-todo@0.2.0 test\n> node --test-isolation=none --test tests/todos.test.js\n\n✔ A1 normalizeText 去空白、拒非字符串、截断超长 (0.8815ms)\n✔ A2 addTodo 追加任务并 trim，返回新数组且不修改原数组 (2.3168ms)\n✔ A3 addTodo 为每条任务生成唯一 id (0.1351ms)\n✔ A4 addTodo 拒绝空、纯空白与非字符串输入（返回原引用） (0.1452ms)\n✔ A5 addTodo 截断超长文本到上限 (0.1275ms)\n✔ A6 toggleTodo 双向切换完成状态，不修改原数组 (0.6203ms)\n✔ A7 toggleTodo 对未知 id 返回原引用 (0.133ms)\n✔ A8 deleteTodo 只删除目标单条，不修改原数组 (0.1453ms)\n✔ A9 deleteTodo 对未知 id 返回原引用 (0.1164ms)\n✔ A10 countTodos 统计总数、已完成与剩余 (0.2435ms)\n✔ A11 持久化往返：saveTodos 后 loadTodos 得到等价列表 (0.3425ms)\n✔ A12 损坏数据安全回退为空列表，不抛异常 (0.1859ms)\n✔ A13 过滤非法条目并修正字段类型 (0.1193ms)\n✔ A14 无可用存储时不抛异常：load 返回 []、save 返回 false (0.08ms)\n✔ A15 存储读写抛异常时被安全吞掉 (0.1125ms)\n✔ A16 serializeTodos 对非法输入退化为空数组 JSON (0.0637ms)\n✔ A17 优先级常量与 normalizePriority：三档合法，非法一律回退 medium (0.0914ms)\n✔ A18 normalizeFilter：all 与三档合法，非法回退 all (0.09ms)\n✔ A19 addTodo 支持优先级：缺省为 medium、指定值被保留、非法值回退 medium (0.1079ms)\n✔ A20 filterTodos：all 返回原引用，指定优先级只含命中项且不修改原数组 (0.1645ms)\n✔ A21 filterTodos 对缺 priority 的旧数据按 medium 命中 (0.0743ms)\n✔ A22 v1 旧数据（无 priority）加载后补 medium，任务不丢失；有 priority 的保留原值 (0.1585ms)\n✔ A23 持久化往返保留优先级（mixed 三档） (0.1146ms)\n✔ B1 index.html 静态契约：挂载点、空态文案、表单提交按钮 (0.3309ms)\n✔ B2 初始渲染：列表为空、空态可见、统计为 0/0 (0.7121ms)\n✔ B3 表单提交添加任务：渲染、清空输入框、更新统计、写入存储 (0.411ms)\n✔ B4 通过真实 submit 事件路径添加（回车与按钮共用该路径） (0.3083ms)\n✔ B5 空输入与纯空白输入不允许添加 (0.1916ms)\n✔ B6 点击复选框切换完成态：加删除线类名、更新统计与存储 (0.3919ms)\n✔ B7 点击删除按钮移除单条任务并立即刷新界面 (0.5978ms)\n✔ B8 刷新页面后数据不丢失（新实例从同一存储恢复） (0.6938ms)\n✔ B9 存储数据损坏时页面仍能正常启动为空列表 (0.1703ms)\n✔ B10 缺少 DOM 挂载点时抛出明确错误 (0.3943ms)\n✔ B11 destroy 解除事件绑定后不再响应提交 (0.1963ms)\n✔ B12 初始渲染：筛选默认「全部」、摘要文案、默认优先级为「中」 (0.1487ms)\n✔ B13 选择优先级后添加：列表项与徽标 data-priority 正确且写入存储 (0.4111ms)\n✔ B14 按优先级筛选只显示命中项，统计保持全局 (0.7081ms)\n✔ B15 筛选后无结果显示专用提示，与真正的空列表文案区分 (0.6813ms)\n✔ B16 筛选只影响视图：不写存储、不改动底层数据与顺序 (0.4915ms)\n✔ B17 刷新后筛选回到「全部」，但任务优先级持久化保留 (0.539ms)\n✔ B18 旧数据（v1，无 priority）在 UI 中按「中」显示与筛选 (0.3086ms)\n✔ B19 destroy 后筛选控件不再触发重绘 (0.4481ms)\nℹ tests 42\nℹ suites 0\nℹ pass 42\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 31.0417\ntest exit code: 0\r\nTEST_STEP_PASSED\r\n\n",
+      "recordedAt": "2026-10-10T11:16:51.253Z"
+    },
+    {
+      "id": "ef6c5ab9-5ed1-4c71-a4eb-949151597256",
+      "changeId": "18cafb27-47cf-43bd-8799-1b3f2f29ceb1",
+      "runId": "a4c169c2-6f8a-4446-9d80-d2c1d61aeea5",
+      "kind": "run",
+      "sessionId": "wish-willow-a546f82d-2c4c-46de-a8dd-0626d0b2431d",
+      "callId": "wish-check-1e7f3e90-c42e-437f-828b-e79b4be410ba",
+      "tool": "pwsh",
+      "command": "npm run smoke; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }\n$home = Invoke-WebRequest -Uri 'http://127.0.0.1:4173/' -UseBasicParsing -TimeoutSec 15\nWrite-Output \"preview GET / status=$($home.StatusCode) bytes=$($home.RawContentLength)\"\nif ($home.StatusCode -ne 200) { exit 1 }\n$missing = @()\nforeach ($id in @('todo-form','new-todo','add-btn','todo-list','empty-state','stats','stats-total','stats-completed','new-priority','priority-filter','filter-summary')) { if ($home.Content -notmatch ('id=\"' + [regex]::Escape($id) + '\"')) { $missing += $id } }\nif ($missing.Count -gt 0) { Write-Output \"missing mounts: $($missing -join ',')\"; exit 1 }\nWrite-Output \"preview URL 含全部 11 个挂载点\"\n$again = Invoke-WebRequest -Uri 'http://127.0.0.1:4173/' -UseBasicParsing -TimeoutSec 15\nif ($again.Content -ne $home.Content) { Write-Output 'repeat response differs'; exit 1 }\nWrite-Output \"RUN_STEP_PASSED http://127.0.0.1:4173/\"",
+      "exitCode": 1,
+      "success": false,
+      "summary": "\n> wish-willow-todo@0.2.0 smoke\n> node scripts/smoke.js\n\n[smoke] 启动零依赖静态服务器…\n[smoke] 服务已监听 http://127.0.0.1:50357/ (pid=32904)\n\n[smoke] 1/4 首页请求\n  ok   GET / 返回 HTTP 200\n  ok   Content-Type 为 text/html\n  ok   响应体非空\n  ok   首页含 DOM 挂载点 #todo-form\n  ok   首页含 DOM 挂载点 #new-todo\n  ok   首页含 DOM 挂载点 #add-btn\n  ok   首页含 DOM 挂载点 #todo-list\n  ok   首页含 DOM 挂载点 #empty-state\n  ok   首页含 DOM 挂载点 #stats\n  ok   首页含 DOM 挂载点 #stats-total\n  ok   首页含 DOM 挂载点 #stats-completed\n  ok   首页含 DOM 挂载点 #new-priority\n  ok   首页含 DOM 挂载点 #priority-filter\n  ok   首页含 DOM 挂载点 #filter-summary\n  ok   首页以 ES Module 加载 src/app.js\n  ok   首页筛选控件含取值 all\n  ok   首页筛选控件含取值 high\n  ok   首页筛选控件含取值 medium\n  ok   首页筛选控件含取值 low\n  ok   首页优先级选择器默认「中」\n\n[smoke] 2/4 静态资源请求\n  ok   GET /styles.css 返回 200\n  ok   GET /src/app.js 返回 200\n  ok   GET /src/todos.js 返回 200\n  ok   GET /src/todos.js Content-Type 为 JavaScript\n\n[smoke] 3/4 可重复性\n  ok   重复请求首页仍为 200\n  ok   重复请求响应体一致\n  ok   未知路径返回 404\n\n[smoke] 4/4 服务元信息\n  ok   监听端口为真实分配端口\n  ok   服务处于监听状态\n[smoke] 服务已关闭\n\n[smoke] OK — 29 项烟测全部通过 (http://127.0.0.1:50357/)\npreview GET / status= bytes=\r\n\n无法覆盖变量 HOME，因为该变量为只读变量或常量。\r\n所在位置 行:2 字符: 1\r\n+ $home = Invoke-WebRequest -Uri 'http://127.0.0.1:4173/' -UseBasicPars ...\r\n+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : WriteError: (HOME:String) [], SessionStateUnauthorizedAccessException\r\n    + FullyQualifiedErrorId : VariableNotWritable\r\n \r\n",
+      "recordedAt": "2026-10-10T11:17:03.562Z"
+    },
+    {
+      "id": "1b21e6dc-280d-4e7a-aa38-8a32fb6d2ee3",
+      "changeId": "18cafb27-47cf-43bd-8799-1b3f2f29ceb1",
+      "runId": "a4c169c2-6f8a-4446-9d80-d2c1d61aeea5",
+      "kind": "run",
+      "sessionId": "wish-willow-a546f82d-2c4c-46de-a8dd-0626d0b2431d",
+      "callId": "wish-check-42bccd55-ca18-4ac9-8d27-0a82162a2f9c",
+      "tool": "pwsh",
+      "command": "npm run smoke; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }\n$page = Invoke-WebRequest -Uri 'http://127.0.0.1:4173/' -UseBasicParsing -TimeoutSec 15\nWrite-Output \"preview GET / status=$($page.StatusCode) bytes=$($page.RawContentLength)\"\nif ($page.StatusCode -ne 200) { exit 1 }\n$missing = @()\nforeach ($id in @('todo-form','new-todo','add-btn','todo-list','empty-state','stats','stats-total','stats-completed','new-priority','priority-filter','filter-summary')) { if ($page.Content -notmatch ('id=\"' + [regex]::Escape($id) + '\"')) { $missing += $id } }\nif ($missing.Count -gt 0) { Write-Output \"missing mounts: $($missing -join ',')\"; exit 1 }\nWrite-Output \"preview URL 含全部 11 个挂载点\"\n$againPage = Invoke-WebRequest -Uri 'http://127.0.0.1:4173/' -UseBasicParsing -TimeoutSec 15\nif ($againPage.Content -ne $page.Content) { Write-Output 'repeat response differs'; exit 1 }\n$css = Invoke-WebRequest -Uri 'http://127.0.0.1:4173/styles.css' -UseBasicParsing -TimeoutSec 15\nWrite-Output \"preview GET /styles.css status=$($css.StatusCode) bytes=$($css.RawContentLength)\"\nif ($css.StatusCode -ne 200) { exit 1 }\nWrite-Output \"RUN_STEP_PASSED http://127.0.0.1:4173/\"",
+      "exitCode": 0,
+      "success": true,
+      "summary": "\n> wish-willow-todo@0.2.0 smoke\n> node scripts/smoke.js\n\n[smoke] 启动零依赖静态服务器…\n[smoke] 服务已监听 http://127.0.0.1:53903/ (pid=3164)\n\n[smoke] 1/4 首页请求\n  ok   GET / 返回 HTTP 200\n  ok   Content-Type 为 text/html\n  ok   响应体非空\n  ok   首页含 DOM 挂载点 #todo-form\n  ok   首页含 DOM 挂载点 #new-todo\n  ok   首页含 DOM 挂载点 #add-btn\n  ok   首页含 DOM 挂载点 #todo-list\n  ok   首页含 DOM 挂载点 #empty-state\n  ok   首页含 DOM 挂载点 #stats\n  ok   首页含 DOM 挂载点 #stats-total\n  ok   首页含 DOM 挂载点 #stats-completed\n  ok   首页含 DOM 挂载点 #new-priority\n  ok   首页含 DOM 挂载点 #priority-filter\n  ok   首页含 DOM 挂载点 #filter-summary\n  ok   首页以 ES Module 加载 src/app.js\n  ok   首页筛选控件含取值 all\n  ok   首页筛选控件含取值 high\n  ok   首页筛选控件含取值 medium\n  ok   首页筛选控件含取值 low\n  ok   首页优先级选择器默认「中」\n\n[smoke] 2/4 静态资源请求\n  ok   GET /styles.css 返回 200\n  ok   GET /src/app.js 返回 200\n  ok   GET /src/todos.js 返回 200\n  ok   GET /src/todos.js Content-Type 为 JavaScript\n\n[smoke] 3/4 可重复性\n  ok   重复请求首页仍为 200\n  ok   重复请求响应体一致\n  ok   未知路径返回 404\n\n[smoke] 4/4 服务元信息\n  ok   监听端口为真实分配端口\n  ok   服务处于监听状态\n[smoke] 服务已关闭\n\n[smoke] OK — 29 项烟测全部通过 (http://127.0.0.1:53903/)\npreview GET / status=200 bytes=2012\r\npreview URL 含全部 11 个挂载点\r\npreview GET /styles.css status=200 bytes=4427\r\nRUN_STEP_PASSED http://127.0.0.1:4173/\r\n\n",
+      "recordedAt": "2026-10-10T11:17:13.183Z"
+    },
+    {
+      "id": "3fee85a7-11d5-4b73-a25c-b5111a46dccd",
+      "changeId": "18cafb27-47cf-43bd-8799-1b3f2f29ceb1",
+      "runId": "a4c169c2-6f8a-4446-9d80-d2c1d61aeea5",
+      "kind": "code",
+      "sessionId": "wish-willow-a546f82d-2c4c-46de-a8dd-0626d0b2431d",
+      "callId": "host-source-snapshot",
+      "tool": "wish_deliver",
+      "success": true,
+      "summary": "11 个实际源码文件；快照 SHA256 e1ac9e4b715a51d31eefd5af59c7abaa3ebd40ba1a537e4458b497a695c84bf8",
+      "recordedAt": "2026-10-10T11:18:09.164Z"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "18cc072e-e35f-4def-b635-f51ca6bafd38",
+      "changeId": "18cafb27-47cf-43bd-8799-1b3f2f29ceb1",
+      "versionId": "3147cf4c-1191-4907-8096-590f9e2bc1d1",
+      "path": "C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\deliveries\\72e73806-11ac-44f4-b58a-01ff32153e00\\3147cf4c-1191-4907-8096-590f9e2bc1d1\\source-snapshot.json",
+      "sha256": "e1ac9e4b715a51d31eefd5af59c7abaa3ebd40ba1a537e4458b497a695c84bf8",
+      "bytes": 110495,
+      "kind": "source-snapshot"
+    }
+  ],
+  "builds": [
+    {
+      "id": "bd9544f4-f76d-4075-9525-0c59e4427bf2",
+      "changeId": "18cafb27-47cf-43bd-8799-1b3f2f29ceb1",
+      "versionId": "3147cf4c-1191-4907-8096-590f9e2bc1d1",
+      "status": "passed",
+      "evidenceIds": [
+        "413949d8-4141-439c-949d-c729b02a25c3",
+        "49c46e3f-3ef6-419d-a01e-d5ee9e00c105",
+        "1b21e6dc-280d-4e7a-aa38-8a32fb6d2ee3"
+      ],
+      "artifactIds": [
+        "18cc072e-e35f-4def-b635-f51ca6bafd38"
+      ],
+      "createdAt": "2026-10-10T11:18:09.164Z"
+    }
+  ],
+  "versions": [
+    {
+      "id": "3147cf4c-1191-4907-8096-590f9e2bc1d1",
+      "changeId": "18cafb27-47cf-43bd-8799-1b3f2f29ceb1",
+      "label": "0.2.0",
+      "status": "Released",
+      "buildId": "bd9544f4-f76d-4075-9525-0c59e4427bf2",
+      "releaseId": "d7dc0b7f-ff87-4b0f-86cf-e0593b0a8b4a"
+    }
+  ],
+  "releases": [
+    {
+      "id": "d7dc0b7f-ff87-4b0f-86cf-e0593b0a8b4a",
+      "versionId": "3147cf4c-1191-4907-8096-590f9e2bc1d1",
+      "buildId": "bd9544f4-f76d-4075-9525-0c59e4427bf2",
+      "changeId": "18cafb27-47cf-43bd-8799-1b3f2f29ceb1",
+      "releasedAt": "2026-10-10T11:18:09.263Z",
+      "sourcePath": "C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\projects\\72e73806-11ac-44f4-b58a-01ff32153e00",
+      "snapshotPath": "C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\deliveries\\72e73806-11ac-44f4-b58a-01ff32153e00\\3147cf4c-1191-4907-8096-590f9e2bc1d1\\source",
+      "startCommand": "npm start",
+      "summary": "## 交付物：待办事项应用 0.2.0 — 优先级与按优先级筛选（零依赖静态 Web）\n\n源码目录：`C:\\Users\\wangw\\.dsh\\profiles\\desktop\\wish-willow\\projects\\72e73806-11ac-44f4-b58a-01ff32153e00`（11 个文件，无 node_modules，零第三方依赖，无需任何安装）\n\n### 本次 ChangeSet 对齐的用户愿望\n**已确认**：「给待办事项增加优先级，并且能够按优先级筛选。」\n原有已确认愿望（添加/标记完成/删除）与其全部推断需求、约束、决策均保留并继续成立，未做任何回退。\n\n### 功能范围\n- **优先级三档**：`high`（高）/ `medium`（中）/ `low`（低）；新任务默认「中」；缺失/非法优先级一律归一化为「中」。\n- **添加时选择优先级**：`#new-priority` 位于 `#todo-form` 内，回车与「添加」按钮共用同一 submit 路径；输入为空或纯空白时依旧拒绝添加且不写存储。\n- **优先级可视化**：列表项带 `data-priority` 与 `.todo__priority` 徽标，三档配色不同（浅色/深色主题各一套 CSS 变量）。徽标文字由 CSS `::after` 依据 `data-priority` 生成（高/中/低），因此徽标不产生文本节点，列表项既有 DOM 形态与断言不受影响。\n- **按优先级筛选**：`#priority-filter` 提供「全部 / 高 / 中 / 低」；纯视图操作——不修改、不重排（保持插入顺序）底层数据，也不写入存储；刷新后回到「全部」。\n- **筛选摘要**：`#filter-summary` 显示「显示全部 N 项」或「筛选：高 · 命中 2 项」，并带 `data-filter` / `data-matched`。\n- **空态区分**：真正的空列表显示「还没有任务，先添加一条吧。」；筛选无命中显示「没有符合当前优先级的任务。」。\n- **统计不回归**：`#stats-total` / `#stats-completed` **始终为全局计数**，不随筛选变化。\n- **向后兼容**：存储键仍为 `wish-willow.todos.v1`（不做双键迁移）；旧数据（无 `priority` 字段）在 `deserializeTodos` / `loadTodos` 边界统一补为「中」，任务不丢失、不报错，下次保存时写回该字段。\n- **非目标（明确不做）**：不支持修改已创建任务的优先级或文本；不按优先级自动排序；不做多条件/组合筛选；筛选状态不持久化。\n\n### 目录结构\n```\nindex.html            页面结构（既有 8 个挂载点 + #new-priority / #priority-filter / #filter-summary）\nstyles.css            样式（完成态删除线、优先级徽标三档配色、筛选行、深浅色）\nsrc/todos.js          领域逻辑：PRIORITIES / DEFAULT_PRIORITY / FILTER_ALL / normalizePriority /\n                      normalizeFilter / addTodo(list,text,priority) / filterTodos(list,priority) / 持久化\nsrc/app.js            UI 层：initApp(doc, storage) 渲染、事件绑定、内存态筛选（可注入 doc/storage）\nscripts/build.js      build：零依赖静态检查（73 项）\nscripts/serve.js      run：node:http 零依赖静态服务器\nscripts/smoke.js      run：进程内起服务 + 真实 HTTP 断言（29 项）\ntests/todos.test.js   node:test 42 项用例（23 项逻辑 + 19 项 UI 行为）\ntests/fake-dom.js     零依赖最小 DOM（含事件冒泡），驱动真实 app.js\npackage.json          仅声明 scripts，dependencies/devDependencies 均为空\nREADME.md             功能范围、验证命令、向后兼容、已知限制与非目标\n```\n\n### 验证证据（三类独立真实执行，均为最终文件状态）\n- **build**（`npm run build`）：**exit 0** — 73 项静态检查全部通过（必需文件、package.json 版本 0.2.0 与零依赖、11 个 DOM 挂载点、优先级选择器位于表单内且默认「中」、筛选控件含 all/high/medium/low、styles.css 三档徽标规则、todos.js 新导出与 API 形状、filterTodos 在 `all` 时返回原引用）。证据 `413949d8-4141-439c-949d-c729b02a25c3`。\n- **test**（`npm test`）：**exit 0** — 42/42 通过，其中**既有 27 项全部继续通过**。新增覆盖：优先级常量与归一化（合法三档 / 非法回退）、`filterTodos` 纯函数性与各级命中、非法筛选回退全部、v1 旧数据加载补 medium 且任务不丢失、持久化往返保留优先级、UI 层选择优先级添加与 `data-priority` 徽标、切换筛选只显示命中项、筛选空结果专用文案、筛选不写存储且不改顺序、刷新后筛选回到全部但优先级保留、旧数据在 UI 中按「中」显示与筛选、destroy 后筛选控件失效。证据 `49c46e3f-3ef6-419d-a01e-d5ee9e00c105`。\n- **run**（`npm run smoke` + 真实预览抓取）：**exit 0** — 烟测 29/29 通过（真实监听端口、`GET /` = 200 且 Content-Type 为 text/html、11 个挂载点齐全、筛选控件取值完整、styles.css / src/app.js / src/todos.js 均 200、重复请求响应体一致、未知路径 404、服务确实处于监听状态）。另以 `npm start` 真实启动常驻服务于 **http://127.0.0.1:4173/** 并实际抓取：`GET /` = 200（2012 bytes）、11 个挂载点齐全、`GET /styles.css` = 200（4427 bytes）、重复请求响应体一致。证据 `1b21e6dc-280d-4e7a-aa38-8a32fb6d2ee3`。\n- **startCommand 可重复性已实测**：`npm start` 在源码目录重复启动成功（`GET /` = 200），随后已停止进程并确认 4173 端口释放，因此再次 `npm start` 不会端口冲突。\n\n### 诚实声明（含本次的一处失败与一处既有断言调整）\n1. **run 首次尝试曾 exit 1**（证据 `ef6c5ab9-5ed1-4c71-a4eb-949151597256`）：烟测 29 项已全部通过，随后我用 PowerShell 变量 `$home` 接收响应，与大小写不敏感的只读变量 `$HOME` 冲突导致脚本报错退出。这是**我的验证脚本变量命名错误，不是产品缺陷**；改用 `$page` 后同一命令 exit 0（证据 `1b21e6dc`）。\n2. **既有测试中有一处必需的最小改动**：`A13`（反序列化非法条目过滤）对反序列化结果做整对象 `deepEqual`，而本次为领域模型新增了 `priority` 字段作为不变式的一部分，因此该断言的三个期望对象字面量补上了 `priority: 'medium'`。**这不是删改或弱化任何行为断言**：非法条目过滤规则、字段类型修正、返回条目的所有原有断言字面保持不变；其余 26 项既有用例**一字未改**。为保护既有 DOM 断言（`textContent` 拼接形态、子元素索引），优先级徽标刻意不携带文本节点，渲染顺序固定为 `[复选框, 文本, 删除按钮, 徽标]`。\n3. 本环境沙箱禁止命名管道，`node --test` 默认的「每文件 spawn 子进程 + 管道捕获输出」会以 `spawn EPERM` 失败；因此 `npm test` 固定使用 `--test-isolation=none`，已在 README 说明原因，不影响结论。\n4. UI 行为测试经由零依赖最小 DOM（已实现事件冒泡）驱动真实 `src/app.js`，未使用真实浏览器内核；浏览器层证据为「真实 HTTP 抓取服务端页面与资源」+ 静态契约断言。\n5. 单用户本地应用：无后端、无多设备同步；清除站点数据会丢失任务；任务文本上限 200 字符；不支持编辑已创建任务的优先级与文本。\n6. 本次未安装任何第三方依赖或系统组件（`dependencies` / `devDependencies` 保持为空），未调用团队/子 Agent/工作流，未公网部署，仅改动本产品工作目录。",
+      "evidenceIds": [
+        "3fee85a7-11d5-4b73-a25c-b5111a46dccd",
+        "413949d8-4141-439c-949d-c729b02a25c3",
+        "49c46e3f-3ef6-419d-a01e-d5ee9e00c105",
+        "1b21e6dc-280d-4e7a-aa38-8a32fb6d2ee3"
+      ]
+    }
+  ],
+  "facts": {
+    "confirmedRequirements": [
+      [
+        "f3311a62-8571-401f-a36a-3e902467ef04",
+        "我想做一个简单的待办事项应用，可以添加任务、标记完成、删除任务。"
+      ],
+      [
+        "9c1f8990-e4a9-471f-b873-b7738a098705",
+        "给待办事项增加优先级，并且能够按优先级筛选。"
+      ]
+    ],
+    "inferredRequirements": 10,
+    "majorDecisions": []
+  },
+  "verification": {
+    "kinds": [
+      "build",
+      "code",
+      "run",
+      "test"
+    ],
+    "exitCodes": [
+      [
+        "build",
+        0,
+        true
+      ],
+      [
+        "test",
+        0,
+        true
+      ],
+      [
+        "run",
+        1,
+        false
+      ],
+      [
+        "run",
+        0,
+        true
+      ]
+    ],
+    "allSuccessful": false,
+    "hasBuildTestRunZero": true
+  }
+}
