@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🌿 Wish Willow · 愿望之柳
+# 🌿 Wish Willow · 许愿柳
 
 **把软件愿望变成有状态、有证据、可持续演化的产品。**
 
