@@ -32,7 +32,14 @@ window.__ModuleLoader__.load({
         invalid: '请检查名称（1–120 字符）与愿望（1–10000 字符）。', busy: '当前变更尚未结束。请先等待、取消或处理，再提交新的愿望。',
         saved: '已持久化保存', submitted: '愿望已提交，Agent 开始执行', retried: '已提交重试', cancelled: '已请求取消执行', decided: '决策已保存', unsaved: '有未保存修改',
         suggestion: { deliver: '已交付。可用“启动方式”在本地运行；如需改动，继续提交新的愿望。', running: 'Agent 正在执行。看板会自动刷新。', blocked: '存在重大决策，需要你先接受或拒绝后才能继续。', failed: '上次执行失败，请查看失败任务后重试或提交修订愿望。', uncertain: '执行状态待确认，请检查工作目录后显式重试。', draft: '尚未提交愿望。写下愿望即可开始。' },
-        language: '语言', stageNote: '统一 Bundle 0.3.1：P0 与 P1 能力来自同一安装单元。',
+        language: '语言', stageNote: '统一 Bundle：新交付同时受 P1 完整性验证、独立 Reviewer 和 Host 质量门禁约束；历史交付不补造审查。',
+        quality: '独立审查与质量门禁', noCandidate: '当前变更尚无可审查候选；不能视为 Reviewer PASS。', candidate: '当前候选', riskLevel: '风险等级', low: '低风险', medium: '中风险', high: '高风险',
+        reviewStatus: 'Reviewer 结论', reviewHistory: '不可覆盖的审查历史', reviewEvidence: '审查材料与实际读取', mustFix: '必须处理', suggestionIssue: '非阻断建议',
+        PASS: 'PASS · 审查通过', FAIL: 'FAIL · 有缺陷', BLOCKED: 'BLOCKED · 无法执行', UNVERIFIED: 'UNVERIFIED · 未验证', REVIEW_RUNNING: '独立审查进行中',
+        ALLOW: 'Host 允许本地交付', NEEDS_CHANGES: '需要修改，禁止释放', REVIEW_INCOMPLETE: '审查或证据未完成，禁止释放', AWAITING_APPROVAL: '等待本候选的用户批准', REJECTED: '用户拒绝，禁止释放',
+        approveLocal: '明确批准此候选的本地交付', rejectCandidate: '拒绝此候选', reReview: '显式重审一次（使用模型）', resumeCandidate: '重新核对并继续本候选交付（不调用模型）',
+        approvalScope: '批准仅绑定显示的候选、审查和风险事项；不授权删除数据、修改权限或对外发布。', historicRelease: '最近已交付版本（不是当前候选）', legacyReview: 'P1 历史交付；未进行 P2 审查',
+        reviewStarted: '已显式提交独立重审', gateChecked: 'Host 已核对候选门禁', candidateDecisionSaved: '已保存绑定本候选的决定；是否释放由 Host 校验',
       },
       en: {
         title: 'Wish Willow', description: 'One entry point: wish, execution, evidence and delivery. Submit a natural-language wish; a real DSH Agent plans, codes, builds, tests and delivers running software. Product state persists independently of sessions.',
@@ -61,7 +68,14 @@ window.__ModuleLoader__.load({
         invalid: 'Check the name (1–120 characters) and wish (up to 10000 characters).', busy: 'The current change is unfinished. Wait, cancel or resolve it before submitting another wish.',
         saved: 'Durably saved', submitted: 'Wish submitted; the Agent started', retried: 'Retry submitted', cancelled: 'Cancellation requested', decided: 'Decision saved', unsaved: 'Unsaved edits',
         suggestion: { deliver: 'Delivered. Run it locally with the start command; submit a new wish for further changes.', running: 'The Agent is working. The board refreshes automatically.', blocked: 'Major decisions are pending; accept or reject them to continue.', failed: 'The last run failed. Inspect failed tasks, then retry or submit a revised wish.', uncertain: 'Execution needs confirmation; inspect the workspace, then retry explicitly.', draft: 'No wish submitted yet. Write one to begin.' },
-        language: 'Language', stageNote: 'Unified bundle 0.3.1: P0 and P1 capabilities come from one install unit.',
+        language: 'Language', stageNote: 'One bundle: new Releases require P1 integrity verification, an independent Reviewer and the Host quality gate. Historical deliveries get no invented reviews.',
+        quality: 'Independent review and quality gate', noCandidate: 'No reviewable candidate for this change; this is not Reviewer PASS.', candidate: 'Current candidate', riskLevel: 'Risk level', low: 'Low', medium: 'Medium', high: 'High',
+        reviewStatus: 'Reviewer conclusion', reviewHistory: 'Append-only review history', reviewEvidence: 'Materials and actual reads', mustFix: 'Must fix', suggestionIssue: 'Non-blocking suggestion',
+        PASS: 'PASS · reviewed', FAIL: 'FAIL · defects', BLOCKED: 'BLOCKED · cannot execute', UNVERIFIED: 'UNVERIFIED · not verified', REVIEW_RUNNING: 'Independent review in progress',
+        ALLOW: 'Host allows local delivery', NEEDS_CHANGES: 'Changes required; release denied', REVIEW_INCOMPLETE: 'Review/evidence incomplete; release denied', AWAITING_APPROVAL: 'Awaiting approval for this candidate', REJECTED: 'User rejected; release denied',
+        approveLocal: 'Explicitly approve this candidate for local delivery', rejectCandidate: 'Reject this candidate', reReview: 'Explicitly re-review once (uses a model)', resumeCandidate: 'Recheck and resume this candidate (no model)',
+        approvalScope: 'Approval binds this candidate, review and listed risks only. It does not authorize data deletion, permission changes or external publication.', historicRelease: 'Latest delivered version (not the current candidate)', legacyReview: 'Historical P1 delivery; no P2 review',
+        reviewStarted: 'Independent re-review explicitly requested', gateChecked: 'Host candidate gate checked', candidateDecisionSaved: 'Candidate-bound decision saved; release remains a Host decision',
       },
     };
     const css = `
@@ -125,6 +139,60 @@ window.__ModuleLoader__.load({
     const blankDraft = () => ({ ...blankLegacy(), newTitle: '', newWish: '' });
     const groupOf = task => ['completed', 'running', 'uncertain', 'blocked', 'failed'].includes(task.status) ? task.status : 'pending';
 
+    function QualityPanel({ t, project, busy, act }) {
+      const requests = React.useRef({});
+      const q = project.quality, change = project.changes.at(-1);
+      const candidate = q?.candidates.filter(c => c.binding.changeId === change?.id).at(-1);
+      if (!candidate) return h('section', { id: 'ww-quality' }, h('h3', null, t('quality')), h('p', null, t('noCandidate')),
+        q?.reviews.length ? h('details', { id: 'ww-review-history' }, h('summary', null, t('reviewHistory')),
+          q.reviews.map(r => h('p', { key: r.id }, `${r.id} · Candidate ${r.binding.candidateId} · ${r.status} · ${r.reason}`))) : null);
+      const attempt = q.attempts.filter(a => a.candidateId === candidate.id).at(-1);
+      const review = q.reviews.filter(r => r.binding.candidateId === candidate.id).at(-1);
+      const active = attempt && attempt.id !== review?.attemptId;
+      const gate = q.gates.filter(g => g.candidateId === candidate.id).at(-1);
+      const gateCurrent = !gate?.reviewId || gate.reviewId === review?.id;
+      const verdict = active || !gateCurrent ? 'REVIEW_INCOMPLETE' : gate?.verdict ?? 'REVIEW_INCOMPLETE';
+      const riskRanks = { low: 0, medium: 1, high: 2 };
+      const risk = review?.report && riskRanks[review.report.risk] > riskRanks[candidate.risk] ? review.report.risk : candidate.risk;
+      const reasons = [...candidate.riskReasons, ...(review?.report?.riskReasons ?? [])];
+      const released = project.releases.some(r => r.buildId === candidate.binding.buildId);
+      const request = method => {
+        const key = `${method}:${candidate.id}:${review?.id}:${project.revision}`;
+        requests.current[key] ??= newId();
+        return { projectId: project.id, candidateId: candidate.id, requestId: requests.current[key], expectedRevision: project.revision };
+      };
+      const approve = accepted => act('approveCandidate', { ...request(accepted ? 'approve' : 'reject'), accepted,
+        reviewId: review.id, binding: candidate.binding, risk, riskReasons: reasons, scope: 'local-delivery-only' });
+      return h('section', { className: 'ww-card', id: 'ww-quality' },
+        h('h3', null, t('quality')),
+        h('p', { id: 'ww-candidate' }, `${t('candidate')}: ${candidate.id} · ChangeSet ${candidate.binding.changeId} · Version ${candidate.binding.versionId} · Build ${candidate.binding.buildId}`),
+        h('p', null, `${t('snapshot')}: ${candidate.snapshotPath} · SHA256 ${candidate.binding.snapshotHash}`),
+        h('p', { id: 'ww-risk' }, `${t('riskLevel')}: ${t(risk)}`), h('ul', null, reasons.map((reason, index) => h('li', { key: index }, reason))),
+        h('p', { id: 'ww-review-status' }, `${t('reviewStatus')}: ${t(active ? 'REVIEW_RUNNING' : review?.status ?? 'UNVERIFIED')}`),
+        h('p', { id: 'ww-gate-result', role: verdict === 'ALLOW' ? 'status' : 'alert' }, t(verdict)),
+        gate && !active && gateCurrent ? h('p', null, gate.reason) : null,
+        review ? h('p', null, `${review.reason} · Session ${review.sessionId}`) : null,
+        review?.report?.checks.length ? h('ul', { id: 'ww-review-checks' }, review.report.checks.map(check => h('li', { key: check.name },
+          `${check.name}: ${check.status} · ${check.reason} · ${check.materialIds.join(', ')}`))) : null,
+        review?.report?.issues.length ? h('ul', { id: 'ww-review-issues' }, review.report.issues.map((issue, index) => h('li', { key: index },
+          `${t(issue.severity === 'must-fix' ? 'mustFix' : 'suggestionIssue')}: ${issue.description} ${issue.location ?? ''} · ${issue.materialIds.join(', ')}`))) : null,
+        h('details', { id: 'ww-review-materials' }, h('summary', null, t('reviewEvidence')),
+          h('ul', null, candidate.materials.map(m => h('li', { key: m.id }, `${m.id} · ${m.kind} · ${m.path ?? ''} · SHA256 ${m.sha256} · ${m.chars} chars${m.verifiable ? '' : ' · UNVERIFIED'}`))),
+          h('ul', null, (review?.reads ?? []).map((r, index) => h('li', { key: index }, `${r.materialId} · ${r.offset}–${r.end} · ${r.callId} · ${r.sha256}`)))),
+        verdict === 'AWAITING_APPROVAL' && !active && !released ? h('div', null, h('p', null, t('approvalScope')),
+          h('div', { className: 'ww-actions' },
+            h('button', { type: 'button', id: 'ww-approve-candidate', disabled: busy, onClick: () => approve(true) }, t('approveLocal')),
+            h('button', { type: 'button', id: 'ww-reject-candidate', disabled: busy, onClick: () => approve(false) }, t('rejectCandidate')))) : null,
+        !released && !active && review && review.status !== 'PASS' && q.attempts.filter(a => a.candidateId === candidate.id).length === 1
+          ? h('button', { type: 'button', id: 'ww-rereview', disabled: busy, onClick: () => act('reReview', request('reReview')) }, t('reReview')) : null,
+        !released && !active && review?.status === 'PASS' && ['ALLOW', 'REVIEW_INCOMPLETE'].includes(verdict)
+          ? h('button', { type: 'button', id: 'ww-resume-candidate', disabled: busy, onClick: () => act('resumeCandidate', request('resumeCandidate')) }, t('resumeCandidate')) : null,
+        h('details', { id: 'ww-review-history' }, h('summary', null, t('reviewHistory')),
+          q.reviews.map(r => h('div', { key: r.id }, `${r.id} · Candidate ${r.binding.candidateId} · Version ${r.binding.versionId} · ${r.status} · ${r.endedAt} · ${r.reason}`)),
+          q.approvals.map(a => h('div', { key: a.id }, `${a.candidateId} · Review ${a.reviewId} · ${a.accepted ? t('accepted') : t('rejected')} · ${a.scope} · ${a.at}`)),
+          q.gates.map(g => h('div', { key: g.id }, `${g.candidateId} · ${t(g.verdict)} · ${g.at} · ${g.reason}`))));
+    }
+
     function ProductWorkspace({ t, project, busy, act, onReload, acked, setAcked, wish, setWish }) {
       const pendingDecisions = project.decisions.filter(d => d.risk === 'major' && d.status === 'proposed');
       const change = project.changes.at(-1);
@@ -133,8 +201,12 @@ window.__ModuleLoader__.load({
       const groups = { pending: [], running: [], completed: [], failed: [], blocked: [], uncertain: [] };
       for (const task of project.tasks) groups[groupOf(task)].push(task);
       const release = project.releases.at(-1);
-      const build = project.builds.at(-1);
-      const version = release ? project.versions.find(v => v.id === release.versionId) : project.versions.at(-1);
+      const build = project.builds.filter(b => b.changeId === change?.id).at(-1);
+      const version = project.versions.at(-1);
+      const currentTests = project.evidence.filter(e => e.changeId === change?.id && e.kind === 'test');
+      const lastTest = currentTests.at(-1);
+      const currentCandidate = project.quality?.candidates.filter(c => c.binding.changeId === change?.id).at(-1);
+      const waitingApproval = !running && currentCandidate && project.quality.gates.filter(g => g.candidateId === currentCandidate.id).at(-1)?.verdict === 'AWAITING_APPROVAL';
       const evidenceFor = ids => project.evidence.filter(e => ids.includes(e.id));
       const confirmed = project.requirements.filter(r => r.confirmation === 'confirmed');
       const inferred = project.requirements.filter(r => r.confirmation === 'inferred');
@@ -166,7 +238,7 @@ window.__ModuleLoader__.load({
           h('dt', null, t('revision')), h('dd', { id: 'ww-revision' }, String(project.revision)),
           h('dt', null, t('goal')), h('dd', { id: 'ww-goal' }, project.goal || '—'),
           h('dt', null, t('currentWish')), h('dd', { id: 'ww-current-wish' }, project.currentWish || '—'),
-          h('dt', null, t('version')), h('dd', { id: 'ww-version' }, version ? `${version.label} · ${t(version.status.toLowerCase())}${release ? ` · ${t('releasedAt')} ${release.releasedAt}` : ''}` : '—')),
+          h('dt', null, t('version')), h('dd', { id: 'ww-version' }, version ? `${version.label} · ${t(version.status.toLowerCase())}${release?.versionId === version.id ? ` · ${t('releasedAt')} ${release.releasedAt}` : ''}` : '—')),
 
         h('h3', null, t('requirements')),
         h('ul', { id: 'ww-requirements-confirmed' }, confirmed.map(r => h('li', { key: r.id }, r.text))),
@@ -209,7 +281,7 @@ window.__ModuleLoader__.load({
         h('div', { className: 'ww-card', id: 'ww-build' },
           h('p', { id: 'ww-build-status' }, `${t('build')}: ${build ? `${t(build.status === 'passed' ? 'passed' : 'failedBuild')} · ${build.createdAt}` : t('noBuild')}`),
           build ? h('p', { id: 'ww-evidence-kinds' }, `${t('evidenceKinds')}: ${evidenceFor(build.evidenceIds).map(e => `${t(e.kind)} exit=${e.exitCode ?? 'n/a'}`).join('; ')}`) : null,
-          h('p', { id: 'ww-test-status' }, `${t('tests')}: ${project.evidence.some(e => e.kind === 'test' && e.success && e.exitCode === 0) ? t('passedMark') : t('missingMark')}`),
+          h('p', { id: 'ww-test-status' }, `${t('tests')}: ${lastTest ? lastTest.success && lastTest.exitCode === 0 ? t('passedMark') : '✗' : t('missingMark')}`),
           h('p', { id: 'ww-artifacts' }, `${t('artifacts')}: ${project.artifacts.length ? project.artifacts.map(a => `${a.path} (${a.sha256.slice(0, 12)}…)`).join('; ') : t('noArtifacts')}`),
           release ? h('p', { id: 'ww-snapshot' }, `${t('snapshot')}: ${release.snapshotPath}`) : null,
           h('p', null, t('noEvidence'))),
@@ -220,6 +292,7 @@ window.__ModuleLoader__.load({
             h('td', null, e.success ? t('passedMark') : '✗'), h('td', null, e.recordedAt),
             h('td', null, e.summary))))) : null,
 
+        h(QualityPanel, { t, project, busy, act }),
         h('h3', null, t('versionHistory')),
         h('div', { className: 'ww-card', id: 'ww-versions' },
           project.versions.length ? h('table', null,
@@ -227,18 +300,19 @@ window.__ModuleLoader__.load({
             h('tbody', null, project.versions.map(v => {
               const rel = project.releases.find(r => r.versionId === v.id);
               return h('tr', { key: v.id, id: `ww-version-${short(v.id)}` },
-                h('td', null, v.label), h('td', null, t(v.status.toLowerCase())),
+                h('td', null, v.label), h('td', null, t(v.status.toLowerCase()), rel && !rel.qualityGateId ? ` · ${t('legacyReview')}` : ''),
                 h('td', null, rel ? rel.releasedAt : '—'),
                 h('td', null, rel ? h('code', null, rel.startCommand) : '—'));
             }))) : h('p', null, t('noRelease')),
           release ? h('div', null,
+            h('p', null, `${t('historicRelease')}: ${project.versions.find(v => v.id === release.versionId)?.label ?? release.versionId}`),
             h('p', { id: 'ww-start-command' }, `${t('startCommand')}: `, h('code', null, release.startCommand)),
             h('p', { id: 'ww-release-path' }, `${t('sourcePath')}: ${release.sourcePath}`),
             h('p', { id: 'ww-release-summary' }, `${t('summary')}: ${release.summary}`)) : null),
 
         h('h3', null, t('submit')),
-        h('p', { id: 'ww-suggestion' }, t('suggestion')[release ? 'deliver' : project.status] ?? t('suggestion').draft),
-        stuck ? h('div', { className: 'ww-card', id: 'ww-stuck' },
+        h('p', { id: 'ww-suggestion' }, waitingApproval ? t('AWAITING_APPROVAL') : t('suggestion')[project.status === 'delivered' ? 'deliver' : project.status] ?? t('suggestion').draft),
+        stuck && !waitingApproval ? h('div', { className: 'ww-card', id: 'ww-stuck' },
           h('p', { role: 'alert' }, t(change.status === 'uncertain' ? 'uncertainExplanation' : 'failedExplanation')),
           change.status === 'uncertain' ? h('label', { htmlFor: 'ww-ack' }, h('input', { id: 'ww-ack', type: 'checkbox', checked: acked, onChange: e => setAcked(e.target.checked) }), ` ${t('retryAck')}`) : null,
           h('div', { className: 'ww-actions' },
@@ -249,7 +323,7 @@ window.__ModuleLoader__.load({
         h('textarea', { id: 'ww-wish', value: wish, maxLength: 10000, disabled: busy || !!running, placeholder: t('wishPlaceholder'),
           onChange: e => setWish(e.target.value) }),
         h('div', { className: 'ww-actions' },
-          h('button', { type: 'button', id: 'ww-submit', disabled: busy || !!running || !wish.trim(),
+          h('button', { type: 'button', id: 'ww-submit', disabled: busy || !!running || !!waitingApproval || !wish.trim(),
             onClick: () => act('submit', { projectId: project.id, expectedRevision: project.revision, requestId: newId(), wish }) }, t('submit'))));
     }
 
@@ -325,8 +399,8 @@ window.__ModuleLoader__.load({
       const act = async (method, input) => {
         const result = await run(signal => api.evolution(method, input, signal));
         if (result) {
-          setNotice(method === 'submit' ? 'submitted' : method === 'retry' ? 'retried' : method === 'cancel' ? 'cancelled' : 'decided');
-          setWish('');
+          setNotice(method === 'submit' ? 'submitted' : method === 'retry' ? 'retried' : method === 'cancel' ? 'cancelled' : method === 'reReview' ? 'reviewStarted' : method === 'resumeCandidate' ? 'gateChecked' : method === 'approveCandidate' ? 'candidateDecisionSaved' : 'decided');
+          if (['submit', 'retry'].includes(method)) setWish('');
           setAcked(false);
           await refresh(result.id, true);
         }
@@ -416,7 +490,7 @@ window.__ModuleLoader__.load({
     }
     return {
       inject: ['slots', 'locale', 'connection'],
-      createApi, Panel, ProductWorkspace, LegacyArea, dictionaries,
+      createApi, Panel, ProductWorkspace, QualityPanel, LegacyArea, dictionaries,
       apply(ctx) {
         ctx.effect(() => ctx.locale.register(NS, dictionaries), 'wish-willow: dictionaries');
         const api = createApi(ctx.connection);
