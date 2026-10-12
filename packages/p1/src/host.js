@@ -5,6 +5,8 @@ import { defineDomain, domainTable } from '@deepseek-ai/dsh-storage-domain';
 import { Remote, RemoteError, TypertRemoteService } from '@deepseek-ai/dsh-typert-protocol';
 import { createEvolutionStore, projectSchema, createInput, refInput, wishInput } from './state.js';
 import { Orchestrator } from './orchestrator.js';
+import { bindingSchema, riskSchema, latestReview } from './quality-gate.js';
+import { verifyReviewCandidate } from './reviewer.js';
 
 export const name = 'wish-willow-p1';
 export const inject = ['storageDomain', 'typertGateway', 'agents', 'agentDefaultModel', 'agentPresets', 'sandboxPolicy', 'sessions', 'sessionQuery'];
@@ -14,6 +16,9 @@ const initializers = [];
 const uuid = z.uuid();
 const retryInput = wishInput.omit({ wish: true }).extend({ changeId: uuid, acknowledgeUncertain: z.boolean().optional() });
 const decisionInput = refInput.extend({ decisionId: uuid, expectedRevision: z.number().int().positive(), accepted: z.boolean() });
+const candidateInput = refInput.extend({ candidateId: uuid, expectedRevision: z.number().int().positive(), requestId: uuid });
+const approvalInput = candidateInput.extend({ reviewId: uuid, binding: bindingSchema, risk: riskSchema,
+  riskReasons: z.array(z.string().min(1).max(10000)).max(50), scope: z.literal('local-delivery-only'), accepted: z.boolean() });
 
 export class EvolutionService extends TypertRemoteService {
   constructor(ctx, store, orchestrator) {
@@ -42,6 +47,8 @@ export class EvolutionService extends TypertRemoteService {
     if (repeated) return previous;
     const c = previous.changes.find(c => c.id === fields.changeId);
     if (!c || !['failed', 'uncertain', 'blocked'].includes(c.status)) throw failure('not-retryable', 'Change is not retryable');
+    const candidate = previous.quality?.candidates.filter(x => x.binding.changeId === c.id).at(-1);
+    if (candidate && c.status === 'blocked' && latestReview(previous, candidate.id)?.status === 'PASS') throw failure('candidate-awaiting-approval', 'Approve/reject or resume the existing candidate; do not restart Coding', {});
     if (c.attempt >= 3) throw failure('retry-budget', 'Three attempts exhausted; submit a revised wish after inspecting results');
     if (c.status === 'uncertain' && !fields.acknowledgeUncertain) throw failure('uncertain', 'Inspect workspace and acknowledge unknown side effects before retrying');
     if (previous.decisions.some(d => d.risk === 'major' && d.status !== 'accepted')) throw failure('decision-required', 'Resolve major decisions first');
@@ -66,9 +73,36 @@ export class EvolutionService extends TypertRemoteService {
       d.status = fields.accepted ? 'accepted' : 'rejected';
     }, fields.expectedRevision);
   }
+  async approveCandidate(input) {
+    const fields = approvalInput.parse(input);
+    await this.store.approveCandidate(fields);
+    return this.store.releaseCandidate(fields.projectId, fields.candidateId);
+  }
+  async reReview(input) {
+    const fields = candidateInput.parse(input), previous = this.store.read(fields.projectId);
+    const repeated = previous.quality?.attempts.find(a => a.requestId === fields.requestId);
+    if (repeated) {
+      if (repeated.candidateId !== fields.candidateId) throw failure('idempotency-conflict', 'Review request reused for another candidate');
+      return previous;
+    }
+    if (this.orchestrator.isActive(fields.projectId)) throw failure('review-busy', 'Wait for current execution to end');
+    const { project, attempt } = await this.store.beginReview(fields.projectId, fields.candidateId, fields.requestId, fields.expectedRevision, true);
+    this.orchestrator.launchReview(fields.projectId, fields.candidateId, attempt);
+    return project;
+  }
+  async resumeCandidate(input) {
+    const fields = candidateInput.parse(input), p = this.store.read(fields.projectId);
+    const candidate = p.quality?.candidates.find(c => c.id === fields.candidateId);
+    if (!candidate) throw failure('candidate-not-found', 'No such persisted candidate');
+    if (p.releases.some(r => r.buildId === candidate.binding.buildId)) return p;
+    if (this.orchestrator.isActive(p.id)) throw failure('review-busy', 'Candidate execution is active');
+    if (p.revision !== fields.expectedRevision) throw failure('conflict', 'Product changed; refresh before resuming');
+    // No coding, review or model invocation: repeat the Host checks for this exact stored candidate.
+    return this.store.releaseCandidate(p.id, candidate.id);
+  }
   cancel(input) { const fields = refInput.parse(input); this.orchestrator.cancel(fields.projectId); return this.store.read(fields.projectId); }
 }
-for (const method of ['list', 'read', 'create', 'legacy', 'importLegacy', 'submit', 'retry', 'decide', 'cancel']) {
+for (const method of ['list', 'read', 'create', 'legacy', 'importLegacy', 'submit', 'retry', 'decide', 'cancel', 'approveCandidate', 'reReview', 'resumeCandidate']) {
   Remote(EvolutionService.prototype[method], { kind: 'method', name: method, static: false, private: false, addInitializer: initialize => initializers.push(initialize) });
 }
 
@@ -81,7 +115,8 @@ export async function apply(ctx, supplied = {}) {
   let orchestrator;
   ctx.effect(() => async () => { await orchestrator?.close(); await domain.close(); }, 'wish-willow-p1: execution then domain teardown');
   const store = createEvolutionStore(domain.table('projects'), { uuid: randomUUID, now: () => new Date().toISOString(),
-    workspaceFor: id => path.join(config.workspaceRoot, 'projects', id), failure });
+    workspaceFor: id => path.join(config.workspaceRoot, 'projects', id), failure,
+    verifyCandidate: (project, candidate) => verifyReviewCandidate(project, candidate, config.workspaceRoot) });
   await store.recover();
   orchestrator = new Orchestrator(ctx, store, config);
   new EvolutionService(ctx, store, orchestrator);

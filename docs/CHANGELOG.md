@@ -1,5 +1,27 @@
 # 变更记录
 
+## 未发布工作树：P2 独立 Reviewer / Host 质量门禁（代码接入，未执行验收）
+
+- P1 成功保全后增量实现 fresh 只读 Reviewer、实际材料/哈希/读回/持久 Session 与结构化 PASS/FAIL/BLOCKED/UNVERIFIED；不继承 Coder 会话，最多 20 步/300 秒，不自动重试。
+- 确定性低/中/高风险，Reviewer 只能提高下限；高风险须候选/最新报告/风险/本地交付范围绑定的用户批准。状态层私有释放许可、物理文件复核和 revision CAS，禁止普通 mutate 追加 Release。
+- optional quality、报告/材料 Artifact、不可覆盖审查/批准/门禁历史、高风险候选重开继续、一次显式重审和最小统一 UI；当前状态不被旧成功掩盖。
+- 新有限正反例与旧断言兼容更新、固定真实正/反候选、[开发报告](<P2-DEVELOPMENT-REPORT.md>)及[分项授权计划](<P2-EXECUTION-PLAN.md>)。
+- **NOT RUN**：测试/build/pack/install/实际模型/UI 验收；没有新版本/Commit/Release。0.3.2 未公开发布，P1 的[接受例外](<P1-CLOSURE-0.3.2.md>)保持不变。下面 92/92 等全部是历史阶段证据，不是 P2 通过结果。
+
+## 0.3.2（F1 收敛：交付门禁、独立快照与测试隔离）
+
+- **F1-A Release 错误放行**：`wish_deliver` 的最终判定只看完整的**前台**退出 DTO（`kind==='foreground'`、`exitCode===0`，且无 `timedOut`/`aborted`/`denied`/`runnerFailed`）。环境拒绝、runner 错误、被提升为后台 job 或超时一律记为 `unverified` 并保留真实原因，但**不再进入 Built/Released**。新增 `healthCheck`（loopback URL + 期望文本）用于 HTTP 服务型交付：先确认端口未被占用，再启动、轮询 HTTP 200 与内容、并确认本次进程已停止；只把超时当成功被明确禁止。
+- **F1-B 独立快照验证**：快照改为排除式收录，`.ps1`/`.sh`/`.cmd`/`.bat`/`.py` 等入口不再被丢弃；每次未通过的尝试使用独立候选目录 `deliveries/<projectId>/candidates/<candidateId>/<versionId>`，历史 Release 不被覆盖；build/test/run 与启动命令改为在**工作区之外、调用前必须不存在**的干净副本 `restores/<candidateId>` 中重放，并经专用无模型验证会话执行；修复 `rebindWorkspacePath` 在“副本位于原目录之下”时重复插入路径的问题。
+- **F1-C 快照与恢复安全边界**：新增规范相对路径校验（拒绝 `..`、绝对路径、盘符、ADS、反斜杠、Windows 尾点/尾空格与设备名）、祖先与目标重解析点拒绝、manifest 在写入与读取两侧的路径/数量/字节/哈希校验、目标目录不可预先存在；凭据类文件按名称（多段 `.env.*`、`.credentials.*`、`secrets.*`，仅显式 `example|sample|template` 结尾豁免）与高置信内容双重排除，排除项写入 manifest 而非静默丢弃。
+- **F1-D 测试与安装验证隔离**：测试 fixture 改为操作系统临时目录下带所有权标记的新目录且**默认不删除**；拒绝真实 DSH Home（按官方 `DSH_HOME > ~/.dsh` 解析）、用户主目录、AppData、磁盘根、仓库根、前缀兄弟路径以及任何符号链接/junction 重定向；脚本化 Agent 的 shell **默认关闭**，只有测试显式构造受限 fixture runner 才真实执行命令（该 runner 明确**不是**操作系统沙箱）；隔离安装探针不再复制真实凭据并要求显式 `--authorize-isolated-profile-change`，隔离 Host 探针要求显式授权并在启动前核对真实 Home。
+- **依赖来源限定**：当前只验证无第三方依赖的 Node/PowerShell 交付——快照声明依赖、受控隔离根内出现 `node_modules`、或 Node 按用户全局目录（`~/.node_modules`、`~/.node_libraries`）存在时拒绝；隔离根之上的无关祖先目录只记录、不拒绝（已写明的限制）。
+- **自动化回归**：`92 pass / 0 fail`（含 F1-A/B/C/D 反例与既有 0.3.1 的 50 项），`node scripts/check.mjs` exit 0。
+
+## 0.3.1（统一 Bundle 验收版）
+
+- 在 0.3.0 基础上补齐统一 Bundle 的验收证据：隔离 Web profile 与真实 Desktop profile 安装、单一入口、P0/P1 历史数据字节不变、真实 Web/Desktop UI 与真实 Agent 两轮演化、回退手册与隔离回退实测。
+- 已知遗留：`packages/p1/src/artifacts.js` 的扩展名白名单会静默丢弃 `.ps1` 等非白名单入口文件（**F1**，已在 0.3.2 修复）。
+
 ## 0.3.0（统一 Bundle）
 
 - **一个安装单元**：`dsh-wish-willow` 0.3.0 取代 P0 Bundle + P1 companion Bundle；`cordis.patch.yml` 只插入一行 `wish-willow`。
