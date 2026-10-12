@@ -2,7 +2,11 @@ import { writeFile, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import assert from 'node:assert/strict';
 import { runtime } from './runtime.mjs';
-const [stage, root] = process.argv.slice(2);
+import { assertTestRoot, assertNoLinks } from './isolation.mjs';
+const [stage, rootArg] = process.argv.slice(2);
+if (!['seed', 'recover'].includes(stage)) throw Error('Expected seed or recover stage');
+const root = await assertTestRoot(rootArg);
+for (const name of ['expected.json', 'restart-proof.json']) await assertNoLinks(join(root, name));
 const host = await runtime(root);
 try {
   if (stage === 'seed') {

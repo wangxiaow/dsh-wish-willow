@@ -2,10 +2,14 @@ import { writeFile, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import assert from 'node:assert/strict';
 import { unifiedRuntime } from './unified-runtime.mjs';
+import { assertTestRoot, assertNoLinks } from './isolation.mjs';
 
 // A second real Node process reopening the same storage root through the unified
 // bundle: this is the restart half of the install/enable/disable/recover lifecycle.
-const [stage, root] = process.argv.slice(2);
+const [stage, rootArg] = process.argv.slice(2);
+if (!['seed', 'recover'].includes(stage)) throw Error('Expected seed or recover stage');
+const root = await assertTestRoot(rootArg);
+for (const name of ['unified-expected.json', 'unified-restart-proof.json']) await assertNoLinks(join(root, name));
 const host = await unifiedRuntime(root);
 try {
   if (stage === 'seed') {

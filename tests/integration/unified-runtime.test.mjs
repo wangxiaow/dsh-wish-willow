@@ -5,8 +5,10 @@ import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import { join } from 'node:path';
 import { temporary } from '../helpers/temp.mjs';
+import { createFixtureRunner } from '../helpers/runner.mjs';
 import { unifiedRuntime } from '../helpers/unified-runtime.mjs';
 import { settle } from '../helpers/p1-runtime.mjs';
+import { passingFixtureReview } from '../helpers/p2-reviewer.mjs'; // explicit scripted Reviewer only
 
 const sha256 = async path => createHash('sha256').update(await readFile(path)).digest('hex');
 const project = input => ({ input });
@@ -101,7 +103,8 @@ test('an interrupted unified execution is recovered as uncertain and is never re
   assert.equal(recovered.status, 'uncertain');
   assert.equal(recovered.changes.at(-1).status, 'uncertain', 'no silent success and no automatic retry');
   assert.match(recovered.changes.at(-1).result, /不会自动重复/);
-  assert.equal(second.scripted.state.createCount, 0, 'no Agent was created for the interrupted change on restart');
+  assert.equal(second.scripted.state.modelCreateCount, 0, 'no Agent was created for the interrupted change on restart');
+  assert.equal(second.scripted.state.validationCreateCount, 0, 'no delivery validation ran either');
 });
 
 test('two independent Node processes reopen both domains through the unified row', async t => {
@@ -129,7 +132,7 @@ test('submitting a wish from the unified entry point produces real Agent, eviden
       await tool('wish_deliver', { startCommand: 'node app.js', summary: '已交付最小应用' });
     },
   ];
-  const host = await unifiedRuntime(root, { turns });
+  const host = await unifiedRuntime(root, { commandRunner: createFixtureRunner({ root }), reviewTurn: passingFixtureReview, turns });
   t.after(host.close);
   const created = await host.call('create', project({ requestId: '3f1a1c0e-0000-4000-8000-000000000107', title: '交付产品', wish: '生成最小应用' }));
   await host.call('submit', project({ projectId: created.id, expectedRevision: 1, requestId: '3f1a1c0e-0000-4000-8000-000000000108', wish: '生成最小应用' }));

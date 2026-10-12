@@ -1,6 +1,6 @@
 {
   "name": "dsh-wish-willow",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Wish Willow: one unified bundle that turns natural-language software wishes into planned, built, tested and delivered software",
   "type": "module",
   "license": "MIT",

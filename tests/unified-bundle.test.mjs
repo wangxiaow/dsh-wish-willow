@@ -19,7 +19,7 @@ const loadClient = async relative => {
 test('the install surface is one Bundle: one manifest, one patch row, one Client entry', async () => {
   const manifest = await readJson('package.json');
   assert.equal(manifest.name, 'dsh-wish-willow');
-  assert.equal(manifest.version, '0.3.1');
+  assert.equal(manifest.version, '0.3.2');
   assert.equal(manifest.dsh.bundle.patch, './cordis.patch.yml');
   assert.equal(manifest.dsh.client.platform, 'web');
   assert.equal(manifest.exports['.'], './src/host.js');
