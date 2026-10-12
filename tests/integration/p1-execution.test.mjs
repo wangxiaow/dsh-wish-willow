@@ -4,7 +4,9 @@ import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { temporary } from '../helpers/temp.mjs';
+import { createFixtureRunner } from '../helpers/runner.mjs';
 import { p1Runtime, settle } from '../helpers/p1-runtime.mjs';
+import { passingFixtureReview } from '../helpers/p2-reviewer.mjs'; // explicit scripted review, not genuine model quality evidence
 
 const APP = `#!/usr/bin/env node
 const tasks = [];
@@ -48,7 +50,7 @@ const happyCodeTurn = observed => async ({ tool }) => {
 test('real orchestration delivers only with real code, build, test and run evidence', async t => {
   const root = await temporary(t);
   const observed = [];
-  const host = await p1Runtime(root, { turns: [planTurn(observed), happyCodeTurn(observed)] });
+  const host = await p1Runtime(root, { commandRunner: createFixtureRunner({ root }), reviewTurn: passingFixtureReview, turns: [planTurn(observed), happyCodeTurn(observed)] });
   t.after(host.close);
   const created = await host.call('create', { input: { requestId: 'aaaaaaaa-0000-4000-8000-000000000001', title: '待办事项应用', wish: '我想做一个简单的待办事项应用，可以添加任务、标记完成、删除任务。' } });
   await host.call('submit', { input: { projectId: created.id, expectedRevision: created.revision, requestId: 'bbbbbbbb-0000-4000-8000-000000000002', wish: created.goal } });
@@ -106,7 +108,10 @@ test('real orchestration delivers only with real code, build, test and run evide
   assert.ok(run.durationMs >= 0);
   assert.ok(project.history.some(row => row.action === 'start-agent-run'));
   assert.ok(project.history.some(row => row.action === 'build-version'));
-  assert.ok(project.history.some(row => row.action === 'release-version'));
+  assert.ok(project.history.some(row => row.action === 'release-reviewed-candidate'));
+  assert.equal(project.quality.reviews[0].status, 'PASS', 'SCRIPTED Reviewer plumbing evidence only');
+  assert.notEqual(project.quality.reviews[0].sessionId, run.sessionId);
+  assert.ok(project.releases[0].qualityGateId);
 
   const guards = observed.filter(row => row.kind === 'guard');
   assert.equal(guards.length, 3);
@@ -114,8 +119,11 @@ test('real orchestration delivers only with real code, build, test and run evide
   assert.ok(guards.every(row => new RegExp(row.expected).test(row.message)));
   assert.deepEqual(observed.find(row => row.kind === 'initial-state'), { kind: 'initial-state', projectId: created.id, requirements: 1, versions: 1 });
   assert.deepEqual(observed.filter(row => row.kind !== 'guard' && row.kind !== 'initial-state' && row.kind !== 'deliver').map(row => [row.kind, row.success, row.exitCode]), [['build', true, 0], ['test', true, 0], ['run', true, 0]]);
-  assert.equal(host.scripted.state.createCount, 1);
-  assert.equal(host.scripted.state.disposed, 1);
+  assert.equal(host.scripted.state.modelCreateCount, 1);
+  // The delivery gate opens one extra tool-only validation handle; it never runs a model turn.
+  assert.equal(host.scripted.state.validationCreateCount, 1);
+  assert.equal(host.scripted.state.modelDisposed, 1);
+  assert.equal(host.scripted.state.validationDisposed, 1);
   assert.equal(host.scripted.state.concluded, 1);
 });
 
@@ -151,11 +159,17 @@ test('a failing command blocks delivery and keeps the real nonzero exit as evide
     const { workspace } = await tool('wish_state', {});
     await tool('write', { path: 'app.js', content: APP, workdir: workspace });
     await tool('wish_verify', { kind: 'build', command: 'node --check app.js', description: 'build' });
-    observed.push({ kind: 'failed-test', value: await tool('wish_verify', { kind: 'test', command: 'node -e "process.exit(9)"', description: 'failing test' }) });
+    // A native nonzero exit is NOT automatically the PowerShell host's exit code, which is exactly
+    // why the Coding Agent is instructed to propagate it (`if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }`).
+    // The propagated form preserves the real code; the bare form is still refused, only less precisely.
+    observed.push({ kind: 'failed-test', value: await tool('wish_verify', { kind: 'test',
+      command: 'node -e "process.exit(9)"; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }', description: 'failing test' }) });
+    observed.push({ kind: 'bare-native', value: await tool('wish_verify', { kind: 'test',
+      command: 'node -e "process.exit(9)"', description: 'bare native failure' }) });
     await tool('wish_verify', { kind: 'run', command: 'node app.js', description: 'run' });
     await tool('wish_deliver', { startCommand: 'node app.js', summary: '不应交付' });
   }];
-  const host = await p1Runtime(root, { turns });
+  const host = await p1Runtime(root, { commandRunner: createFixtureRunner({ root }), reviewTurn: passingFixtureReview, turns });
   t.after(host.close);
   const created = await host.call('create', { input: { requestId: 'aaaaaaaa-0000-4000-8000-000000000005', title: '失败测试', wish: '必须有测试。' } });
   await host.call('submit', { input: { projectId: created.id, expectedRevision: created.revision, requestId: 'bbbbbbbb-0000-4000-8000-000000000006', wish: created.goal } });
@@ -164,9 +178,14 @@ test('a failing command blocks delivery and keeps the real nonzero exit as evide
   const failed = observed.find(row => row.kind === 'failed-test').value;
   assert.equal(failed.success, false);
   assert.equal(failed.exitCode, 9);
-  const test = project.evidence.find(row => row.kind === 'test');
-  assert.equal(test.success, false);
-  assert.equal(test.exitCode, 9);
+  const bare = observed.find(row => row.kind === 'bare-native').value;
+  assert.equal(bare.success, false, 'a bare native failure must be refused even without propagation');
+  assert.notEqual(bare.exitCode, 0, `a refused native failure must not report exit 0, got ${bare.exitCode}`);
+  const tests = project.evidence.filter(row => row.kind === 'test');
+  assert.equal(tests.length, 2, 'both failing test calls are kept as evidence');
+  assert.equal(tests[0].success, false);
+  assert.equal(tests[0].exitCode, 9);
+  assert.equal(tests[1].success, false);
   assert.equal(project.evidence.filter(row => row.kind === 'build')[0].success, true);
   assert.equal(project.releases.length, 0);
   assert.equal(project.builds.length, 0);
@@ -185,7 +204,7 @@ test('a failed change can be retried, and a second wish evolves the same product
     observed.push({ kind: 'retry-state', value: state.requirements.map(row => row.confirmation), releases: state.releases.length });
     await happyCodeTurn(observed)(context);
   }];
-  const host = await p1Runtime(root, { turns });
+  const host = await p1Runtime(root, { commandRunner: createFixtureRunner({ root }), reviewTurn: passingFixtureReview, turns });
   t.after(host.close);
   const created = await host.call('create', { input: { requestId: 'aaaaaaaa-0000-4000-8000-000000000007', title: '两轮演化', wish: '做一个待办事项应用。' } });
   await host.call('submit', { input: { projectId: created.id, expectedRevision: created.revision, requestId: 'bbbbbbbb-0000-4000-8000-000000000008', wish: created.goal } });
@@ -214,7 +233,8 @@ test('a failed change can be retried, and a second wish evolves the same product
   assert.deepEqual([...new Set(retryState.value.filter(row => row !== 'confirmed'))], ['inferred']);
   assert.equal(retryState.releases, 0);
   assert.ok(first.history.some(row => row.action === 'link-retry'));
-  assert.equal(host.scripted.state.createCount, 2);
+  assert.equal(host.scripted.state.modelCreateCount, 2);
+  assert.equal(host.scripted.state.validationCreateCount, 1);
 
   // Round two: a new wish on the SAME product modifies the same sources and delivers a second version.
   const snapshotBefore = first.releases[0].snapshotPath;
@@ -235,8 +255,10 @@ test('a failed change can be retried, and a second wish evolves the same product
   assert.equal(second.currentWish, '给待办事项增加优先级，并且能够按优先级筛选。');
   assert.equal(second.builds.filter(row => row.status === 'passed').length, 2);
   assert.ok(second.artifacts.every((row, index, list) => index === 0 || row.path !== list[index - 1].path));
-  assert.equal(host.scripted.state.createCount, 3);
-  assert.equal(host.scripted.state.disposed, 3);
+  assert.equal(host.scripted.state.modelCreateCount, 3);
+  assert.equal(host.scripted.state.validationCreateCount, 2);
+  assert.equal(host.scripted.state.modelDisposed, 3);
+  assert.equal(host.scripted.state.validationDisposed, 2);
 
   await assert.rejects(host.call('retry', { input: { projectId: created.id, expectedRevision: second.revision, requestId: 'bbbbbbbb-0000-4000-8000-00000000000c', changeId: second.changes[2].id } }), { code: 'wish-willow-p1/not-retryable' });
   await assert.rejects(host.call('submit', { input: { projectId: created.id, expectedRevision: second.revision - 1, requestId: 'bbbbbbbb-0000-4000-8000-00000000000d', wish: '基于旧版本的提交。' } }), { code: 'wish-willow-p1/conflict' });
@@ -263,7 +285,8 @@ test('retry is bounded to three attempts and never silently repeats', async t =>
   }
   assert.equal(project.changes.length, 3);
   await assert.rejects(host.call('retry', { input: { projectId: created.id, expectedRevision: project.revision, requestId: 'cccccccc-0000-4000-8000-000000000004', changeId: project.changes.at(-1).id } }), { code: 'wish-willow-p1/retry-budget' });
-  assert.equal(host.scripted.state.createCount, 3);
+  assert.equal(host.scripted.state.modelCreateCount, 3);
+  assert.equal(host.scripted.state.validationCreateCount, 0);
   assert.equal(project.releases.length, 0);
 });
 

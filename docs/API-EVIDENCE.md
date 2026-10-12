@@ -82,3 +82,18 @@ ASAR 的 `dsh/` 只读提取于被 Git 忽略的 `.research/installed/dsh/`。�
 | 默认模型：base 默认 `provider: deepseek-official` / `model: deepseek-flash`，显示名为 **DeepSeek-V41-Flash** | `dsh-base/cordis.patch.yml` 的 `agent-default-model`；`dsh-llm-deepseek/lib/index.js:43–51`（`deepseek-flash` → `DeepSeek-V41-Flash`） |
 | Windows 沙箱 `grantWrite` 需要工作目录对当前用户具备 **WRITE_OWNER**（强制完整性标签位于 SACL）；继承 ACE 只有 `Modify` 的目录会以 `ACCESS_DENIED` 失败 | `dsh-sandbox-windows-acl/lib/index.js:583–611` 注释与实现；本次实测报错 `SetNamedSecurityInfoW failed (Win32 5): grantWrite(<workspace>)`；迁移到用户 profile 下（FullControl 继承）后通过 |
 | P0/P1 的 Domain、Service、Slot、RPC 名称在统一 Bundle 中全部保持不变 | `tests/unified-bundle.test.mjs`、`tests/integration/unified-runtime.test.mjs` 断言；升级前后真实存储文件 SHA256 一致 |
+
+## P2（只读契约核对，未调用模型/运行插件）
+
+先重新列 Inspect Providers，再精确读取 Host `Service.listService` 的 agents/tools/sessions/sessionQuery 与 `Event.listEvents` 的 agent/pre-step、tools/result、session/event。当前 Inspect 返回的是接口声明，不是业务调用，不证明本工作树 SDK/沙箱/模型运行成功。实际版本/peer/生命周期仍须后续授权验证。
+
+| 使用点 | 只读依据与边界 |
+|---|---|
+| fresh Agent | `agents.create` 接受独立 sessionId/meta/setup；Reviewer 不传 seed/parentSession/parentAgent。当 setup 中 ID、cwd、isSeeded/parent 不符就拒绝创建 |
+| 默认 fresh Session metadata | 官方随附 [Session 实现:1697–1710](<../.research/installed/dsh/node_modules/@deepseek-ai/dsh-session/lib/index.js#L1697-L1710>) 构造 `isSeeded: meta?.isSeeded ?? false`，parentSession 只有显式 meta 才出现；读取源码，不执行 |
+| 全局 mask / scoped 遮蔽 | tools Service 声明 scoped registration 会遮蔽同名 global；restrict 只接受已知非空 global allow/deny，局部工具不应作为 filter 名称猜测。代码先 allow 已核实 global read，再注册受限 scoped read |
+| 通用 read 的实际 schema | `Tool.listTools({})` 返回全局 `read` 的 file_path/offset/limit。Reviewer 遮蔽它并改为材料 ID/字符分页，不能给通用路径；另有同步白名单 guard 拒绝所有非允许动作 |
+| scoped 事件 | agent/pre-step 是 waterfall，以 next 返回决定；tools/result、session/event 为 emit，按 Agent 过滤。只用实际声明的监听模式，不能把 Inspect 当可调用业务 Service |
+| 完成与保存 | whenIdle 不等于成功；正常 turn/end + flush + readSession 中的持久正常结束、实际 read/submit tool/result 均须验证，异常/取消仍保留 Session 和非 PASS 结论 |
+
+实现与未验证限制见[P2 报告](<P2-DEVELOPMENT-REPORT.md>)；这些声明/源码阅读均不是语法、测试、安装或真实 Reviewer 的通过证据。

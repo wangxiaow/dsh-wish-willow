@@ -4,8 +4,10 @@ import { readFile, readdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { join } from 'node:path';
 import { temporary } from '../helpers/temp.mjs';
+import { createFixtureRunner } from '../helpers/runner.mjs';
 import { unifiedRuntime } from '../helpers/unified-runtime.mjs';
 import { settle } from '../helpers/p1-runtime.mjs';
+import { passingFixtureReview } from '../helpers/p2-reviewer.mjs'; // explicit Reviewer fixture, not real acceptance
 
 const sha256 = async path => createHash('sha256').update(await readFile(path)).digest('hex');
 const plan = async ({ tool }) => {
@@ -61,7 +63,7 @@ test('a P0-only installation upgrades in place: bytes, UUID, history and confirm
 test('a delivered P0+P1 installation upgrades without losing released history, then evolves a second version', async t => {
   const root = await temporary(t);
   // 1. Round one runs on the pre-upgrade installation (both companion plugins), as an existing user would have it.
-  const legacyHost = await unifiedRuntime(root, { modules: 'legacy', turns: [plan, code] });
+  const legacyHost = await unifiedRuntime(root, { modules: 'legacy', commandRunner: createFixtureRunner({ root }), reviewTurn: passingFixtureReview, turns: [plan, code] });
   const p0Row = await legacyHost.callP0('create', { input: { title: '[P0] 历史产品', wish: '旧愿望', status: 'confirmed' } });
   const created = await legacyHost.call('create', { input: { requestId: '3f1a1c0e-0000-4000-8000-000000000203', title: '待办事项应用', wish: '我想做一个待办事项应用' } });
   await change(legacyHost, created.id, '3f1a1c0e-0000-4000-8000-000000000204', created.goal, created.revision);
@@ -76,7 +78,7 @@ test('a delivered P0+P1 installation upgrades without losing released history, t
   const p1Hash = await sha256(join(root, 'wish_willow_p1.json'));
 
   // 2. The upgrade opens the very same media through the unified bundle.
-  const unified = await unifiedRuntime(root, { turns: [plan, code] });
+  const unified = await unifiedRuntime(root, { commandRunner: createFixtureRunner({ root }), reviewTurn: passingFixtureReview, turns: [plan, code] });
   t.after(unified.close);
   assert.equal(await sha256(join(root, 'wish_willow.json')), p0Hash, 'P0 media is byte-identical after the upgrade');
   assert.equal(await sha256(join(root, 'wish_willow_p1.json')), p1Hash, 'P1 media is byte-identical after the upgrade');
