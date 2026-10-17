@@ -78,7 +78,8 @@ test('the internal modules keep their own identity, services and storage domains
   assert.equal(Object.keys(p0.productDomain.tables).join(','), 'products');
   assert.equal(Object.keys(p1.evolutionDomain.tables).join(','), 'projects');
   // The unified row injects the union of what both internal modules need, so one row can mount both.
-  const union = [...new Set([...p0.inject, ...p1.inject])].sort();
+  const native = await import('../src/native-intake.js');
+  const union = [...new Set([...p0.inject, ...p1.inject, ...native.inject])].sort();
   assert.deepEqual([...unified.inject].sort(), union);
 });
 

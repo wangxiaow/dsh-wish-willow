@@ -81,6 +81,37 @@ export const createInput = z.strictObject({ requestId: id, title: z.string().tri
 export const refInput = z.strictObject({ projectId: id });
 export const wishInput = refInput.extend({ requestId: id, expectedRevision: z.number().int().positive(), wish: text });
 
+// Revision links reuse source: user -> rejected decision -> original AgentRun/ChangeSet.
+// Unknown legacy associations fail closed rather than guessing which approval applies.
+export function changeDecisions(p, changeId) {
+  const owner = (d, seen = new Set()) => {
+    if (seen.has(d.id)) throw Error('Decision association cycle; manual inspection required');
+    seen.add(d.id);
+    const parent = d.source.kind === 'user' && p.decisions.find(x => x.id === d.source.ref);
+    if (parent) {
+      if (parent.status !== 'rejected' || parent.risk !== 'major') throw Error('Invalid decision revision link');
+      return owner(parent, seen);
+    }
+    const change = p.changes.find(c => c.id === d.source.ref) ?? p.changes.find(c => c.id === p.runs.find(r => r.id === d.source.ref)?.changeId);
+    if (!change) throw Error('Unknown decision association; manual inspection required');
+    return change.id;
+  };
+  return p.decisions.filter(d => d.risk === 'major' && owner(d) === changeId);
+}
+export function pendingMajorDecisions(p, changeId) {
+  const decisions = changeDecisions(p, changeId);
+  return decisions.filter(d => !decisions.some(next => next.source.kind === 'user' && next.source.ref === d.id) && d.status !== 'accepted');
+}
+export function assertUnexecutedPlan(p, changeId) {
+  const tasks = p.tasks.filter(t => t.changeId === changeId);
+  if (!tasks.some(t => t.phase === 'plan' && t.status === 'completed') || !tasks.some(t => t.phase === 'code') ||
+    tasks.some(t => t.phase !== 'plan' && (t.status !== 'pending' || t.evidenceIds.length)) ||
+    p.evidence.some(e => e.changeId === changeId) || p.builds.some(b => b.changeId === changeId) ||
+    p.runs.some(r => r.changeId === changeId && !['blocked'].includes(r.status))) {
+    throw Error('Cannot safely resume this plan: execution may have started; inspect persisted state, do not replay');
+  }
+}
+
 /** One aggregate per product: mutations are atomic in the existing DSH Domain write queue. */
 export function createEvolutionStore(table, { uuid, now, workspaceFor, failure, verifyCandidate }) {
   let creationQueue = Promise.resolve();
@@ -103,6 +134,13 @@ export function createEvolutionStore(table, { uuid, now, workspaceFor, failure, 
       // An idempotent no-op does not produce a new logical revision/history entry.
       if (JSON.stringify(next) === JSON.stringify(current)) return current;
       if (JSON.stringify(next.releases.slice(0, current.releases.length)) !== JSON.stringify(current.releases)) throw failure('immutable-release', 'Historical releases are immutable', {});
+      for (const old of current.decisions) {
+        const nextDecision = next.decisions.find(d => d.id === old.id);
+        const allowed = old.status === 'proposed' && origin.kind === 'user' && action === 'user-decision' &&
+          ['accepted', 'rejected'].includes(nextDecision?.status);
+        if (!nextDecision || JSON.stringify({ ...nextDecision, status: old.status }) !== JSON.stringify(old) ||
+          (nextDecision.status !== old.status && !allowed)) throw failure('immutable-decision', 'Decision history cannot be rewritten', {});
+      }
       for (const key of ['artifacts', 'builds', 'evidence']) {
         if (JSON.stringify(next[key].slice(0, current[key].length)) !== JSON.stringify(current[key])) throw failure('immutable-evidence', 'Historical build/artifact/evidence records are immutable', {});
       }
@@ -295,15 +333,17 @@ export function createEvolutionStore(table, { uuid, now, workspaceFor, failure, 
         await table.put(record.id, record); return structuredClone(record);
       });
     },
-    async submit(input) {
+    async submit(input, conversationSource) {
       const fields = wishInput.parse(input);
+      const origin = conversationSource === undefined ? { kind: 'user', ref: fields.requestId }
+        : source.extend({ kind: z.literal('user') }).parse(conversationSource);
       // Check retry first (including stale expectedRevision after response loss); recheck inside serialized write.
       const existing = read(fields.projectId).changes.find(c => c.requestId === fields.requestId);
       if (existing) {
         if (existing.wish !== fields.wish) throw failure('idempotency-conflict', 'Request ID already used with different wish', {});
         return read(fields.projectId);
       }
-      return mutate(fields.projectId, 'submit-wish', { kind: 'user', ref: fields.requestId }, p => {
+      return mutate(fields.projectId, conversationSource === undefined ? 'submit-wish' : 'submit-native-wish', origin, p => {
         if (p.changes.some(c => c.requestId === fields.requestId)) return;
         if (p.changes.some(c => ['pending', 'running', 'blocked', 'uncertain'].includes(c.status))) throw failure('busy', 'Resolve current change before submitting another', {});
         const changeId = uuid(), versionId = uuid();
@@ -328,6 +368,20 @@ export function createEvolutionStore(table, { uuid, now, workspaceFor, failure, 
             gateRecord(p, candidate, { verdict: 'REVIEW_INCOMPLETE', reviewId: review.id, reason: review.reason });
           }
         });
+        // Crash between durable wish_plan (blocked) and the planning run's finally.
+        // Only this pre-code boundary is recoverable; never infer completion of execution.
+        const paused = read(current.id), blocked = paused.changes.at(-1);
+        if (blocked?.status === 'blocked' && paused.runs.some(r => r.changeId === blocked.id && r.status === 'running')) {
+          const probe = structuredClone(paused);
+          for (const r of probe.runs.filter(r => r.changeId === blocked.id && r.status === 'running')) r.status = 'blocked';
+          let safe = false;
+          try { assertUnexecutedPlan(probe, blocked.id); safe = changeDecisions(probe, blocked.id).length > 0; } catch { /* ambiguous legacy data stays blocked */ }
+          if (safe) await mutate(paused.id, 'recover-paused-plan', { kind: 'runtime', ref: 'host-start' }, p => {
+            for (const r of p.runs.filter(r => r.changeId === blocked.id && r.status === 'running')) {
+              r.status = 'blocked'; r.endedAt = now(); r.reason = '规划已保存，Host 在等待决策时中断；未恢复编码，继续须显式批准。';
+            }
+          }, paused.revision);
+        }
         if (!read(current.id).changes.some(c => ['pending', 'running'].includes(c.status))) continue;
         await mutate(current.id, 'recover-interrupted-execution', { kind: 'runtime', ref: 'host-start' }, p => {
           p.status = 'uncertain';

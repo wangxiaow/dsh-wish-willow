@@ -1,1 +1,0 @@
-﻿Build PASS: install-ready JavaScript entrypoints, lazy Client factory, Bundle manifest and schema import. No transpilation needed.

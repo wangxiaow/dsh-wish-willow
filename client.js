@@ -6,7 +6,7 @@ window.__ModuleLoader__.load({
     const NS = 'wishWillow';
     const dictionaries = {
       zh: {
-        title: 'Wish Willow', description: '一个入口：许愿、执行、证据与交付。提交自然语言愿望，由真实 DSH Agent 规划、开发、构建、测试并交付可运行软件；产品状态独立于会话并持久保存。',
+        title: '许愿柳', description: '一个入口：许愿、执行、证据与交付。提交自然语言愿望，由真实 DSH Agent 规划、开发、构建、测试并交付可运行软件；产品状态独立于会话并持久保存。',
         productList: '产品', newProduct: '新建产品', name: '产品名称', wish: '软件愿望', create: '创建产品', creating: '创建中…',
         reload: '重新读取', loading: '读取中…', empty: '尚无产品。请先新建产品并写下你的愿望。',
         goal: '产品目标', currentWish: '当前愿望', workspace: '工作目录', revision: '修订号', productStatus: '产品状态',
@@ -21,6 +21,9 @@ window.__ModuleLoader__.load({
         artifacts: '交付产物', snapshot: '不可覆盖源码快照', noArtifacts: '尚无产物', recordedAt: '记录时间', code: '源码', passed: '通过', failedBuild: '失败', passedMark: '✓', missingMark: '—',
         versionHistory: '版本历史与运行方式', version: '当前版本', startCommand: '启动方式', releasedAt: '交付时间', summary: '交付说明', noRelease: '尚未交付版本', planned: '计划中', built: '已构建', released: '正式交付', sourcePath: '源码目录', snapshotPath: '快照目录',
         submit: '提交下一轮愿望', submitting: '已提交，正在执行…', wishPlaceholder: '用自然语言描述你希望这个软件接下来变成什么样；已确认需求与历史版本会保留。',
+        unsafeDecisionState: '无法安全恢复：旧决策关联不完整，或执行可能已经开始。已保留原状态，未自动重放；请人工核查，不要反复重试。',
+        reviseDecision: '提交修改后的方案（需重新批准）', revisionText: '修改意见与完整替代方案', resumePlan: '继续已批准计划',
+        decisionPaused: '计划已暂停并持久保存，可直接离开以保持暂停。拒绝不会授权执行；请填写替代方案、重新提交并明确批准，再继续；也可取消本次计划。',
         retry: '重试本次变更', retryAck: '我已检查工作目录并确认可以重试（可能有未知副作用）', retrying: '已提交重试…', cancel: '取消执行',
         failedExplanation: '本次执行失败：不会产生新版本，也不会改写已交付历史。可查看失败任务后重试，或提交修订愿望。',
         uncertainExplanation: 'Host 在执行中中断。为避免重复副作用，系统没有自动重跑：请检查工作目录，确认后再重试。',
@@ -57,6 +60,9 @@ window.__ModuleLoader__.load({
         artifacts: 'Deliverables', snapshot: 'Immutable source snapshot', noArtifacts: 'No artifacts yet', recordedAt: 'Recorded at', code: 'Source', passed: 'passed', failedBuild: 'failed', passedMark: '✓', missingMark: '—',
         versionHistory: 'Version history and how to run', version: 'Current version', startCommand: 'Start command', releasedAt: 'Released at', summary: 'Delivery summary', noRelease: 'No release yet', planned: 'Planned', built: 'Built', released: 'Released', sourcePath: 'Source directory', snapshotPath: 'Snapshot directory',
         submit: 'Submit the next wish', submitting: 'Submitted; running…', wishPlaceholder: 'Describe in natural language what this software should become next; confirmed requirements and released history are preserved.',
+        unsafeDecisionState: 'Cannot safely resume: legacy decision links are incomplete or execution may have started. State was preserved and nothing replayed. Inspect it manually; do not repeatedly retry.',
+        reviseDecision: 'Submit revised proposal (approval required)', revisionText: 'Feedback and complete replacement proposal', resumePlan: 'Continue approved plan',
+        decisionPaused: 'Plan paused and saved; leave it here to stay paused. Rejection never authorizes execution. Submit a replacement, explicitly approve it, then continue; or cancel this plan.',
         retry: 'Retry this change', retryAck: 'I inspected the workspace and confirm retry (side effects may be unknown)', retrying: 'Retry submitted…', cancel: 'Cancel run',
         failedExplanation: 'This run failed: no new version is produced and released history is unchanged. Inspect failed tasks, then retry or submit a revised wish.',
         uncertainExplanation: 'The Host was interrupted mid-run. Nothing was re-run automatically to avoid duplicate side effects; inspect the workspace, then retry explicitly.',
@@ -194,8 +200,17 @@ window.__ModuleLoader__.load({
     }
 
     function ProductWorkspace({ t, project, busy, act, onReload, acked, setAcked, wish, setWish }) {
-      const pendingDecisions = project.decisions.filter(d => d.risk === 'major' && d.status === 'proposed');
       const change = project.changes.at(-1);
+      const [revisions, setRevisions] = React.useState({});
+      const revisionRequests = React.useRef(new Map());
+      const refs = new Set([change?.id, ...project.runs.filter(r => r.changeId === change?.id).map(r => r.id)]);
+      // Expand only explicit persisted links; the Host validates associations authoritatively.
+      for (let i = 0; i < project.decisions.length; i++) for (const d of project.decisions) if (refs.has(d.source?.ref)) refs.add(d.id);
+      const majorDecisions = project.decisions.filter(d => d.risk === 'major' && refs.has(d.id));
+      const unresolved = majorDecisions.filter(d => d.status !== 'accepted' && !majorDecisions.some(n => n.source?.kind === 'user' && n.source.ref === d.id));
+      const decisionPaused = change?.status === 'blocked' && majorDecisions.length > 0 && !project.builds.some(b => b.changeId === change.id);
+      const pendingDecisions = decisionPaused ? unresolved.filter(d => d.status === 'proposed') : [];
+      const rejectedDecisions = decisionPaused ? unresolved.filter(d => d.status === 'rejected') : [];
       const running = change && ['pending', 'running'].includes(change.status);
       const stuck = change && ['failed', 'uncertain', 'blocked'].includes(change.status);
       const groups = { pending: [], running: [], completed: [], failed: [], blocked: [], uncertain: [] };
@@ -257,6 +272,18 @@ window.__ModuleLoader__.load({
                 onClick: () => act('decide', { projectId: project.id, decisionId: d.id, expectedRevision: project.revision, accepted: true }) }, t('accept')),
               h('button', { type: 'button', id: 'ww-reject', disabled: busy,
                 onClick: () => act('decide', { projectId: project.id, decisionId: d.id, expectedRevision: project.revision, accepted: false }) }, t('reject')))))) : null,
+        decisionPaused ? h('div', { id: 'ww-decision-paused', className: 'ww-card' },
+          h('p', null, t('decisionPaused')),
+          rejectedDecisions.map(d => h('div', { key: d.id },
+            h('label', { htmlFor: `ww-revision-${d.id}` }, `${t('revisionText')}: ${d.text}`),
+            h('textarea', { id: `ww-revision-${d.id}`, maxLength: 10000, disabled: busy, value: revisions[d.id] ?? '',
+              onChange: e => setRevisions({ ...revisions, [d.id]: e.target.value }) }),
+            h('button', { type: 'button', id: `ww-revise-${d.id}`, disabled: busy || !(revisions[d.id] ?? '').trim() || revisions[d.id]?.trim() === d.text.trim(),
+              onClick: () => {
+                const text = revisions[d.id].trim(), key = `${d.id}:${text}`;
+                if (!revisionRequests.current.has(key)) revisionRequests.current.set(key, newId());
+                act('reviseDecision', { projectId: project.id, decisionId: d.id, expectedRevision: project.revision, requestId: revisionRequests.current.get(key), text });
+              } }, t('reviseDecision'))))) : null,
         project.decisions.length ? h('div', { id: 'ww-decision-history', className: 'ww-hint' },
           h('h4', null, t('decisions')),
           h('ul', null, project.decisions.map(d => h('li', { key: d.id, id: `ww-decision-${short(d.id)}` }, `${d.text} — ${t(d.risk)} · ${t(d.status)}`)))) : null,
@@ -311,19 +338,19 @@ window.__ModuleLoader__.load({
             h('p', { id: 'ww-release-summary' }, `${t('summary')}: ${release.summary}`)) : null),
 
         h('h3', null, t('submit')),
-        h('p', { id: 'ww-suggestion' }, waitingApproval ? t('AWAITING_APPROVAL') : t('suggestion')[project.status === 'delivered' ? 'deliver' : project.status] ?? t('suggestion').draft),
+        h('p', { id: 'ww-suggestion' }, decisionPaused ? t('decisionPaused') : waitingApproval ? t('AWAITING_APPROVAL') : t('suggestion')[project.status === 'delivered' ? 'deliver' : project.status] ?? t('suggestion').draft),
         stuck && !waitingApproval ? h('div', { className: 'ww-card', id: 'ww-stuck' },
-          h('p', { role: 'alert' }, t(change.status === 'uncertain' ? 'uncertainExplanation' : 'failedExplanation')),
+          h('p', { role: 'alert' }, t(decisionPaused ? 'decisionPaused' : change.status === 'uncertain' ? 'uncertainExplanation' : 'failedExplanation')),
           change.status === 'uncertain' ? h('label', { htmlFor: 'ww-ack' }, h('input', { id: 'ww-ack', type: 'checkbox', checked: acked, onChange: e => setAcked(e.target.checked) }), ` ${t('retryAck')}`) : null,
           h('div', { className: 'ww-actions' },
-            h('button', { type: 'button', id: 'ww-retry', disabled: busy || (change.status === 'uncertain' && !acked),
-              onClick: () => act('retry', { projectId: project.id, expectedRevision: project.revision, requestId: newId(), changeId: change.id, acknowledgeUncertain: acked }) }, t('retry')))) : null,
-        running ? h('div', { className: 'ww-actions' }, h('button', { type: 'button', id: 'ww-cancel', disabled: busy, onClick: () => act('cancel', { projectId: project.id }) }, t('cancel'))) : null,
+            h('button', { type: 'button', id: 'ww-retry', disabled: busy || (decisionPaused && unresolved.length > 0) || (change.status === 'uncertain' && !acked),
+              onClick: () => act('retry', { projectId: project.id, expectedRevision: project.revision, requestId: newId(), changeId: change.id, acknowledgeUncertain: acked }) }, t(decisionPaused ? 'resumePlan' : 'retry')))) : null,
+        running || decisionPaused ? h('div', { className: 'ww-actions' }, h('button', { type: 'button', id: 'ww-cancel', disabled: busy, onClick: () => act('cancel', { projectId: project.id, changeId: change.id, expectedRevision: project.revision }) }, t('cancel'))) : null,
         h('label', { htmlFor: 'ww-wish' }, t('submit')),
         h('textarea', { id: 'ww-wish', value: wish, maxLength: 10000, disabled: busy || !!running, placeholder: t('wishPlaceholder'),
           onChange: e => setWish(e.target.value) }),
         h('div', { className: 'ww-actions' },
-          h('button', { type: 'button', id: 'ww-submit', disabled: busy || !!running || !!waitingApproval || !wish.trim(),
+          h('button', { type: 'button', id: 'ww-submit', disabled: busy || !!running || change?.status === 'blocked' || change?.status === 'uncertain' || !!waitingApproval || !wish.trim(),
             onClick: () => act('submit', { projectId: project.id, expectedRevision: project.revision, requestId: newId(), wish }) }, t('submit'))));
     }
 
@@ -374,6 +401,7 @@ window.__ModuleLoader__.load({
         if (cause.name === 'AbortError') return;
         setError(cause.code === 'wish-willow-p1/conflict' || cause.code === 'wish-willow/conflict' ? 'conflict'
           : cause.code === 'wish-willow-p1/invalid-input' || cause.code === 'wish-willow/invalid-input' ? 'invalid'
+          : cause.code === 'wish-willow-p1/unsafe-decision-state' ? 'unsafeDecisionState'
           : cause.code === 'wish-willow-p1/busy' ? 'busy' : 'failure');
       };
       const run = React.useCallback(async (fn, { quiet = false } = {}) => {

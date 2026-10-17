@@ -1,8 +1,0 @@
-# Acceptance-only overlay: normal browser authentication remains enabled.
-# Do not print the new isolated Host's authenticated startup URL into logs.
-- id: web-runtime
-  config:
-    openBrowser: false
-    printUrl: false
-    surfaceContext: true
-    trustedHosts: []
