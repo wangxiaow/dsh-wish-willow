@@ -101,7 +101,17 @@ test('the unified workspace reports real requirement, task, run, evidence and de
   assert.match(running, /id="ww-runs"/);
   assert.match(running, /id="ww-evidence"/);
   assert.match(running, /重试本次变更/);
-  assert.match(running, /接受/);
+  assert.doesNotMatch(running, /id="ww-accept"|id="ww-reject"/, 'a failed change cannot approve an old decision');
+  const paused = board(project({ status: 'blocked',
+    changes: [{ ...project().changes[0], status: 'blocked' }] }));
+  assert.match(paused, /id="ww-accept"/);
+  assert.match(paused, /id="ww-reject"/);
+  assert.match(paused, /接受/);
+  const historical = board(project({ status: 'blocked',
+    changes: [{ ...project().changes[0], status: 'blocked' }],
+    decisions: [{ ...project().decisions[0], source: { kind: 'agent', ref: 'older-run' } }] }));
+  assert.match(historical, /是否公网部署？/);
+  assert.doesNotMatch(historical, /id="ww-accept"|id="ww-reject"/, 'unlinked historical decisions remain non-actionable');
   assert.doesNotMatch(running, /%|进度/);
   const delivered = board(project({ status: 'delivered',
     releases: [{ id: 'x1', versionId: 'v1', buildId: 'b1', changeId: 'c1', releasedAt: '2026-10-10T01:00:00.000Z',

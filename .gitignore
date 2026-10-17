@@ -3,3 +3,13 @@ node_modules/
 artifacts/
 .test-data/
 *.tgz
+
+# Local design/acceptance records and preservation copies are not published.
+/docs/
+/.p1-preservation*/
+/.dsh/
+/dsh-home/
+.env
+.env.*
+!.env.example
+.credentials*

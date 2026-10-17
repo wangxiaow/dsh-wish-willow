@@ -40,11 +40,18 @@ export const qualitySchema = z.strictObject({ policy: z.literal('wish-willow-qua
   attempts: z.array(attemptSchema).max(200), reviews: z.array(reviewSchema).max(200), approvals: z.array(approvalSchema).max(200), gates: z.array(gateSchema).max(600) });
 export const emptyQuality = () => ({ policy: 'wish-willow-quality/1', candidates: [], attempts: [], reviews: [], approvals: [], gates: [] });
 
+export function decisionsForChange(project, changeId) {
+  const refs = new Set([changeId, ...project.runs.filter(r => r.changeId === changeId).map(r => r.id)]);
+  const selected = new Set(project.decisions.filter(d => refs.has(d.source.ref)).map(d => d.id));
+  for (let i = 0; i < project.decisions.length; i++) for (const d of project.decisions) {
+    if (d.source.kind === 'user' && selected.has(d.source.ref)) selected.add(d.id);
+  }
+  return project.decisions.filter(d => selected.has(d.id));
+}
 export function contractHash(project, changeId) {
-  const runIds = project.runs.filter(r => r.changeId === changeId).map(r => r.id);
   return hashJson({ change: project.changes.find(c => c.id === changeId)?.wish,
     requirements: project.requirements, constraints: project.constraints,
-    decisions: project.decisions.filter(d => runIds.includes(d.source.ref) || d.source.ref === changeId) });
+    decisions: decisionsForChange(project, changeId) });
 }
 export const requiredChecks = risk => ['requirements', 'evidence', 'tests', ...(risk !== 'low' ? ['change-impact'] : []), ...(risk === 'high' ? ['risk-scope'] : [])];
 

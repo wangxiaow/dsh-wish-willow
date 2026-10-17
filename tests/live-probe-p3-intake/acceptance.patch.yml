@@ -1,0 +1,22 @@
+# P3 Task 03 ONLY: inert until explicitly passed as an official dsh --patch overlay.
+# DSH_HOME and invocation cwd MUST already be the freshly owned P3 test locations.
+# This file does not create a Home, install a Bundle, boot a Host or invoke a model.
+- id: wish-willow
+  config:
+    workspaceRoot: !!js process.getBuiltinModule('node:path').join(process.env.DSH_HOME, 'wish-willow')
+    maxSteps: 0
+    maxRunMs: 10000
+
+# No title-model side call or automatic model-request retry in this acceptance process.
+- id: session-title-llm
+  disabled: true
+- id: llm-retry
+  disabled: true
+
+- insert:
+    - id: wish-willow-p3-intake-acceptance-guard
+      name: ./guard.mjs
+      config:
+        authorize: p3-task03-entry-only
+        home: !!js process.env.DSH_HOME
+        conversationWorkspace: !!js process.cwd()
