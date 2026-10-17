@@ -7,7 +7,7 @@ import { setSandboxMode } from '@deepseek-ai/dsh-sandbox-policy';
 import { setApprovalPolicy } from '@deepseek-ai/dsh-user-approval';
 import { assertPlainPath, inside, sha256, validateSnapshotEntries, runnableSource, snapshotLimits, detectCredentialContent } from './artifacts.js';
 import { listSnapshotFiles } from './delivery.js';
-import { candidateSchema, classifyRisk, contractHash, hashJson, latestReview, reportSchema, requiredChecks, validateReport } from './quality-gate.js';
+import { candidateSchema, classifyRisk, contractHash, decisionsForChange, hashJson, latestReview, reportSchema, requiredChecks, validateReport } from './quality-gate.js';
 
 const now = () => new Date().toISOString();
 const redact = value => String(value).replace(/\b(?:sk-|Bearer\s+)[A-Za-z0-9_.-]{12,}/gi, '[REDACTED]')
@@ -72,8 +72,7 @@ export async function prepareReviewCandidate(project, delivery, root) {
     .map(key => ({ path: key, kind: !before.has(key) ? 'added' : !after.has(key) ? 'removed' : 'modified',
       before: before.get(key)?.sha256 ?? null, after: after.get(key)?.sha256 ?? null }));
   const change = project.changes.find(c => c.versionId === versionId);
-  const runIds = project.runs.filter(r => r.changeId === change.id).map(r => r.id);
-  const decisions = project.decisions.filter(d => runIds.includes(d.source.ref) || d.source.ref === change.id);
+  const decisions = decisionsForChange(project, change.id);
   const proof = project.evidence.filter(e => build.evidenceIds.includes(e.id));
   const commandsOf = b => project.evidence.filter(e => b.evidenceIds.includes(e.id) && e.command).map(e => `${e.kind}:${e.command}`).sort();
   const sameExecution = baseline && baseline.startCommand === input.startCommand &&

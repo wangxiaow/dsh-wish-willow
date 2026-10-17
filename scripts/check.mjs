@@ -38,7 +38,7 @@ assert.equal((clientCode.match(/__ModuleLoader__\.load\(/g) ?? []).length, 1);
 assert.equal((clientCode.match(/ctx\.slots\.register\(/g) ?? []).length, 1, 'the unified UI registers exactly one section');
 assert.doesNotMatch(clientCode, /'wish-willow-p0'|'wish-willow-p1'/);
 
-for (const path of ['src/host.js', 'src/p0/host.js', 'src/p0/model.js', 'client.js']) {
+for (const path of ['src/host.js', 'src/native-intake.js', 'src/p0/host.js', 'src/p0/model.js', 'client.js']) {
   const result = spawnSync(process.execPath, ['--check', path], { stdio: 'inherit' });
   assert.equal(result.status, 0, `syntax: ${path}`);
 }
@@ -50,7 +50,7 @@ for (const language of ['en', 'zh']) {
 // The unified plugin composition: one row, two unchanged internal storage domains.
 const unified = await import('../src/host.js');
 assert.equal(unified.name, 'wish-willow');
-assert.deepEqual(unified.inject, ['storageDomain', 'typertGateway', 'agents', 'agentDefaultModel', 'agentPresets', 'sandboxPolicy', 'sessions', 'sessionQuery']);
+assert.deepEqual(unified.inject, ['storageDomain', 'typertGateway', 'agents', 'agentDefaultModel', 'agentPresets', 'sandboxPolicy', 'sessions', 'sessionQuery', 'tools', 'systemPrompt', 'userQuestions']);
 assert.equal(typeof unified.apply, 'function');
 assert.equal(unified.productDomain.name, 'wish_willow');
 assert.equal(unified.productDomain.version, 1);
